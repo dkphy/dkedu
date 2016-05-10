@@ -1,0 +1,29 @@
+@charset "utf-8";
+
+.zhaopin_summary{background:#fff;width:100%;overflow:hidden;}
+.zhaopin_summary p{width:462px;margin:45px auto;color:#646464;line-height:30px;font-size:14px;}
+.zhaopin_nav{width: 100%;overflow:hidden;text-align: center;margin:45px 0;}
+.zhaopin_nav a{display:inline-block;width:130px;height:45px;line-height:45px;background:#fff;margin:0 18px;color:#646464;font-size:14px;text-align: center;cursor:pointer;}
+.zhaopin_nav a.current{background:#3398DB;color:#fff;}
+
+.zhaopin_list .zhiwei_box{width:100%;overflow: hidden;display:none;padding-bottom:120px;}
+.zhaopin_list .zhiwei_box.current{display:block;}
+.zhaopin_list .zhiwei_box li{float:left;width:33.3%;}
+.zhaopin_list .zhiwei_box li a{display:block;margin:10px 15px;background:#fff;border:1px solid #D4D4D4;height:46px;line-height: 46px;text-align: center;color:#9B9B9B;font-size:20px;-webkit-transition:all .4s ease;-moz-transition:all .4s ease;-o-transition:all .4s ease;transition:all .4s ease;}
+.zhaopin_list .zhiwei_box li a:hover{border-color:#3398DB;}
+
+
+
+.zhaopin_detail{background:#fff;width:680px;height:510px;position: relative; margin:0 auto;border-radius:6px; }
+.zhaopin_detail .zhiwei_tit{display:block;font-size:24px;line-height:26px;color:#3398DB;font-weight: 500;padding:30px 0;text-align: center;}
+.zhaopin_detail .zhiwei_ct{width:640px;height:400px;border-radius:4px;border:1px solid #E1E1E1;margin:0 auto;overflow-x:hidden;overflow-y:auto;}
+.zhaopin_detail .zhiwei_ct h2{color:#4A4A4A;font-size:14px;margin:20px 0;line-height:24px;font-weight: 600;}
+.zhaopin_detail .zhiwei_ct ul,.zhaopin_detail .zhiwei_ct ol{padding-left:24px;}
+.zhaopin_detail .zhiwei_ct ul li{list-style: disc inside none;list-style-position:outside;margin-bottom:5px;text-indent:0;}
+.zhaopin_detail .zhiwei_ct ol li{list-style: decimal inside none;list-style-position:outside;margin-bottom:5px;text-indent:0;}
+.zhaopin_detail .zhiwei_ct ul ul li,.zhaopin_detail .zhiwei_ct ol ul li{list-style-type: circle;}
+.zhaopin_detail .zhiwei_ct ul ul ul li,.zhaopin_detail .zhiwei_ct ol ul ul li,.post-content ol ol ul li{list-style-type: square;}
+.zhaopin_detail .zhiwei_ct li{font-size:12px;color:#4A4A4A;line-height:24px;}
+.zhaopin_detail .zhiwei_ct p{font-size:12px;color:#4A4A4A;line-height:24px;margin: 1em 0;}
+.zhaopin_detail .zhiwei_ct .zhiwei_main{margin:15px;}
+

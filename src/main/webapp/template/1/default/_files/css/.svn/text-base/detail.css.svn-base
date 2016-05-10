@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+.header{position:static;background:#393E46;}
+.post_wrap{margin:50px auto;width:650px;}
+.post_wrap h1{color:#4A4A4A;font-size:24px;line-height:32px;font-weight: 500;margin-bottom:6px;}
+.post_wrap .post_head{margin-bottom:20px;}
+.post_wrap .post_head .time{color:#4A4A4A;font-size:12px;}
+.post_wrap .post_main{padding-bottom:40px;border-bottom:1px solid #E9E9E9;}
+.post_wrap .post_main p{font-size: 14px;color:#4A4A4A;line-height:20px;margin-bottom:16px;}
+.post_wrap .post_main img{margin-bottom:16px;display: block;width:100%;}
+.bdsharebuttonbox{margin:50px 0;}
