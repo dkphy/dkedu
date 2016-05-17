@@ -134,7 +134,7 @@ public class InfoFulltextServiceImpl implements InfoFulltextService {
 			fragmentSize = 100;
 		}
 		SimpleHTMLFormatter formatter = new SimpleHTMLFormatter(
-				"<em class=\"term\">", "</em>");
+				"<span class=\"highlight\">", "</span>");
 		Highlighter hl = new Highlighter(formatter, new QueryScorer(query));
 		Fragmenter fragmenter = new SimpleFragmenter(fragmentSize);
 		hl.setTextFragmenter(fragmenter);
