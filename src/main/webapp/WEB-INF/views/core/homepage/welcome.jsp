@@ -19,16 +19,11 @@ a.latest-version{color:red;}
 </style>
 </head>
 <body class="c-body">
-<p class="welcome">欢迎使用专业的JAVA内容管理系统 -- Jspxcms内容管理系统。</p>
+<p class="welcome">欢迎使用</p>
 <!-- 
 <h1 class="bar">安全提示</h1>
  -->
 <h1 class="bar">您的资料</h1>
-<p class="line">
-	<label class="label">当前版本</label>
-	<span class="content">Jspxcms v${site.version} <a href="http://www.jspxcms.com" target="_blank" class="latest-version">查看最新版</a></span>
-	<div class="clear"></div>
-</p>
 <p class="line">
 	<label class="label">用户名</label>
 	<span class="content">${user.username}</span>
