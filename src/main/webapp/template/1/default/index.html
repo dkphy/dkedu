@@ -365,74 +365,32 @@
         <div class="wrap">
             <div class="col_hd">
                 <b class="tit">师资力量</b>
-                <a href="#" target="_blank">查看更多→</a>
+                [@Node id='110';node]
+                <a href="${node.url}" target="_blank">查看更多→</a>
+                [/@Node]
             </div>
 
             <div class="teacher_list clearfix">
+            	[@NodeList parent='teacherManager';list]
+				 [#list list as node]
+                [@InfoPage nodeId=node.id pageSize='3';pagedList]
                 <ul class="list_box clearfix">
+                  [#list pagedList.content as info]
                     <li>
-                        <a href="#">
-                            <img src="_files/upload/teacher_test.jpg" alt="">
+                        <a href="${info.url}">
+                            <img src="${info.customs['teacherPhoto']}" alt="">
                             <div class="words">
-                                <b>朗马悦</b>
-                                <p class="info">国家二级心理咨询师</p>
-                                <p class="summary">皇马在夏天收购一名大牌前锋的计划还在继续媒体披露。向奥巴梅杨提出一份总价8000万英镑的邀请。</p>
+                                <b>${info.customs['teacherName']}</b>
+                                <p class="info">${info.customs['teacherZc']}</p>
+                                <p class="summary">${info.customs['teacherIntroduction']}</p>
                             </div>
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
-                            <img src="_files/upload/teacher_test.jpg" alt="">
-                            <div class="words">
-                                <b>朗马悦</b>
-                                <p class="info">临床心理治疗专家<br />心理教育家<br />国内著名心理产业化开拓者</p>
-                                <p class="summary">皇马在夏天收购一名大牌前锋的计划还在继续媒体披露。向奥巴梅杨提出一份总价8000万英镑的邀请。皇马在夏天收购一名大牌前锋的计划还在继续媒体披露。向奥巴梅杨提出一份总价8000万英镑的邀请。皇马在夏天收购一名大牌前锋的计划还在继续媒体披露。向奥巴梅杨提出一份总价8000万英镑的邀请。</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="_files/upload/teacher_test.jpg" alt="">
-                            <div class="words">
-                                <b>朗马悦</b>
-                                <p class="info">国家职业心理咨询师<br />培训师督导师<br />国际认证EAP培训师</p>
-                                <p class="summary">皇马在夏天收购一名大牌前锋的计划还在继续媒体披露。向奥巴梅杨提出一份总价8000万英镑的邀请。皇马在夏天收购一名大牌前锋的计划还在继续媒体披露。向奥巴梅杨提出一份总价8000万英镑的邀请。</p>
-                            </div>
-                        </a>
-                    </li>
+                   [/#list]
                 </ul>
-                <ul class="list_box clearfix">
-                    <li>
-                        <a href="#">
-                            <img src="_files/upload/teacher_test.jpg" alt="">
-                            <div class="words">
-                                <b>朗马悦</b>
-                                <p class="info">国家二级心理咨询师</p>
-                                <p class="summary">皇马在夏天收购一名大牌前锋的计划还在继续媒体披露。向奥巴梅杨提出一份总价8000万英镑的邀请。</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="_files/upload/teacher_test.jpg" alt="">
-                            <div class="words">
-                                <b>朗马悦</b>
-                                <p class="info">临床心理治疗专家<br />心理教育家<br />国内著名心理产业化开拓者</p>
-                                <p class="summary">皇马在夏天收购一名大牌前锋的计划还在继续媒体披露。向奥巴梅杨提出一份总价8000万英镑的邀请。皇马在夏天收购一名大牌前锋的计划还在继续媒体披露。向奥巴梅杨提出一份总价8000万英镑的邀请。皇马在夏天收购一名大牌前锋的计划还在继续媒体披露。向奥巴梅杨提出一份总价8000万英镑的邀请。</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="_files/upload/teacher_test.jpg" alt="">
-                            <div class="words">
-                                <b>朗马悦</b>
-                                <p class="info">国家职业心理咨询师<br />培训师督导师<br />国际认证EAP培训师</p>
-                                <p class="summary">皇马在夏天收购一名大牌前锋的计划还在继续媒体披露。向奥巴梅杨提出一份总价8000万英镑的邀请。皇马在夏天收购一名大牌前锋的计划还在继续媒体披露。向奥巴梅杨提出一份总价8000万英镑的邀请。</p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
+                [/@InfoPage]
+                 [/#list]
+                 [/@NodeList]
             </div>
 
         </div>
