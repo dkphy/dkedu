@@ -241,7 +241,7 @@
 			</div>
 			[/#list]	
 			[/@InfoList]
-			[@InfoList nodeId=node.id limit='5';list]
+			[@InfoList nodeId=node.id limit='2';list]
 			<ul class="mt5 list-unstyled" style="padding:10px 10px;border-top:1px dotted #d2e1f1;">
 			[#list list as info]
 				<li class="ico-point-blue" style="padding-left:10px;height:26px;line-height:26px;"><a class="fs14 a" href="${info.url}" target="_blank" title="${info.title}">${substring(info.title,20,'...')}</a></li>

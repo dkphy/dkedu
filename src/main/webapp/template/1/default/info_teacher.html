@@ -1,0 +1,63 @@
+[#escape x as (x)!?html]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>${title}_${node.name}_${site.name}${global.customs['poweredby']}</title>
+<meta name="viewport"
+	content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="_files/css/swiper.min.css">
+<link rel="stylesheet" href="_files/css/common.css">
+<link rel="stylesheet" href="_files/css/detail.css">
+[#include 'inc_js.html'/]
+</head>
+<body>
+	[#include 'head.html'/]
+	 
+    <div class="wrap wrap_910">
+        <div class="teacher_detail">
+            <div class="t_pic">
+                <img src="${info.customs['teacherPhoto']}" width="180" height="260" alt=""><!--尺寸180x260-->
+                <a href="#" class="btn">预约咨询</a>
+            </div>
+            <div class="t_detail">
+                <b>${info.customs['teacherName']}</b>
+                <div class="summary">
+                    <p>${info.customs['teacherZc']}</p>
+                </div>
+                <div class="detail">
+                    <p>${info.customs['teacherIntroduction']}</p>
+                    <p>&nbsp;</p>
+                    <p>${info.customs['teacherIntroduction']}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+	[#include 'end.html'/]
+</body>
+<script src="_files/js/jquery-1.9.1.min.js"></script>
+<script src="_files/js/common.js"></script>
+<script type="text/javascript">
+	var share_tit = $("h1").eq(0).text(), share_desc = $(".post p").eq(0)
+			.text(), share_pic = $(".post img").eq(0).attr("src");
+	window._bd_share_config = {
+		common : {
+			bdText : share_tit,
+			bdDesc : share_desc,
+			bdPic : share_pic
+		},
+		share : [ {
+			"bdSize" : 16
+		} ]
+	}
+	with (document)
+		0[(getElementsByTagName('head')[0] || body)
+				.appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='
+				+ ~(-new Date() / 36e5)];
+</script>
+</html>
+[/#escape]
