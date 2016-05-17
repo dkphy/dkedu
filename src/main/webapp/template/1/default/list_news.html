@@ -31,11 +31,8 @@
                             </div>
                             <span class="view">
                                 <i class="icon-view2"></i>
-                                <span id="info_views${info.id}"></span>
+                                <span id="info_views">${info.bufferViews}</span>
                             </span>
-                            <script type="text/javascript">
-						$("#info_views${info.id}").load("${dy}/info_views/${info.id}.jspx?d=");
-					</script>
                         </a>
                     </li>
                     [/#list]
