@@ -50,28 +50,24 @@
             <div class="sidebar">
 
                 <div class="side_tit">
-                    <b>心理咨询师22</b>
-                    <a href="#">查看更多名师</a>
+                    <b>心理咨询专家</b>
+                  	[@Node id='110';node]
+                        <a href="${node.url}">>查看更多名师</a>
+                     	[/@Node]
                 </div>
-             [@NodeList parent='teacherManager';list]
-			[#list list as node]
-			[@InfoList nodeName='consultation'  limit='2';list]
+			[@InfoList nodeId='111'  limit='5';list]
 			[#list list as info]
                 <div class="proficients">
                     <div class="box">
-                        <a href="#">
-                            <img src="_files/upload/proficient_test.jpg" alt=""><!--尺寸120x174-->
-                            <b>${info.title}</b>
-                            <span>临床心理治疗专家</span>
-                            <span>心理教育家</span>
-                            <span>国内著名心理产业化开拓者</span>
+                        <a href="${info.url}">
+                            <img src="${info.customs['teacherPhoto']}" alt=""><!--尺寸120x174-->
+                            <b>${info.customs['teacherName']}</b>
+                            <span>[#noescape]${info.customs['teacherZc']}[/#noescape]</span>
                         </a>
                     </div>
                 </div>
 				[/#list]
 				[/@InfoList]
-				[/#list]
-				[/@NodeList]
 
                 <div class="adv">
                     <img src="http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDTz5r2_AEQrAIY-gEyCK0uvp3cER15" alt="">
