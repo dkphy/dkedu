@@ -1,0 +1,106 @@
+[#escape x as (x)!?html]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>${node.name}</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="_files/css/swiper.min.css">
+    <link rel="stylesheet" href="_files/css/common.css">
+    <link rel="stylesheet" href="_files/css/list.css">
+</head>
+<body>
+      [#include 'head.html'/]
+    <div class="wrap">
+        <h1 class="com_tit">${node.name}</h1>
+        <div class="ct">
+            <div class="main">
+                 [@NodeList parent='teacherManager';list]
+				 [#list list as node]
+                <ul class="teacher_list">
+                  	[@InfoList nodeId=node.id  limit='2';list]
+					[#list list as info]
+                    <li>
+                        <a href="${info.url}">
+                            <img src="${info.customs['teacherPhoto']}" width="110" height="160" alt=""><!--尺寸110x160 同专家图片尺寸比例相同,可复用-->
+                            <div class="wd">
+                                <b>	${info.customs['teacherName']}</b>
+                                <span>${info.customs['teacherZc']}</span>
+                                <p>${info.customs['teacherIntroduction']}</p>
+                            </div>
+                        </a>
+                        
+                    </li>
+ 					[/#list]	
+					[/@InfoList]
+                </ul>
+                [/#list]
+               [/@NodeList]
+               
+               
+               
+               
+               
+                <div class="more_btn">
+                    <a href="javascript:;">查看更多文章 <span class="icon-double-arrow-d"></span></a>
+                </div>
+            </div>
+
+
+
+            <div class="sidebar">
+                <div class="side_tit">
+                    <b>最热</b>
+                    <a href="#">查看全部测试</a>
+                </div>
+                <div class="hot_tests">
+                    <div class="box">
+                        <a href="#">
+                            <img src="_files/upload/list_test.jpg" alt=""><!--尺寸150x102 同list1文章列表图片尺寸比例相同,可复用-->
+                            <b>怎么确定自己真的恋爱了怎么确定自己真的恋爱了</b>
+                        </a>
+                    </div>
+                    <div class="box">
+                        <a href="#">
+                            <img src="_files/upload/list_test.jpg" alt=""><!--尺寸150x102 同list1文章列表图片尺寸比例相同,可复用-->
+                            <b>怎么确定自己真的恋爱了怎么确定自己真的恋爱了定自己真的恋爱了</b>
+                        </a>
+                    </div>
+                    <div class="box">
+                        <a href="#">
+                            <img src="_files/upload/list_test.jpg" alt=""><!--尺寸150x102 同list1文章列表图片尺寸比例相同,可复用-->
+                            <b>怎么确定自己真的恋爱了怎么确定自己真的恋爱了怎么确定自己真的恋爱了怎么确定自己真的恋爱了</b>
+                        </a>
+                    </div>
+                    <div class="box">
+                        <a href="#">
+                            <img src="_files/upload/list_test.jpg" alt=""><!--尺寸150x102 同list1文章列表图片尺寸比例相同,可复用-->
+                            <b>怎么确定自己真的恋爱了怎么</b>
+                        </a>
+                    </div>
+                    <div class="box">
+                        <a href="#">
+                            <img src="_files/upload/list_test.jpg" alt=""><!--尺寸150x102 同list1文章列表图片尺寸比例相同,可复用-->
+                            <b>怎么确定自己真的恋爱了怎么确定自己真的恋爱了</b>
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="adv">
+                    <img src="http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDTz5r2_AEQrAIY-gEyCK0uvp3cER15" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+ [#include 'end.html'/]
+</body>
+<script src="_files/js/jquery-1.9.1.min.js"></script>
+<script src="_files/js/common.js"></script>
+</html>
+[/#escape]

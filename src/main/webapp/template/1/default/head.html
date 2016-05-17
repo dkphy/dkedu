@@ -40,15 +40,18 @@
                      [/@NodeList]   
                     </span>
                 </li>
+                 
                 <li>
                     <a href="#">关于我们</a>
                     <span class="sub_menu">
-                        <a href="#">师资力量</a>
-                        <a href="template/1/default/dk_introduce.html">大康简介</a>
-                        <a href="template/1/default/dk_process.html">发展历程</a>
-                        <a href="#">对外交流</a>
-                        <a href="#">诚聘英才</a>
-                        <a href="#">联系我们</a>
+                    	[@Node id='110';node]
+                        <a href="${node.url}">师资力量</a>
+                     	[/@Node]
+                        <a href="dk_introduce.jspx">大康简介</a>
+                        <a href="dk_process.jspx">发展历程</a>
+                        <a href="dk_exchange.jspx">对外交流</a>
+                        <a href="dk_recruit.jspx">诚聘英才</a>
+                        <a href="dk_connection.jspx">联系我们</a>
                     </span>
                 </li>
             </ul>

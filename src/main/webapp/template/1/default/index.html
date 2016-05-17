@@ -122,78 +122,20 @@
         <div class="news_slide_wrap">
             <div class="swiper-container news_slide">
                 <div class="swiper-wrapper">
+                
+                    [@InfoPage nodeId='108' pageSize='6';pagedList]
+                    [#list pagedList.content as info]
                     <div class="swiper-slide">
                         <img src="_files/upload/test1.jpg" alt=""><!--尺寸270x480-->
                         <span class="overlay"></span>
                         <div class="show_box">
-                            <img src="_files/upload/test2.jpg" alt=""><!--270x396-->
-                            <p>爱笑的人运气不会太差有科学原理吗？</p>
-                            <a href="#" class="btn">点击查看更多</a>
+                            <img src="${info.customs['photo']}" width="270" height="396" alt=""><!--270x396-->
+                            <p>${info.title}</p>
+                            <a href="${info.url}" class="btn">点击查看更多</a>
                         </div>
                     </div>
-                    <div class="swiper-slide">
-                        <img src="_files/upload/test1.jpg" alt="">
-                        <span class="overlay"></span>
-                        <div class="show_box">
-                            <img src="_files/upload/test2.jpg" alt=""><!--270x396-->
-                            <p>爱笑的人运气不会太差有科学原理吗？</p>
-                            <a href="#" class="btn">点击查看更多</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="_files/upload/test1.jpg" alt="">
-                        <span class="overlay"></span>
-                        <div class="show_box">
-                            <img src="_files/upload/test2.jpg" alt=""><!--270x396-->
-                            <p>爱笑的人运气不会太差有科学原理吗？</p>
-                            <a href="#" class="btn">点击查看更多</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="_files/upload/test1.jpg" alt="">
-                        <span class="overlay"></span>
-                        <div class="show_box">
-                            <img src="_files/upload/test2.jpg" alt=""><!--270x396-->
-                            <p>爱笑的人运气不会太差有科学原理吗？</p>
-                            <a href="#" class="btn">点击查看更多</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="_files/upload/test1.jpg" alt="">
-                        <span class="overlay"></span>
-                        <div class="show_box">
-                            <img src="_files/upload/test2.jpg" alt=""><!--270x396-->
-                            <p>爱笑的人运气不会太差有科学原理吗？</p>
-                            <a href="#" class="btn">点击查看更多</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="_files/upload/test1.jpg" alt="">
-                        <span class="overlay"></span>
-                        <div class="show_box">
-                            <img src="_files/upload/test2.jpg" alt=""><!--270x396-->
-                            <p>爱笑的人运气不会太差有科学原理吗？</p>
-                            <a href="#" class="btn">点击查看更多</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="_files/upload/test1.jpg" alt="">
-                        <span class="overlay"></span>
-                        <div class="show_box">
-                            <img src="_files/upload/test2.jpg" alt=""><!--270x396-->
-                            <p>爱笑的人运气不会太差有科学原理吗？</p>
-                            <a href="#" class="btn">点击查看更多</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="_files/upload/test1.jpg" alt="">
-                        <span class="overlay"></span>
-                        <div class="show_box">
-                            <img src="_files/upload/test2.jpg" alt=""><!--270x396-->
-                            <p>爱笑的人运气不会太差有科学原理吗？</p>
-                            <a href="#" class="btn">点击查看更多</a>
-                        </div>
-                    </div>
+                     [/#list]
+          		     [/@InfoPage]
                 </div>
 
                 <!-- Add Arrows -->
@@ -204,12 +146,10 @@
         <div class="news_list">
             <div class="col_hd">
                 <b class="tit">最新资讯</b>
-                <a href="#" target="_blank">查看更多 <span class="icon-arrow-r"></span></a>
+                <a href="${info.url}" target="_blank">查看更多 <span class="icon-arrow-r"></span></a>
             </div>
             <ul class="list_main">
-            [@NodeList parent='news';list]
-			[#list list as node]
-				[@InfoList nodeId=node.id isWithImage='true' limit='2';list]
+				[@InfoList nodeId='40' limit='2';list]
 				[#list list as info]
                 <li>
                     <a href="${info.url}">
@@ -219,8 +159,39 @@
                 </li>
                 [/#list]
 				[/@InfoList]
-			 [/#list]
-			 [/@NodeList]
+				
+				[@InfoList nodeId='98' limit='2';list]
+				[#list list as info]
+                <li>
+                    <a href="${info.url}">
+                        <p><span class="text">◆ ${substring(info.title,18,'...')}</span></p>
+                        <span class="time">${info.publishDate?string('yyyy-MM-dd')}</span>
+                    </a>
+                </li>
+                [/#list]
+				[/@InfoList]
+				
+				[@InfoList nodeId='100' limit='2';list]
+				[#list list as info]
+                <li>
+                    <a href="${info.url}">
+                        <p><span class="text">◆ ${substring(info.title,18,'...')}</span></p>
+                        <span class="time">${info.publishDate?string('yyyy-MM-dd')}</span>
+                    </a>
+                </li>
+                [/#list]
+				[/@InfoList]
+				
+				[@InfoList nodeId='101' limit='2';list]
+				[#list list as info]
+                <li>
+                    <a href="${info.url}">
+                        <p><span class="text">◆ ${substring(info.title,18,'...')}</span></p>
+                        <span class="time">${info.publishDate?string('yyyy-MM-dd')}</span>
+                    </a>
+                </li>
+                [/#list]
+				[/@InfoList]
 				
             </ul>
         </div>

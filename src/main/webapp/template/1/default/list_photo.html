@@ -27,7 +27,7 @@
 			[#list pagedList.content as info]
 			<div class="left photo-item mt20" style="[#if info_index % 4 !=0]margin-left:16px;[/#if]">
 				<div class="photo-item-inner">
-					<div><a href="${info.url}" target="_blank" title="${info.title}"><img src="${info.smallImageUrl}" width="234" height="156"/></a></div>
+					<div><a href="${info.url}" target="_blank" title="${info.title}"><img src="${info.customs['coursePhoto']}" width="234" height="156"/></a></div>
 					<div style="padding:15px 10px;"><a href="${info.url}" target="_blank" title="${info.title}" class="c-333 a-none ff-yh fs14">${substring(info.title,15,'...')}</a></div>
 				</div>
 			</div>

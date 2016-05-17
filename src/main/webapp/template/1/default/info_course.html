@@ -1,0 +1,149 @@
+[#escape x as (x)!?html]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>${title}_${node.name}_${site.name}${global.customs['poweredby']}</title>
+<meta name="viewport"
+	content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="_files/css/swiper.min.css">
+<link rel="stylesheet" href="_files/css/common.css">
+<link rel="stylesheet" href="_files/css/detail.css">
+[#include 'inc_js.html'/]
+</head>
+<body>
+	[#include 'head.html'/]
+	<div class="wrap">
+		<div class="main">
+			<div class="detail_tit">
+				<h1>[#noescape]${bbcode(title)}[/#noescape]</h1>
+				<div class="info">
+					<div class="tags">
+						<span class="icon-tag"></span> <a href="#">标签1</a> <a href="#">标签2</a>
+						<a href="#">标签3</a>
+					</div>
+					<span class="view"> <i class="icon-view2"></i> 
+						<span id="info_views"></span>
+					</span>
+					<script type="text/javascript">
+						$("#info_views").load("${dy}/info_views/${info.id}.jspx?d="+new Date()*1);
+					</script>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="ct">
+			<div class="main">
+				<div class="post">
+					<!--富文本-->
+					<p>课程名：${info.customs['courseName']}</p>
+					<p>主讲老师：${info.customs['teacherName']}</p>
+					<p>开课时间：${info.customs['courseDate']}</p>
+					<p>课程摘要：${info.customs['courseDESC']}</p>
+					<p>课程图片：<img alt="" src="${info.customs['photo']}" width="553" height="356"></p>
+					<p>时长：${info.customs['costTime']}</p>
+					<p>视频链接：<a href="${info.customs['video']}">${info.customs['video']}</a></p>
+					<!--富文本-->
+				</div>
+				<div class="share_box">
+					<div class="share bdsharebuttonbox">
+						<span>分享至：</span> <a class="bds_weixin icon-wx" data-cmd="weixin"
+							title="分享到微信" href="#"></a> <a class="bds_qzone icon-qqzone"
+							data-cmd="qzone" title="分享到QQ空间" href="#"></a> <a
+							class="bds_douban icon-douban" data-cmd="douban" title="分享到豆瓣网"
+							href="#"></a> <a class="bds_tsina icon-weibo" data-cmd="tsina"
+							title="分享到新浪微博" href="#"></a>
+					</div>
+				</div>
+
+				<div class="related">
+					<h2 class="com_tit">相关文章</h2>
+					<div class="list clearfix">
+						[@InfoPage nodeId=node.id pageSize='3';pagedList]
+						<ul>
+							[#list pagedList.content as info]
+							<li>
+								<div class="box">
+									<a href="${info.url}"> <img src="${info.customs['photo']}" width="240" height="156" alt="">
+										<b>${info.title}</b> </a>
+								</div></li>
+							[/#list]
+						</ul>
+						[/@InfoPage]
+					</div>
+				</div>
+			</div>
+
+
+
+			<div class="sidebar">
+				<div class="side_tit">
+					<b>精品课程</b> <a href="#">查看更多课程</a>
+				</div>
+				<div class="hot_lessons">
+					<div class="box">
+						<img src="upload/lessons_test.jpg" alt="">
+						<!--尺寸330x200-->
+						<b>怎么确定自己真的恋爱了</b>
+						<div class="price_bar">
+							<strong>¥ 399</strong> <span>已有<i>23</i>人购买该课程</span>
+						</div>
+						<a href="#" class="buy_btn">购买该课程</a>
+					</div>
+					<div class="box">
+						<img src="upload/lessons_test.jpg" alt="">
+						<!--尺寸330x200-->
+						<b>怎么确定自己真的恋爱了</b>
+						<div class="price_bar">
+							<strong>¥ 399</strong> <span>已有<i>23</i>人购买该课程</span>
+						</div>
+						<a href="#" class="buy_btn">购买该课程</a>
+					</div>
+					<div class="box">
+						<img src="upload/lessons_test.jpg" alt="">
+						<!--尺寸330x200-->
+						<b>怎么确定自己真的恋爱了</b>
+						<div class="price_bar">
+							<strong>¥ 399</strong> <span>已有<i>23</i>人购买该课程</span>
+						</div>
+						<a href="#" class="buy_btn">购买该课程</a>
+					</div>
+				</div>
+
+
+				<div class="adv">
+					<img
+						src="http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDTz5r2_AEQrAIY-gEyCK0uvp3cER15"
+						alt="">
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	[#include 'end.html'/]
+</body>
+<script src="_files/js/jquery-1.9.1.min.js"></script>
+<script src="_files/js/common.js"></script>
+<script type="text/javascript">
+	var share_tit = $("h1").eq(0).text(), share_desc = $(".post p").eq(0)
+			.text(), share_pic = $(".post img").eq(0).attr("src");
+	window._bd_share_config = {
+		common : {
+			bdText : share_tit,
+			bdDesc : share_desc,
+			bdPic : share_pic
+		},
+		share : [ {
+			"bdSize" : 16
+		} ]
+	}
+	with (document)
+		0[(getElementsByTagName('head')[0] || body)
+				.appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='
+				+ ~(-new Date() / 36e5)];
+</script>
+</html>
+[/#escape]
