@@ -1,0 +1,213 @@
+[#escape x as (x)!?html]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>${title}_${node.name}_${site.name}${global.customs['poweredby']}</title>
+<meta name="viewport"
+	content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="_files/css/swiper.min.css">
+<link rel="stylesheet" href="_files/css/common.css">
+<link rel="stylesheet" href="_files/css/detail.css">
+[#include 'inc_js.html'/]
+</head>
+<body>
+	
+		[#if node.name=="心理测试" ]
+		 [@Node id='42';node]
+            <div class="sidebar">
+                <div class="side_tit">
+                    <b>最热</b>
+                    <a href="${node.url}">查看更多心理测试</a>
+                </div>
+                
+                
+                <div class="proficients">
+                [@InfoList nodeId=node.id  limit='5';list]
+				[#list list as info]
+                    <div class="box">
+                        <a href="${info.url}">
+                            <img src="${info.smallImageUrl}" width="170" height="104" alt=""><!--尺寸120x174-->
+                            <b>${info.title}</b>
+                            <span>${substring(info.description,60,'...')}</span>
+                        </a>
+                    </div>
+                    [/#list]
+                    [/@InfoList]
+                </div>
+
+                <div class="adv">
+                    <img src="http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDTz5r2_AEQrAIY-gEyCK0uvp3cER15" alt="">
+                </div>
+            </div>
+             [/@Node]	
+		[#elseif node.name=="心理咨询"]
+		  <div class="sidebar">
+                <div class="side_tit">
+                    <b>名师</b>
+                    [@Node id='110';node]
+                        <a href="${node.url}">>查看更多名师</a>
+                     	[/@Node]
+                </div>
+			[@InfoList nodeId='112'  limit='5';list]
+			[#list list as info]
+                <div class="proficients">
+                    <div class="box">
+                        <a href="${info.url}">
+                            <img src="${info.customs['teacherPhoto']}" alt=""><!--尺寸120x174-->
+                            <b>${info.customs['teacherName']}</b>
+                            <span>[#noescape]${info.customs['teacherZc']}[/#noescape]</span>
+                        </a>
+                    </div>
+                </div>
+				[/#list]
+				[/@InfoList]
+
+
+                <div class="adv">
+                    <img src="http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDTz5r2_AEQrAIY-gEyCK0uvp3cER15" alt="">
+                </div>
+            </div>
+		[#elseif node.name=="文章精选"]
+		[@Node id='40';node]
+            <div class="sidebar">
+                <div class="side_tit">
+                    <b>最热</b>
+                    <a href="${node.url}">查看更多热门文章</a>
+                </div>
+                
+                
+                <div class="proficients">
+                [@InfoList nodeId=node.id  limit='5';list]
+				[#list list as info]
+                    <div class="box">
+                        <a href="${info.url}">
+                            <img src="${info.smallImageUrl}" width="170" height="104" alt=""><!--尺寸120x174-->
+                            <b>${info.title}</b>
+                            <span>${substring(info.description,60,'...')}</span>
+                        </a>
+                    </div>
+                    [/#list]
+                    [/@InfoList]
+                </div>
+
+                <div class="adv">
+                    <img src="http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDTz5r2_AEQrAIY-gEyCK0uvp3cER15" alt="">
+                </div>
+            </div>
+             [/@Node]
+		[#elseif node.name=="行业资讯"]
+		[@Node id='98';node]
+            <div class="sidebar">
+                <div class="side_tit">
+                    <b>最热</b>
+                    <a href="${node.url}">查看更多热门资讯</a>
+                </div>
+                
+                
+                <div class="proficients">
+                [@InfoList nodeId=node.id  limit='5';list]
+				[#list list as info]
+                    <div class="box">
+                        <a href="${info.url}">
+                            <img src="${info.smallImageUrl}" width="170" height="104" alt=""><!--尺寸120x174-->
+                            <b>${info.title}</b>
+                            <span>${substring(info.description,60,'...')}</span>
+                        </a>
+                    </div>
+                    [/#list]
+                    [/@InfoList]
+                </div>
+
+                <div class="adv">
+                    <img src="http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDTz5r2_AEQrAIY-gEyCK0uvp3cER15" alt="">
+                </div>
+            </div>
+             [/@Node]
+             
+        [#elseif node.name=="沙龙讲座"]
+		[@Node id='40';node]
+            <div class="sidebar">
+                <div class="side_tit">
+                    <b>最热</b>
+                    <a href="${node.url}">查看更多热门文章</a>
+                </div>
+                
+                
+                <div class="proficients">
+                [@InfoList nodeId=node.id  limit='5';list]
+				[#list list as info]
+                    <div class="box">
+                        <a href="${info.url}">
+                            <img src="${info.smallImageUrl}" width="170" height="104" alt=""><!--尺寸120x174-->
+                            <b>${info.title}</b>
+                            <span>${substring(info.description,60,'...')}</span>
+                        </a>
+                    </div>
+                    [/#list]
+                    [/@InfoList]
+                </div>
+
+                <div class="adv">
+                    <img src="http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDTz5r2_AEQrAIY-gEyCK0uvp3cER15" alt="">
+                </div>
+            </div>
+             [/@Node] 
+        
+        
+        [#elseif node.name=="案例分析"]
+		[@Node id='101';node]
+            <div class="sidebar">
+                <div class="side_tit">
+                    <b>最热</b>
+                    <a href="${node.url}">查看更多热门案例</a>
+                </div>
+                
+                
+                <div class="proficients">
+                [@InfoList nodeId=node.id  limit='5';list]
+				[#list list as info]
+                    <div class="box">
+                        <a href="${info.url}">
+                            <img src="${info.smallImageUrl}" width="170" height="104" alt=""><!--尺寸120x174-->
+                            <b>${info.title}</b>
+                            <span>${substring(info.description,60,'...')}</span>
+                        </a>
+                    </div>
+                    [/#list]
+                    [/@InfoList]
+                </div>
+
+                <div class="adv">
+                    <img src="http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDTz5r2_AEQrAIY-gEyCK0uvp3cER15" alt="">
+                </div>
+            </div>
+             [/@Node] 
+                  
+             
+		[/#if]
+			
+</body>
+<script src="_files/js/jquery-1.9.1.min.js"></script>
+<script src="_files/js/common.js"></script>
+<script type="text/javascript">
+	var share_tit = $("h1").eq(0).text(), share_desc = $(".post p").eq(0)
+			.text(), share_pic = $(".post img").eq(0).attr("src");
+	window._bd_share_config = {
+		common : {
+			bdText : share_tit,
+			bdDesc : share_desc,
+			bdPic : share_pic
+		},
+		share : [ {
+			"bdSize" : 16
+		} ]
+	}
+	with (document)
+		0[(getElementsByTagName('head')[0] || body)
+				.appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='
+				+ ~(-new Date() / 36e5)];
+</script>
+</html>
+[/#escape]
