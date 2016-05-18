@@ -20,8 +20,12 @@
 				<h1>[#noescape]${bbcode(title)}[/#noescape]</h1>
 				<div class="info">
 					<div class="tags">
-						<span class="icon-tag"></span> <a href="#">标签1</a> <a href="#">标签2</a>
-						<a href="#">标签3</a>
+						 [@TagPage pageSize='3';pagedList]
+						 [#list pagedList.content as tag]
+						<span class="icon-tag"></span>
+						 <a href="${ctx}/tag/${tag.id?url}.jspx">${tag.name}</a> 
+						[/#list]
+						[/@TagPage]
 					</div>
 					
 					<span class="view"> <i class="icon-view2"></i> 

@@ -18,11 +18,12 @@
 				 <div class="sidebar">
                 <div class="side_tit">
                     <b>心理咨询师</b>
-                    [@Node id='110';node]
+                    [@Node number='teacherManager';node]
                         <a href="${node.url}">>查看更多名师</a>
                      	[/@Node]
                 </div>
-			[@InfoList nodeId='112'  limit='5';list]
+             [@Node number='consultationTeacher';node]   
+			[@InfoList nodeId=node.id  limit='5';list]
 			[#list list as info]
                 <div class="proficients">
                     <div class="box">
@@ -35,7 +36,7 @@
                 </div>
 				[/#list]
 				[/@InfoList]
-
+				[/@Node]
 
                 <div class="adv">
                     <img src="http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDTz5r2_AEQrAIY-gEyCK0uvp3cER15" alt="">
@@ -43,7 +44,7 @@
             </div>
 		
 		[#elseif node.name=="心理咨询"]
-				 [@Node id='42';node]
+				 [@Node number='test';node]
             <div class="sidebar">
                 <div class="side_tit">
                     <b>最热</b>

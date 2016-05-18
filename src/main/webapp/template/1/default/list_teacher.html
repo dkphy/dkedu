@@ -16,10 +16,9 @@
         <h1 class="com_tit">${node.name}</h1>
         <div class="ct">
             <div class="main">
-                 [@NodeList parent='teacherManager';list]
-				 [#list list as node]
+                 
                 <ul class="teacher_list">
-                  	[@InfoList nodeId=node.id  limit='2';list]
+                  	[@InfoList node='teacherManager' isIncludeChildren='true' limit='5';list]
 					[#list list as info]
                     <li>
                         <a href="${info.url}">
@@ -35,8 +34,6 @@
  					[/#list]	
 					[/@InfoList]
                 </ul>
-                [/#list]
-               [/@NodeList]
                
                
                

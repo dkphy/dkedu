@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>${node.name}</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="_files/css/swiper.min.css">
+    <link rel="stylesheet" href="_files/css/common.css">
+    <link rel="stylesheet" href="_files/css/list.css">
+</head>
+<body>
+[#include 'head.html'/]
+    <div class="wrap">
+        <h1 class="com_tit">${node.name}</h1>
+        <div class="ct">
+            <div class="main">
+                
+                <ul class="teacher_list list_with_btn">
+                   [@InfoList node='consultationTeacher'  limit='5';list]
+					[#list list as info]
+                    <li>
+                        <a href="${info.url}">
+                            <img src="${info.customs['teacherPhoto']}" width="110" height="160" alt=""><!--尺寸110x160 同专家图片尺寸比例相同,可复用-->
+                            <div class="wd">
+                                <b>${info.customs['teacherName']}</b>
+                                <span>${info.customs['teacherZc']}</span>
+                                <p>${info.customs['teacherIntroduction']}</p>
+                            </div>
+
+                        </a>
+                        <a class="btn" href="#">预约</a>
+                    </li>
+                   [/#list]
+                   [/@InfoList]
+                    
+                </ul>
+                <div class="more_btn">
+                    <a href="javascript:;">查看更多文章 <span class="icon-double-arrow-d"></span></a>
+                </div>
+            </div>
+
+ [#include 'list_news_right.html'/]
+           
+        </div>
+    </div>
+
+
+
+
+
+
+   [#include 'end.html'/]
+</body>
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/common.js"></script>
+</html>

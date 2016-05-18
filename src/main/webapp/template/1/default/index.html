@@ -122,8 +122,8 @@
         <div class="news_slide_wrap">
             <div class="swiper-container news_slide">
                 <div class="swiper-wrapper">
-                
-                    [@InfoPage nodeId='108' pageSize='6';pagedList]
+                	[@Node number='courseList';node]	
+                    [@InfoPage nodeId=node.id pageSize='6';pagedList]
                     [#list pagedList.content as info]
                     <div class="swiper-slide">
                         <img src="_files/upload/test1.jpg" alt=""><!--尺寸270x480-->
@@ -136,6 +136,7 @@
                     </div>
                      [/#list]
           		     [/@InfoPage]
+          		     [/@Node]
                 </div>
 
                 <!-- Add Arrows -->
@@ -149,7 +150,8 @@
                 <a href="${info.url}" target="_blank">查看更多 <span class="icon-arrow-r"></span></a>
             </div>
             <ul class="list_main">
-				[@InfoList nodeId='40' limit='2';list]
+            	[@Node number='article';node]
+				[@InfoList nodeId=node.id limit='2';list]
 				[#list list as info]
                 <li>
                     <a href="${info.url}">
@@ -159,8 +161,10 @@
                 </li>
                 [/#list]
 				[/@InfoList]
+				[/@Node]
 				
-				[@InfoList nodeId='98' limit='2';list]
+				[@Node number='industry';node]
+				[@InfoList nodeId=node.id limit='2';list]
 				[#list list as info]
                 <li>
                     <a href="${info.url}">
@@ -170,8 +174,10 @@
                 </li>
                 [/#list]
 				[/@InfoList]
+				[/@Node]
 				
-				[@InfoList nodeId='100' limit='2';list]
+				[@Node number='lecture';node]
+				[@InfoList nodeId=node.id limit='2';list]
 				[#list list as info]
                 <li>
                     <a href="${info.url}">
@@ -181,8 +187,10 @@
                 </li>
                 [/#list]
 				[/@InfoList]
+				[/@Node]
 				
-				[@InfoList nodeId='101' limit='2';list]
+				[@Node number='case';node]
+				[@InfoList nodeId=node.id limit='2';list]
 				[#list list as info]
                 <li>
                     <a href="${info.url}">
@@ -192,6 +200,7 @@
                 </li>
                 [/#list]
 				[/@InfoList]
+				[/@Node]
 				
             </ul>
         </div>
@@ -208,51 +217,20 @@
 
         <div class="swiper-container test_slide">
             <div class="swiper-wrapper">
+              
+               [@Node number='test';node]
+				[@InfoList nodeId=node.id limit='10';list]
+				[#list list as info]
                 <div class="swiper-slide">
-                    <span class="pic"><img src="https://krplus-pic.b0.upaiyun.com/201603/28034926/i7f8y8qtjdpbtm6z.jpg!100" alt=""><span class="over"></span></span>
-                    <b>102400人已测试</b>
+                    <span class="pic"><img src="${info.smallImage}" alt=""><span class="over"></span></span>
+                    <b> <span class="view">
+                          <span id="info_views">${info.bufferViews}</span>
+                         </span>人已测试</b>
                     <a href="#" target="_blank" class="btn">开始测试</a>
                 </div>
-                <div class="swiper-slide">
-                    <span class="pic"><img src="https://krplus-pic.b0.upaiyun.com/201603/28034926/i7f8y8qtjdpbtm6z.jpg!100" alt=""><span class="over"></span></span>
-                    <b>102400人已测试</b>
-                    <a href="#" target="_blank" class="btn">开始测试</a>
-                </div>
-                <div class="swiper-slide">
-                    <span class="pic"><img src="https://krplus-pic.b0.upaiyun.com/201603/28034926/i7f8y8qtjdpbtm6z.jpg!100" alt=""><span class="over"></span></span>
-                    <b>102400人已测试</b>
-                    <a href="#" target="_blank" class="btn">开始测试</a>
-                </div>
-                <div class="swiper-slide">
-                    <span class="pic"><img src="https://krplus-pic.b0.upaiyun.com/201603/28034926/i7f8y8qtjdpbtm6z.jpg!100" alt=""><span class="over"></span></span>
-                    <b>102400人已测试</b>
-                    <a href="#" target="_blank" class="btn">开始测试</a>
-                </div>
-                <div class="swiper-slide">
-                    <span class="pic"><img src="https://krplus-pic.b0.upaiyun.com/201603/28034926/i7f8y8qtjdpbtm6z.jpg!100" alt=""><span class="over"></span></span>
-                    <b>102400人已测试</b>
-                    <a href="#" target="_blank" class="btn">开始测试</a>
-                </div>
-                <div class="swiper-slide">
-                    <span class="pic"><img src="https://krplus-pic.b0.upaiyun.com/201603/28034926/i7f8y8qtjdpbtm6z.jpg!100" alt=""><span class="over"></span></span>
-                    <b>102400人已测试</b>
-                    <a href="#" target="_blank" class="btn">开始测试</a>
-                </div>
-                <div class="swiper-slide">
-                    <span class="pic"><img src="https://krplus-pic.b0.upaiyun.com/201603/28034926/i7f8y8qtjdpbtm6z.jpg!100" alt=""><span class="over"></span></span>
-                    <b>102400人已测试</b>
-                    <a href="#" target="_blank" class="btn">开始测试</a>
-                </div>
-                <div class="swiper-slide">
-                    <span class="pic"><img src="https://krplus-pic.b0.upaiyun.com/201603/28034926/i7f8y8qtjdpbtm6z.jpg!100" alt=""><span class="over"></span></span>
-                    <b>102400人已测试</b>
-                    <a href="#" target="_blank" class="btn">开始测试</a>
-                </div>
-                <div class="swiper-slide">
-                    <span class="pic"><img src="https://krplus-pic.b0.upaiyun.com/201603/28034926/i7f8y8qtjdpbtm6z.jpg!100" alt=""><span class="over"></span></span>
-                    <b>102400人已测试</b>
-                    <a href="#" target="_blank" class="btn">开始测试</a>
-                </div>
+                [/#list]
+				[/@InfoList]
+				[/@Node]
             </div>
             <!-- Add Arrows -->
             <div class="swiper-button-next swiper-button-white"><span class="icon-double-arrow-r"></span></div>
@@ -365,7 +343,7 @@
         <div class="wrap">
             <div class="col_hd">
                 <b class="tit">师资力量</b>
-                [@Node id='110';node]
+                [@Node number='teacherManager';node]
                 <a href="${node.url}" target="_blank">查看更多→</a>
                 [/@Node]
             </div>
