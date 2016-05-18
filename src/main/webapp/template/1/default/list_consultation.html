@@ -23,8 +23,11 @@
                         <a href="${info.url}">
                             <img src="${info.customs['teacherPhoto']}" width="110" height="160" alt=""><!--尺寸110x160 同专家图片尺寸比例相同,可复用-->
                             <div class="wd">
-                                <b>${info.customs['teacherName']}</b>
+                            	<!-- 教师姓名 -->
+                                <b>${info.title}</b>
+                                <!-- 教师荣誉 -->
                                 <span>${info.customs['teacherZc']}</span>
+                                <!-- 教师简介 -->
                                 <p>${info.customs['teacherIntroduction']}</p>
                             </div>
 

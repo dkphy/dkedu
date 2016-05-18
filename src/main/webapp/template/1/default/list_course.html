@@ -40,14 +40,16 @@
                         <a href="${node.url}">>查看更多名师</a>
                      	[/@Node]
                 </div>
-			
+
                 <div class="proficients">
                   [@InfoList node='courseTeacher'  limit='5';list]
 			[#list list as info]
                     <div class="box">
                         <a href="${info.url}">
                             <img src="${info.customs['teacherPhoto']}" alt=""><!--尺寸120x174-->
-                            <b>${info.customs['teacherName']}</b>
+                            <!-- 教师姓名 -->
+                            <b>${info.title}</b>
+                            <!-- 教师荣誉 -->
                             <span>[#noescape]${info.customs['teacherZc']}[/#noescape]</span>
                         </a>
                     </div>
