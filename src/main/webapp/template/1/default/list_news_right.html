@@ -34,13 +34,11 @@
                             <span>[#noescape]${info.customs['teacherZc']}[/#noescape]</span>
                         </a>
                     </div>
-                    
+                    [/#list]
+                    [/@InfoList]
+                    [/@Node]
                 </div>
-				
-
-                <div class="adv">
-                    <img src="http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDTz5r2_AEQrAIY-gEyCK0uvp3cER15" alt="">
-                </div>
+               
             </div>
 		
 		[#elseif node.name=="心理咨询"]
@@ -53,22 +51,20 @@
                 
                 
                 <div class="proficients">
+                <div class="hot_tests">
                 [@InfoList nodeId=node.id  limit='5';list]
 				[#list list as info]
                     <div class="box">
                         <a href="${info.url}">
-                            <img src="${info.smallImageUrl}" width="120" height="174" alt=""><!--尺寸120x174-->
+                            <img src="${info.smallImageUrl}" width="150" height="104" alt=""><!--尺寸120x174-->
                             <b>${info.title}</b>
                             <span>${substring(info.description,60,'...')}</span>
                         </a>
                     </div>
-                    [/#list]
-                    [/@InfoList]
+                  [/#list]
+                  [/@InfoList]
                 </div>
-
-                <div class="adv">
-                    <img src="http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDTz5r2_AEQrAIY-gEyCK0uvp3cER15" alt="">
-                </div>
+	</div>
             </div>
              [/@Node]
              

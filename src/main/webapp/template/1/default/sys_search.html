@@ -49,49 +49,31 @@
             </div>
 		</div>
 		
-		<div class="sidebar">
+		[@Node number='article';node]
+            <div class="sidebar">
                 <div class="side_tit">
                     <b>最热</b>
-                    <a href="#">查看全部测试</a>
+                    <a href="${node.url}">查看更多热门文章</a>
                 </div>
+                
+                
+                <div class="proficients">
                 <div class="hot_tests">
+                [@InfoList nodeId=node.id  limit='10';list]
+				[#list list as info]
                     <div class="box">
-                        <a href="#">
-                            <img src="upload/list_test.jpg" alt=""><!--尺寸150x102 同list1文章列表图片尺寸比例相同,可复用-->
-                            <b>怎么确定自己真的恋爱了怎么确定自己真的恋爱了</b>
+                        <a href="${info.url}">
+                            <img src="${info.smallImageUrl}" width="150" height="105" alt=""><!--尺寸120x174-->
+                            <b>${info.title}</b>
+                            <span>${substring(info.description,40,'...')}</span>
                         </a>
                     </div>
-                    <div class="box">
-                        <a href="#">
-                            <img src="upload/list_test.jpg" alt=""><!--尺寸150x102 同list1文章列表图片尺寸比例相同,可复用-->
-                            <b>怎么确定自己真的恋爱了怎么确定自己真的恋爱了定自己真的恋爱了</b>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a href="#">
-                            <img src="upload/list_test.jpg" alt=""><!--尺寸150x102 同list1文章列表图片尺寸比例相同,可复用-->
-                            <b>怎么确定自己真的恋爱了怎么确定自己真的恋爱了怎么确定自己真的恋爱了怎么确定自己真的恋爱了</b>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a href="#">
-                            <img src="upload/list_test.jpg" alt=""><!--尺寸150x102 同list1文章列表图片尺寸比例相同,可复用-->
-                            <b>怎么确定自己真的恋爱了怎么</b>
-                        </a>
-                    </div>
-                    <div class="box">
-                        <a href="#">
-                            <img src="upload/list_test.jpg" alt=""><!--尺寸150x102 同list1文章列表图片尺寸比例相同,可复用-->
-                            <b>怎么确定自己真的恋爱了怎么确定自己真的恋爱了</b>
-                        </a>
-                    </div>
+                    [/#list]
+                    [/@InfoList]
                 </div>
-
-                <div class="adv">
-                    <img src="http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDTz5r2_AEQrAIY-gEyCK0uvp3cER15" alt="">
-                </div>
+		</div>
             </div>
-	</div>
+             [/@Node]
 	[/#if]
 </div>
 [/@InfoFulltextPage]

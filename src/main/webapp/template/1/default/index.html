@@ -126,10 +126,10 @@
                     [@InfoPage nodeId=node.id pageSize='6';pagedList]
                     [#list pagedList.content as info]
                     <div class="swiper-slide">
-                        <img src="_files/upload/test1.jpg" alt=""><!--尺寸270x480-->
+                        <img src="${info.customs['photo']}" width="270" height="480" alt=""><!--尺寸270x480-->
                         <span class="overlay"></span>
                         <div class="show_box">
-                            <img src="${info.smallImage}" width="270" height="396" alt=""><!--270x396-->
+                            <img src="${info.customs['photo']}" width="270" height="396" alt=""><!--270x396-->
                             <!-- 课程名称 -->
                             <p>${info.title}</p>
                             <a href="${info.url}" class="btn">点击查看更多</a>
@@ -212,11 +212,7 @@
          
         <div class="wrap">
             <div class="col_hd">
-<<<<<<< HEAD
-                <h2>${info.title}</h2>
-=======
                 <h2>测测你是疯狂动物城里的谁？</h2>
->>>>>>> e1a4825134c4f7b0cb0c8f44e2a2efebd6a0e6a6
                 [@Node number='test';node]
                 <a href="${node.url}" target="_blank">查看更多→</a>
                 [/@Node]
@@ -369,7 +365,7 @@
                             	<!--教师姓名 -->
                                 <b>${info.title}</b>
                                 <p class="info">${info.customs['teacherZc']}</p>
-                                <p class="summary">${info.customs['teacherIntroduction']}</p>
+                                <p class="summary">${info.customs['informationSummary']}</p>
                             </div>
                         </a>
                     </li>
