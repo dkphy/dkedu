@@ -61,7 +61,7 @@
 				<div class="related">
 					<h2 class="com_tit">相关文章</h2>
 					<div class="list clearfix">
-						[@InfoPage nodeId=node.id pageSize='3';pagedList]
+						[@InfoPage nodeId=node.id excludeId=info.id pageSize='3';pagedList]
 						<ul>
 							[#list pagedList.content as info]
 							<li>

@@ -208,17 +208,20 @@
     </div>
 
     <div class="test_col">
+         
         <div class="wrap">
             <div class="col_hd">
-                <h2>测测你是疯狂动物城里的谁？</h2>
-                <a href="#" target="_blank">查看更多→</a>
+                <h2>${info.title}</h2>
+                [@Node number='test';node]
+                <a href="${node.url}" target="_blank">查看更多→</a>
+                [/@Node]
             </div>
         </div>
 
         <div class="swiper-container test_slide">
             <div class="swiper-wrapper">
-              
-               [@Node number='test';node]
+              	
+              	[@Node number='test';node]
 				[@InfoList nodeId=node.id limit='10';list]
 				[#list list as info]
                 <div class="swiper-slide">
@@ -226,7 +229,7 @@
                     <b> <span class="view">
                           <span id="info_views">${info.bufferViews}</span>
                          </span>人已测试</b>
-                    <a href="#" target="_blank" class="btn">开始测试</a>
+                    <a href="${info.url}" target="_blank" class="btn">开始测试</a>
                 </div>
                 [/#list]
 				[/@InfoList]

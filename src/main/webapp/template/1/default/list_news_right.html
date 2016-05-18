@@ -14,7 +14,7 @@
 <body>
 	 
             
-		[#if node.name=="心理测试" || node.name=="案例分析"]
+		[#if node.name=="心理测试" || node.name=="案例分享"]
 				 <div class="sidebar">
                 <div class="side_tit">
                     <b>心理咨询师</b>
@@ -22,21 +22,23 @@
                         <a href="${node.url}">>查看更多名师</a>
                      	[/@Node]
                 </div>
-             [@Node number='consultationTeacher';node]   
+            
+                <div class="proficients">
+                    [@Node number='consultationTeacher';node]   
 			[@InfoList nodeId=node.id  limit='5';list]
 			[#list list as info]
-                <div class="proficients">
                     <div class="box">
                         <a href="${info.url}">
-                            <img src="${info.customs['teacherPhoto']}" alt=""><!--尺寸120x174-->
+                            <img src="${info.customs['teacherPhoto']}"  width="120" height="174" alt=""><!--尺寸120x174-->
                             <b>${info.customs['teacherName']}</b>
                             <span>[#noescape]${info.customs['teacherZc']}[/#noescape]</span>
                         </a>
                     </div>
-                </div>
-				[/#list]
+                    [/#list]
 				[/@InfoList]
 				[/@Node]
+                </div>
+				
 
                 <div class="adv">
                     <img src="http://static.googleadsserving.cn/pagead/imgad?id=CICAgKDTz5r2_AEQrAIY-gEyCK0uvp3cER15" alt="">
@@ -57,7 +59,7 @@
 				[#list list as info]
                     <div class="box">
                         <a href="${info.url}">
-                            <img src="${info.smallImageUrl}" width="170" height="104" alt=""><!--尺寸120x174-->
+                            <img src="${info.smallImageUrl}" width="120" height="174" alt=""><!--尺寸120x174-->
                             <b>${info.title}</b>
                             <span>${substring(info.description,60,'...')}</span>
                         </a>
