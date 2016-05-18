@@ -44,6 +44,8 @@
 .summary{padding-bottom:50px;}
 .summary p{line-height:25px;color:#4A4A4A;font-size:14px;text-indent: 2em;margin-bottom:30px;font-weight: 300;}
 .summary b{line-height:25px;color:#4A4A4A;font-size:14px;text-indent: 2em;display:block;}
+.summary.fazhan_summary p{text-indent:0;margin-bottom:20px;}
+.summary.fazhan_summary b{text-indent:0;}
 .summary table{border: 1px solid #ddd;border-left: none;border-bottom:none;border-spacing: 0;table-layout:fixed;width: 664px;margin:30px auto;  }
 .summary tbody tr td{border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;padding:28px 16px;line-height: 1.6;vertical-align: middle;text-align: center; font-size:14px;color:#4A4A4A;font-weight:300; }
 .summary ol{margin: 0 0 0 85px;width:420px;padding-left: 24px;}
