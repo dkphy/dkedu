@@ -17,12 +17,12 @@
         <h1 class="com_tit">诚聘英才</h1>
         <div class="zhaopin_list">
            
-           [@InfoPage nodeId='113';pagedList]
+           [@InfoPage node='recruit';pagedList]
             <ul class="clearfix">
              	[#list pagedList.content as info]
                 <li>
                     <div class="box">
-                        <b class="tit">${info.customs['position']}</b>
+                        <b class="tit">${info.title}</b>
                         <p>${info.customs['positionIntroduction']}</p>
                         <strong class="tit">你的工作内容</strong>
                            [#noescape] ${info.customs['jobs']}[/#noescape]

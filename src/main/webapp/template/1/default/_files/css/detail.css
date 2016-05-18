@@ -37,7 +37,7 @@
 .related .list .box a:hover b{color:#3EBE9F}
 
 .wrap_910{width:910px;margin: 0 auto;}
-.teacher_detail{position:relative;margin:30px 0;}
+.teacher_detail{position:relative;margin:30px 0 130px 0;}
 .t_pic{position:absolute;left:0;top:0;width:180px;min-height: 310px;}
 .t_pic img{width:100%;display:block;}
 .t_pic .btn{width:100%;border-radius: 3px;background:#3EBE9F;color:#fff;height:36px;line-height: 36px;display: block;text-align: center;margin-top:10px;}

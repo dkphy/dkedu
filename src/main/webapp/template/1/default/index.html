@@ -130,6 +130,7 @@
                         <span class="overlay"></span>
                         <div class="show_box">
                             <img src="${info.customs['photo']}" width="270" height="396" alt=""><!--270x396-->
+                            <!-- 课程名称 -->
                             <p>${info.title}</p>
                             <a href="${info.url}" class="btn">点击查看更多</a>
                         </div>
@@ -211,7 +212,9 @@
         <div class="wrap">
             <div class="col_hd">
                 <h2>测测你是疯狂动物城里的谁？</h2>
-                <a href="#" target="_blank">查看更多→</a>
+                [@Node number='test';node]
+                <a href="${node.url}" target="_blank">查看更多→</a>
+                [/@Node]
             </div>
         </div>
 
@@ -226,7 +229,7 @@
                     <b> <span class="view">
                           <span id="info_views">${info.bufferViews}</span>
                          </span>人已测试</b>
-                    <a href="#" target="_blank" class="btn">开始测试</a>
+                    <a href="${info.url}" target="_blank" class="btn">开始测试</a>
                 </div>
                 [/#list]
 				[/@InfoList]
@@ -358,7 +361,8 @@
                         <a href="${info.url}">
                             <img src="${info.customs['teacherPhoto']}" alt="">
                             <div class="words">
-                                <b>${info.customs['teacherName']}</b>
+                            	<!--教师姓名 -->
+                                <b>${info.title}</b>
                                 <p class="info">${info.customs['teacherZc']}</p>
                                 <p class="summary">${info.customs['teacherIntroduction']}</p>
                             </div>

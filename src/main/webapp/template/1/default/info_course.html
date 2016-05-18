@@ -38,7 +38,7 @@
 			<div class="main">
 				<div class="post">
 					<!--富文本-->
-					<p>课程名：${info.customs['courseName']}</p>
+					<p>课程名：${info.title}</p>
 					<p>主讲老师：${info.customs['teacherName']}</p>
 					<p>开课时间：${info.customs['courseDate']}</p>
 					<p>课程摘要：${info.customs['courseDESC']}</p>
@@ -61,7 +61,7 @@
 				<div class="related">
 					<h2 class="com_tit">相关文章</h2>
 					<div class="list clearfix">
-						[@InfoPage nodeId=node.id pageSize='3';pagedList]
+						[@InfoPage nodeId=node.id excludeId=info.id pageSize='3';pagedList]
 						<ul>
 							[#list pagedList.content as info]
 							<li>
