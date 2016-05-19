@@ -1,0 +1,91 @@
+[#escape x as (x)!?html]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>${site.fullNameOrName}</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="_files/css/swiper.min.css">
+    <link rel="stylesheet" href="_files/css/common.css">
+    <link rel="stylesheet" href="_files/css/index.css">
+</head>
+<body>
+    <div class="swiper-container top_slide">
+        <div class="swiper-wrapper">
+        [@InfoList node='poster' limit='4';list]
+		[#list list as info]
+            <div class="swiper-slide" style="background-image:url(${info.customs['posterPhoto']})">
+                <div class="over">
+                    <div class="wrap">
+                        <div class="text">
+                            <p data-swiper-parallax="-2000"></p>
+                            <p data-swiper-parallax="-4000">${info.title}</p>
+                            <a class="btn" href="${info.link}"  data-swiper-parallax="-6000">查看更多</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          [/#list]
+          [/@InfoList]  
+        </div>
+        <!-- Add 分页 -->
+        <div class="swiper-pagination swiper-pagination-white"></div>
+        <!-- Add Arrows -->
+        <div class="swiper-button-next swiper-button-white"><span></span></div>
+        <div class="swiper-button-prev swiper-button-white"><span></span></div>
+    </div>
+
+    
+
+
+<script src="_files/js/jquery-1.9.1.min.js"></script>
+<script src="_files/js/swiper.min.js"></script>
+<script src="_files/js/common.js"></script>
+<script>
+    var top_slide = new Swiper('.top_slide', {
+        loop:true,
+        pagination: '.top_slide .swiper-pagination',
+        paginationClickable: true,
+        nextButton: '.top_slide .swiper-button-next',
+        prevButton: '.top_slide .swiper-button-prev',
+        autoplay: 4000,
+        speed:1000,
+        autoplayDisableOnInteraction: false,
+        parallax:true
+    });
+
+    var class_slide = new Swiper('.class_slide', {
+        slidesPerView: 4,
+        nextButton: '.class_slide .swiper-button-next',
+        prevButton: '.class_slide .swiper-button-prev',
+        spaceBetween: 10
+    });
+
+    var news_slide = new Swiper('.news_slide', {
+        slidesPerView: 'auto',
+        nextButton: '.news_slide .swiper-button-next',
+        prevButton: '.news_slide .swiper-button-prev',
+        spaceBetween: 0
+    });
+
+    var default_test_slide_num=Math.floor($(".test_slide .swiper-slide").length/2);
+    var test_slide = new Swiper('.test_slide', {
+        slidesPerView: 5,
+        speed:0,
+        centeredSlides: true,
+        nextButton: '.test_slide .swiper-button-next',
+        prevButton: '.test_slide .swiper-button-prev',
+        spaceBetween: 20,onSlideChangeEnd: function(swiper){
+            test_slide.update(true);
+        }
+    });
+
+    test_slide.slideTo(default_test_slide_num, 1000, false);
+    test_slide.update(true);
+</script>
+
+</body>
+
+</html>
+[/#escape]

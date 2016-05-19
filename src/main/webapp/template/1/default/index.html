@@ -12,31 +12,7 @@
 </head>
 <body>
     [#include 'head.html'/]
-    <div class="swiper-container top_slide">
-        <div class="swiper-wrapper">
-        [@InfoList attr='focus' limit='4';list]
-		[#list list as info]
-            <div class="swiper-slide" style="background-image:url(${info.attrImageUrl})">
-                <div class="over">
-                    <div class="wrap">
-                        <div class="text">
-                            <p data-swiper-parallax="-2000"></p>
-                            <p data-swiper-parallax="-4000">${substring(info.title,20,'...')}</p>
-                            <a class="btn" href="${info.url}" title="${info.title}" data-swiper-parallax="-6000">查看更多</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          [/#list]
-          [/@InfoList]  
-        </div>
-        <!-- Add Pagination -->
-        <div class="swiper-pagination swiper-pagination-white"></div>
-        <!-- Add Arrows -->
-        <div class="swiper-button-next swiper-button-white"><span></span></div>
-        <div class="swiper-button-prev swiper-button-white"><span></span></div>
-    </div>
-
+    [#include 'index_poster.html']
     <div class="class">
         <div class="wrap">
             <div class="col_hd">
@@ -122,22 +98,19 @@
         <div class="news_slide_wrap">
             <div class="swiper-container news_slide">
                 <div class="swiper-wrapper">
-                	[@Node number='courseList';node]	
-                    [@InfoPage nodeId=node.id pageSize='6';pagedList]
-                    [#list pagedList.content as info]
+                	[@InfoList attr='focus' limit='8';list]
+                	[#list list as info]
                     <div class="swiper-slide">
-                        <img src="${info.customs['photo']}" width="270" height="480" alt=""><!--尺寸270x480-->
+                        <img src="${info.attrImageUrl}" width="270" height="480" alt=""><!--尺寸270x480-->
                         <span class="overlay"></span>
                         <div class="show_box">
-                            <img src="${info.customs['photo']}" width="270" height="396" alt=""><!--270x396-->
-                            <!-- 课程名称 -->
+                            <img src="${info.attrImageUrl}" width="270" height="396" alt=""><!--270x396-->
                             <p>${info.title}</p>
                             <a href="${info.url}" class="btn">点击查看更多</a>
                         </div>
                     </div>
                      [/#list]
-          		     [/@InfoPage]
-          		     [/@Node]
+          		     [/@InfoList]
                 </div>
 
                 <!-- Add Arrows -->
@@ -147,13 +120,14 @@
         </div>
         <div class="news_list">
             <div class="col_hd">
+            [@Node number='information';node]
                 <b class="tit">最新资讯</b>
-                <a href="${info.url}" target="_blank">查看更多 <span class="icon-arrow-r"></span></a>
+                <a href="${node.url}" target="_blank">查看更多 <span class="icon-arrow-r"></span></a>
+            [/@Node]
             </div>
             <ul class="list_main">
-            	[@Node number='article';node]
-				[@InfoList nodeId=node.id limit='2';list]
-				[#list list as info]
+            	[@InfoList node='information' isIncludeChildren='true' limit='8';list]
+                  	[#list list as info]
                 <li>
                     <a href="${info.url}">
                         <p><span class="text">◆ ${substring(info.title,18,'...')}</span></p>
@@ -162,79 +136,55 @@
                 </li>
                 [/#list]
 				[/@InfoList]
-				[/@Node]
 				
-				[@Node number='industry';node]
-				[@InfoList nodeId=node.id limit='2';list]
-				[#list list as info]
-                <li>
-                    <a href="${info.url}">
-                        <p><span class="text">◆ ${substring(info.title,18,'...')}</span></p>
-                        <span class="time">${info.publishDate?string('yyyy-MM-dd')}</span>
-                    </a>
-                </li>
-                [/#list]
-				[/@InfoList]
-				[/@Node]
-				
-				[@Node number='lecture';node]
-				[@InfoList nodeId=node.id limit='2';list]
-				[#list list as info]
-                <li>
-                    <a href="${info.url}">
-                        <p><span class="text">◆ ${substring(info.title,18,'...')}</span></p>
-                        <span class="time">${info.publishDate?string('yyyy-MM-dd')}</span>
-                    </a>
-                </li>
-                [/#list]
-				[/@InfoList]
-				[/@Node]
-				
-				[@Node number='case';node]
-				[@InfoList nodeId=node.id limit='2';list]
-				[#list list as info]
-                <li>
-                    <a href="${info.url}">
-                        <p><span class="text">◆ ${substring(info.title,18,'...')}</span></p>
-                        <span class="time">${info.publishDate?string('yyyy-MM-dd')}</span>
-                    </a>
-                </li>
-                [/#list]
-				[/@InfoList]
-				[/@Node]
 				
             </ul>
         </div>
 
     </div>
 
+    
+   <style>
+    	.col_hd h2{display: none;}
+    </style>
     <div class="test_col">
-         
         <div class="wrap">
-            <div class="col_hd">
-                <h2>测测你是疯狂动物城里的谁？</h2>
+       		<div class="col_hd col_hd_h2">
+       			
+       			[#assign sIndex=1/]
                 [@Node number='test';node]
-                <a href="${node.url}" target="_blank">查看更多→</a>
+                [@InfoList nodeId=node.id limit='10';list]
+				[#list list as info]
+                	<h2 class="col_hd_${sIndex}">${info.title}</h2>
+					[#assign sIndex=sIndex+1/]                
+                 [/#list]
+               [/@InfoList]
+               	 <a href="${node.url}" target="_blank">查看更多→</a>
                 [/@Node]
-            </div>
+            </div>   
         </div>
 
-        <div class="swiper-container test_slide">
+        <div class="swiper-container test_slide" style="height:370px;">
             <div class="swiper-wrapper">
-              	
-              	[@Node number='test';node]
+               [#assign sIndex=1/]
+               [@Node number='test';node]
 				[@InfoList nodeId=node.id limit='10';list]
 				[#list list as info]
-                <div class="swiper-slide">
-                    <span class="pic"><img src="${info.smallImage}" alt=""><span class="over"></span></span>
+               
+                <div class="swiper-slide" data-id="swiper-slide_${sIndex}">	
+                    <span class="pic">				
+					<img src="${info.smallImage}" alt=""><span class="over"></span></span>
                     <b> <span class="view">
                           <span id="info_views">${info.bufferViews}</span>
-                         </span>人已测试</b>
+                         </span>人已测试
+                    </b>
                     <a href="${info.url}" target="_blank" class="btn">开始测试</a>
                 </div>
+                [#assign sIndex=sIndex+1/] 
                 [/#list]
 				[/@InfoList]
 				[/@Node]
+                
             </div>
             <!-- Add Arrows -->
             <div class="swiper-button-next swiper-button-white"><span class="icon-double-arrow-r"></span></div>
@@ -242,107 +192,14 @@
         </div>
 
     </div>
+    
+    
+    
+    
+    
+    
 
-    <div class="fm">
-        <div class="wrap">
-            <div class="col_hd">
-                <b class="tit">心灵FM</b>
-                <a href="#" target="_blank">查看更多→</a>
-            </div>
-
-            <ul class="fm_list">
-                <li>
-                    <a href="#">
-                        <div class="box">
-                            <div class="img_box">
-                                <img src="_files/upload/fm_test.jpg" alt="" class="fm_img"><!--尺寸270x344-->
-                                <img src="_files/css/img/fm_over_light.png" alt="" class="over_light over">
-                                <img src="_files/css/img/fm_over_dark.png" alt="" class="over_dark over">
-                            </div>
-                        </div>
-                        <b>交友不必攀援</b>
-                        <div class="info">
-                            <span>
-                                <em class="icon-view"></em>
-                                <i>222222</i>
-                            </span>
-                            <span>
-                                <em class="icon-share"></em>
-                                <i>222222</i>
-                            </span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="box">
-                            <div class="img_box">
-                                <img src="_files/upload/fm_test.jpg" alt="" class="fm_img"><!--尺寸270x344-->
-                                <img src="_files/css/img/fm_over_light.png" alt="" class="over_light over">
-                                <img src="_files/css/img/fm_over_dark.png" alt="" class="over_dark over">
-                            </div>
-                        </div>
-                        <b>交友不必攀援</b>
-                        <div class="info">
-                            <span>
-                                <em class="icon-view"></em>
-                                <i>222222</i>
-                            </span>
-                            <span>
-                                <em class="icon-share"></em>
-                                <i>222222</i>
-                            </span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="box">
-                            <div class="img_box">
-                                <img src="_files/upload/fm_test.jpg" alt="" class="fm_img"><!--尺寸270x344-->
-                                <img src="_files/css/img/fm_over_light.png" alt="" class="over_light over">
-                                <img src="_files/css/img/fm_over_dark.png" alt="" class="over_dark over">
-                            </div>
-                        </div>
-                        <b>交友不必攀援</b>
-                        <div class="info">
-                            <span>
-                                <em class="icon-view"></em>
-                                <i>222222</i>
-                            </span>
-                            <span>
-                                <em class="icon-share"></em>
-                                <i>222222</i>
-                            </span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="box">
-                            <div class="img_box">
-                                <img src="_files/upload/fm_test.jpg" alt="" class="fm_img"><!--尺寸270x344-->
-                                <img src="_files/css/img/fm_over_light.png" alt="" class="over_light over">
-                                <img src="_files/css/img/fm_over_dark.png" alt="" class="over_dark over">
-                            </div>
-                        </div>
-                        <b>交友不必攀援</b>
-                        <div class="info">
-                            <span>
-                                <em class="icon-view"></em>
-                                <i>222222</i>
-                            </span>
-                            <span>
-                                <em class="icon-share"></em>
-                                <i>222222</i>
-                            </span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-
+    [#include 'index_FM.html']
     <div class="teachers">
         <div class="wrap">
             <div class="col_hd">
@@ -421,12 +278,23 @@
         nextButton: '.test_slide .swiper-button-next',
         prevButton: '.test_slide .swiper-button-prev',
         spaceBetween: 20,onSlideChangeEnd: function(swiper){
+        	$(".col_hd_h2 h2").hide();
+	    	var active = $(".test_slide .swiper-slide-active").attr("data-id");
+	    	var sp = active.split("_");
+	    	$(".col_hd_" + sp[1]).show();
             test_slide.update(true);
         }
     });
 
     test_slide.slideTo(default_test_slide_num, 1000, false);
     test_slide.update(true);
+
+    //初始化
+    $(function(){
+    	var active = $(".test_slide .swiper-slide-active").attr("data-id");
+    	var sp = active.split("_");
+    	$(".col_hd_" + sp[1]).show();
+    })
 </script>
 
 </body>

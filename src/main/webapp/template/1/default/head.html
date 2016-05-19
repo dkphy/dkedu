@@ -27,22 +27,33 @@
                         <a href="${ctx}/dk_building.jspx">学习中心</a>
                     </span>
                 </li>
-                <li><a href="${ctx}/dk_building.jspx">在线报名</a></li>
+                <li><a href="https://jinshuju.net/f/x9Ls7G" target="_blank">在线报名</a></li>
                 <li><a href="${ctx}/dk_building.jspx">督导系统</a></li>
                 <li><a href="${ctx}/dk_building.jspx">OPS</a></li>
                 <li>
-                    <a href="#">心理氧吧</a>
+                	[@Node number='information'; node]
+                    <a href="${node.url}">心理氧吧</a>
+                    [/@Node]
                     <span class="sub_menu">
-                    [@NodeList parent='news';list]
+                    [@NodeList parent='news' limit='3';list]
+					[#list list as node]
+                        <a href="${node.url}">${node.name}</a>
+                     [/#list]
+                     [/@NodeList] 
+                     
+                    [@NodeList parent='information';list]
 					[#list list as node]
                         <a href="${node.url}">${node.name}</a>
                      [/#list]
                      [/@NodeList]   
+                     [@Node number='FM';node]
+                     <a href="${node.url}">${node.name}</a>
+                     [/@Node]
                     </span>
                 </li>
                  
                 <li>
-                    <a href="#">关于我们</a>
+                    <a href="${ctx}/dk_introduce.jspx">关于我们</a>
                     <span class="sub_menu">
                     	[@Node number='teacherManager';node]
                         <a href="${node.url}">师资力量</a>

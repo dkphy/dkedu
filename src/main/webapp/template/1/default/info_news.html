@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>${title}_${node.name}_${site.name}${global.customs['poweredby']}</title>
+<title>${title}_${node.name}</title>
 <meta name="viewport"
 	content="initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="format-detection" content="telephone=no">
@@ -20,21 +20,18 @@
 				<h1>[#noescape]${bbcode(title)}[/#noescape]</h1>
 				<div class="info">
 					<div class="tags">
-						 [@TagPage pageSize='3';pagedList]
-						 [#list pagedList.content as tag]
-						<span class="icon-tag"></span>
-						 <a href="${ctx}/tag/${tag.id?url}.jspx">${tag.name}</a> 
-						[/#list]
-						[/@TagPage]
-					</div>
-					
+                        [#list info.tags as tag]
+                        <span class="icon-tag"></span>
+                        <a href="${ctx}/tag/${tag.id?url}.jspx"> ${tag.name}</a>
+                        [/#list]
+                    </div>
+						
 					<span class="view"> <i class="icon-view2"></i> 
 						<span id="info_views"></span>
 					</span>
 					<script type="text/javascript">
 						$("#info_views").load("${dy}/info_views/${info.id}.jspx?d="+new Date()*1);
 					</script>
-					
 					
 				</div>
 			</div>

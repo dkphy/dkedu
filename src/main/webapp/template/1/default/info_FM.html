@@ -1,0 +1,121 @@
+[#escape x as (x)!?html]
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>大康</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="_files/css/swiper.min.css">
+    <link rel="stylesheet" href="_files/css/common.css">
+    <link rel="stylesheet" href="_files/css/fm.css">
+</head>
+<body>
+<a href="${ctx}/" class="logo">
+    <img src="_files/css/img/logo.png" alt="">
+</a>
+<div id="fm_player" class="jp-jplayer"></div>
+    <div id="fm_player_container" class="jp-audio" role="application" aria-label="media player">
+        <div class="jp-type-playlist">
+            <div class="jp-playlist">
+                <ul>
+                    <li>&nbsp;</li>
+                </ul>
+            </div>
+            <div class="player_main">
+                <div class="jp-controls">
+                    <button class="jp-previous" role="button" tabindex="0">previous</button>
+                    <button class="jp-play" role="button" tabindex="0">play</button>
+                    <button class="jp-next" role="button" tabindex="0">next</button>
+                    <!--<button class="jp-stop" role="button" tabindex="0">stop</button>-->
+                </div>
+                <div class="progress_wrap">
+                    <div class="jp-progress">
+                        <div class="jp-seek-bar">
+                            <div class="jp-play-bar"></div>
+                        </div>
+                    </div>
+
+                    <div class="jp-time-holder">
+                        <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+                        <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="share_box">
+            <div class="share bdsharebuttonbox">
+                <span><i class="icon-share2"></i>分享：</span>
+                <a class="bds_weixin icon-wx" data-cmd="weixin" title="分享到微信" href="#"></a>
+                <a class="bds_qzone icon-qqzone" data-cmd="qzone" title="分享到QQ空间" href="#"></a>
+                <a class="bds_douban icon-douban" data-cmd="douban" title="分享到豆瓣网" href="#"></a>
+                <a class="bds_tsina icon-weibo" data-cmd="tsina" title="分享到新浪微博" href="#"></a>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+<script src="_files/js/jquery-1.9.1.min.js"></script>
+<script src="_files/js/jquery.jplayer.min.js"></script>
+<script src="_files/js/jplayer.playlist.min.js"></script>
+<script src="_files/js/common.js"></script>
+<script>
+
+
+
+        var playlist=new jPlayerPlaylist({
+            jPlayer: "#fm_player",
+            cssSelectorAncestor: "#fm_player_container"
+        }, [
+            
+             [@InfoList node='FM';list]
+			[#list list as info]
+            {
+                title:"${info.title}",
+                artist:"${info.customs['artist']}",
+                detail:"${info.customs['detail']}",
+                mp3:"${info.customs['mp3']}",
+                oga:"${info.customs['oga']}"
+            },
+           	[/#list] 
+            [/@InfoList]
+            
+        ], {
+            swfPath: "js",
+            supplied: "oga, mp3",
+            wmode: "window",
+            useStateClassSkin: true,
+            smoothPlayBar: true,
+            keyEnabled: true,
+            remainingDuration:true,
+            playlistOptions: {
+                autoPlay: true
+            }
+
+            });
+
+
+
+</script>
+
+<script type="text/javascript">
+    var share_tit='大康心灵FM',
+            share_desc='',
+            share_pic='';
+    window._bd_share_config = {
+        common : {
+            bdText : share_tit,
+            bdDesc : share_desc,
+            bdPic : share_pic
+        },
+        share : [{
+            "bdSize" : 16
+        }]
+    }
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+
+</script>
+</html>
+[/#escape]

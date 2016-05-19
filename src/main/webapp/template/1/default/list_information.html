@@ -16,14 +16,14 @@
 	 [#include 'head.html'/]
 	
 	
-	 
-    <div class="wrap">
+		<div class="wrap">
         <h1 class="com_tit">${node.name}</h1>
         <div class="ct">
             <div class="main">
-               [@InfoPage nodeId=node.id pageSize='10';pagedList]
+              
                 <ul class="post_list">
-                  	[#list pagedList.content as info]
+                  	[@InfoList node='information' isIncludeChildren='true' limit='10';list]
+                  	[#list list as info]
                     <li>
                         <a href="${info.url}">
                             <img src="${info.smallImageUrl}" alt=""><!--尺寸235x160-->
@@ -38,22 +38,44 @@
                         </a>
                     </li>
                     [/#list]
+               	[/@InfoList]
                 </ul>
-                [/@InfoPage]
+               
                 <div class="more_btn">
-                    <a href="javascript:;" id="div1">查看更多文章 <span class="icon-double-arrow-d"></span></a>
+                    <a href="javascript:;">查看更多文章 <span class="icon-double-arrow-d"></span></a>
                 </div>
-                <script type="text/javascript">
-						$("#div1").load("${dy}/info_views/${info.id}.jspx?d="+new Date()*1);
-				</script>
-                
             </div>
 	
-	[#include 'list_news_right.html'/]
+	[@Node number='article';node]
+            <div class="sidebar">
+                <div class="side_tit">
+                    <b>最热</b>
+                    <a href="${node.url}">查看更多热门文章</a>
+                </div>
+                
+                
+                <div class="proficients">
+                <div class="hot_tests">
+                [@InfoList nodeId=node.id  limit='10';list]
+				[#list list as info]
+                    <div class="box">
+                        <a href="${info.url}">
+                            <img src="${info.smallImageUrl}" width="150" height="105" alt=""><!--尺寸120x174-->
+                            <b>${info.title}</b>
+                            <span>${substring(info.description,40,'...')}</span>
+                        </a>
+                    </div>
+                    [/#list]
+                    [/@InfoList]
+                </div>
+		</div>
+            </div>
+             [/@Node]
 		</div>
 	</div>
-	
-		
+	 
+	 
+	 
   [#include 'end.html'/]
 
 </body>

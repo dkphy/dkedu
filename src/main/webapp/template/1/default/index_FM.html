@@ -1,0 +1,105 @@
+[#escape x as (x)!?html]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>${site.fullNameOrName}</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="_files/css/swiper.min.css">
+    <link rel="stylesheet" href="_files/css/common.css">
+    <link rel="stylesheet" href="_files/css/index.css">
+</head>
+<body>
+<div class="fm">
+        <div class="wrap">
+            <div class="col_hd">
+            	 [@Node number='FM';node]
+                <b class="tit">${node.name}</b>
+                <a href="${node.url}" target="_blank">查看更多→</a>
+             	 [/@Node]
+            </div>
+            <ul class="fm_list">
+               [@InfoList node='FM' limit='6';list]
+				[#list list as info]
+                <li>
+                    <a href="${info.url}">
+                        <div class="box">
+                            <div class="img_box">
+                                <img src="${info.customs['FMPhoto']}" alt="" class="fm_img"><!--尺寸270x344-->
+                                <img src="_files/css/img/fm_over_light.png" alt="" class="over_light over">
+                                <img src="_files/css/img/fm_over_dark.png" alt="" class="over_dark over">
+                            </div>
+                        </div>
+                        <b>${info.title}</b>
+                        <div class="info">
+                            <span>
+                                <em class="icon-view"></em>
+                                <i>222222</i>
+                            </span>
+                            <span>
+                                <em class="icon-share"></em>
+                                <i>222222</i>
+                            </span>
+                        </div>
+                    </a>
+                </li>
+				[/#list]
+              [/@InfoList]
+            </ul>
+        </div>
+    </div>
+
+    
+
+
+<script src="_files/js/jquery-1.9.1.min.js"></script>
+<script src="_files/js/swiper.min.js"></script>
+<script src="_files/js/common.js"></script>
+<script>
+    var top_slide = new Swiper('.top_slide', {
+        loop:true,
+        pagination: '.top_slide .swiper-pagination',
+        paginationClickable: true,
+        nextButton: '.top_slide .swiper-button-next',
+        prevButton: '.top_slide .swiper-button-prev',
+        autoplay: 4000,
+        speed:1000,
+        autoplayDisableOnInteraction: false,
+        parallax:true
+    });
+
+    var class_slide = new Swiper('.class_slide', {
+        slidesPerView: 4,
+        nextButton: '.class_slide .swiper-button-next',
+        prevButton: '.class_slide .swiper-button-prev',
+        spaceBetween: 10
+    });
+
+    var news_slide = new Swiper('.news_slide', {
+        slidesPerView: 'auto',
+        nextButton: '.news_slide .swiper-button-next',
+        prevButton: '.news_slide .swiper-button-prev',
+        spaceBetween: 0
+    });
+
+    var default_test_slide_num=Math.floor($(".test_slide .swiper-slide").length/2);
+    var test_slide = new Swiper('.test_slide', {
+        slidesPerView: 5,
+        speed:0,
+        centeredSlides: true,
+        nextButton: '.test_slide .swiper-button-next',
+        prevButton: '.test_slide .swiper-button-prev',
+        spaceBetween: 20,onSlideChangeEnd: function(swiper){
+            test_slide.update(true);
+        }
+    });
+
+    test_slide.slideTo(default_test_slide_num, 1000, false);
+    test_slide.update(true);
+</script>
+
+</body>
+
+</html>
+[/#escape]

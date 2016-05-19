@@ -89,7 +89,7 @@ parent.frames["left"].location.href="left.do";
 	<fieldset class="c-fieldset">
     <legend><s:message code="search"/></legend>
 	  <label class="c-lab"><s:message code="node.name"/>: <input type="text" name="search_CONTAIN_name" value="${search_CONTAIN_name[0]}"/></label>
-	  <label class="c-lab"><s:message code="node.number"/>: <input type="text" name="search_CONTAIN_number" value="${search_CONTAIN_number[0]}"/></label>
+	 <!--  <label class="c-lab"><s:message code="node.number"/>: <input type="text" name="search_CONTAIN_number" value="${search_CONTAIN_number[0]}"/></label> -->
 	  <label class="c-lab">
 	  	<s:message code="node.hidden"/>:
 	  	<select name="search_EQ_hidden_Boolean">
