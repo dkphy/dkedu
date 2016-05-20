@@ -11,7 +11,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>${site.name}管理平台</title>
+<title>${site.name}管理平台  我在这里</title>
 <jsp:include page="/WEB-INF/views/commons/head.jsp"></jsp:include>
 <style type="text/css">
 </style>
@@ -33,6 +33,11 @@ function imgCrop(name) {
 }
 function confirmDelete() {
 	return confirm("<s:message code='confirmDelete'/>");
+}
+
+function append(tag) {
+	var tags = document.getElementById('tagKeywords');
+	tags.value = tags.value + ',' + tag;
 }
 </script>
 </head>
@@ -186,7 +191,20 @@ function confirmDelete() {
     <f:textarea name="fullTitle" value="${bean.fullTitle}" maxlength="150" style="width:500px;height:46px" spellcheck="false"/>
   </c:when>
   <c:when test="${field.name eq 'tagKeywords'}">
-    <f:text name="tagKeywords" value="${bean.tagKeywords}" maxlength="150" style="width:500px;"/>
+  <!-- 标签 -->
+    <f:text name="tagKeywords" id="tagKeywords" value="${bean.tagKeywords}" maxlength="150" style="width:500px;"/>
+    <br/>
+    <a href="#" onclick="append('亲密关系')">亲密关系</a>&nbsp;&nbsp;
+    <a href="#" onclick="append('亲子教育')">亲子教育</a>&nbsp;&nbsp;
+    <a href="#" onclick="append('个人成长')">个人成长</a>&nbsp;&nbsp;
+    <a href="#" onclick="append('职场')">职场</a>&nbsp;&nbsp;
+    <a href="#" onclick="append('健康')">健康</a>&nbsp;&nbsp;
+    <a href="#" onclick="append('科普')">科普</a>&nbsp;&nbsp;
+    <a href="#" onclick="append('测试')">测试</a>&nbsp;&nbsp;
+    <a href="#" onclick="append('资讯')">资讯</a>&nbsp;&nbsp;
+    <a href="#" onclick="append('活动')">活动</a>&nbsp;&nbsp;
+    <a href="#" onclick="append('服务')">服务</a>&nbsp;&nbsp;
+    <a href="#" onclick="append('案例')">案例</a>&nbsp;&nbsp;
     <%-- <input type="button" value="<s:message code='info.getTagKeywords'/>" onclick="var button=this;$(button).prop('disabled',true);$.get('get_keywords.do',{title:$('input[name=title]').val()},function(data){$('input[name=tagKeywords]').val(data);$(button).prop('disabled',false);})"/> --%>
   </c:when>
   <c:when test="${field.name eq 'metaDescription'}">

@@ -25,6 +25,7 @@ import com.jspxcms.core.support.ForeContext;
 public class TagsController {
 	public static final String TAGS_TEMPLATE = "sys_tags.html";
 	public static final String TAG_TEMPLATE = "sys_tag.html";
+	//public static final String TAG_TEMPLATE = "list_tags.html";
 
 	@RequestMapping(value = "/tags.jspx")
 	public String tags(Integer page, HttpServletRequest request,

@@ -1,0 +1,106 @@
+[#escape x as (x)!?html]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>${tag.name}</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="_files/css/swiper.min.css">
+    <link rel="stylesheet" href="_files/css/common.css">
+    <link rel="stylesheet" href="_files/css/list.css">
+    [#include 'inc_js.html'/]
+</head>
+<body>
+
+	 [#include 'head.html'/]
+	
+	
+	 
+    <div class="wrap">
+        <h1 class="com_tit">${tag.name}dsdsdfdsf</h1>
+        <div class="ct">
+            <div class="main">
+               [@InfoPage tagId=tag.id pageSize=8;pagedList]
+                <ul class="post_list">
+                   [#list pagedList.content as info]
+                    <li>
+                        <a href="${info.url}">
+                            <img src="${info.smallImageUrl}" alt=""><!--尺寸235x160-->
+                            <div class="wd">
+                                <b>${info.title}</b>
+                                <p>${substring(info.description,80,'...')}</p>
+                            </div>
+                             <span class="view">
+                                <i class="icon-view2"></i>
+                                <span id="info_views">${info.bufferViews}</span>
+                            </span>
+                        </a>
+                        <div class="tags">
+                            <span class="icon-tag"></span>
+                            [#list info.tags as tag]
+                            <a href="${ctx}/tag/${tag.id?url}.jspx">${tag.name}</a>
+                        	[/#list]
+                        </div>
+                    </li>
+                    	[/#list]
+                </ul>
+                [/@InfoPage]
+                <div class="more_btn">
+                    <a href="javascript:;">查看更多文章 <span class="icon-double-arrow-d"></span></a>
+                </div>
+            </div>
+
+
+
+            <div class="sidebar">
+                <div class="side_tit">
+                    <b>精品课程</b>
+                    <a href="#">查看更多课程</a>
+                </div>
+                <div class="hot_lessons">
+                    
+                    
+                    <div class="box">
+                        <img src="upload/lessons_test.jpg" alt=""><!--尺寸330x200-->
+                        <b>怎么确定自己真的恋爱了</b>
+                        <div class="price_bar">
+                            <strong>¥ 399</strong>
+                            <span>已有<i>23</i>人购买该课程</span>
+                        </div>
+                        <a href="#" class="buy_btn">购买该课程</a>
+                    </div>
+                    <div class="box">
+                        <img src="upload/lessons_test.jpg" alt=""><!--尺寸330x200-->
+                        <b>怎么确定自己真的恋爱了</b>
+                        <div class="price_bar">
+                            <strong>¥ 399</strong>
+                            <span>已有<i>23</i>人购买该课程</span>
+                        </div>
+                        <a href="#" class="buy_btn">购买该课程</a>
+                    </div>
+                    <div class="box">
+                        <img src="upload/lessons_test.jpg" alt=""><!--尺寸330x200-->
+                        <b>怎么确定自己真的恋爱了</b>
+                        <div class="price_bar">
+                            <strong>¥ 399</strong>
+                            <span>已有<i>23</i>人购买该课程</span>
+                        </div>
+                        <a href="#" class="buy_btn">购买该课程</a>
+                    </div>
+                </div>
+
+
+                	
+            </div>
+        </div>
+    </div>
+	
+		
+  [#include 'end.html'/]
+
+</body>
+<script src="_files/js/jquery-1.9.1.min.js"></script>
+<script src="_files/js/common.js"></script>
+</html>
+[/#escape]

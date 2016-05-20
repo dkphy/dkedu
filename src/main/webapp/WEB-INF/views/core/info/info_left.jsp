@@ -46,7 +46,7 @@ html{height:100%;}
 
 	var zNodes =[
 		<c:forEach var="node" items="${nodeList}" varStatus="status">
-			{"id":${node.id},"pId":<c:out value="${node.parent.id}" default="-1"/>,"name":"${node.name} <span style='color:#c8103d;'>${node.infoModel.name}</span>"<c:if test="${empty node.parent}">,"open":true</c:if>}<c:if test="${!status.last}">,</c:if>
+			{"id":${node.id},"pId":<c:out value="${node.parent.id}" default="-1"/>,"name":"${node.name} <!--<span style='color:#c8103d;'>${node.infoModel.name}</span>-->"<c:if test="${empty node.parent}">,"open":true</c:if>}<c:if test="${!status.last}">,</c:if>
 		</c:forEach>
 	];
 
