@@ -17,7 +17,7 @@
             <ul class="menu clearfix">
                 <li class="current"><a href="${ctx}/">首页</a></li>
                 <li>
-                    <a href="#">网络课程</a>
+                    <a href="${ctx}/dk_building.jspx">网络课程</a>
                     <span class="sub_menu">
                         <a href="${ctx}/dk_building.jspx">在线课程</a>
                         <a href="${ctx}/dk_building.jspx">行业快递</a>
@@ -35,20 +35,17 @@
                     <a href="${node.url}">心理氧吧</a>
                     [/@Node]
                     <span class="sub_menu">
-                    [@NodeList parent='news' limit='3';list]
+                    [@NodeList parent='news' limit='6';list]
 					[#list list as node]
                         <a href="${node.url}">${node.name}</a>
                      [/#list]
-                     [/@NodeList] 
-                     
-                    [@NodeList parent='information';list]
+                     [/@NodeList]
+                      
+                    [@NodeList parent='information' limit='6';list]
 					[#list list as node]
                         <a href="${node.url}">${node.name}</a>
                      [/#list]
                      [/@NodeList]   
-                     [@Node number='FM';node]
-                     <a href="${node.url}">${node.name}</a>
-                     [/@Node]
                     </span>
                 </li>
                  

@@ -20,8 +20,6 @@
 				<h1>[#noescape]${bbcode(title)}[/#noescape]</h1>
 				<div class="info">
 					<div class="tags">
-						<span class="icon-tag"></span> <a href="#">标签1</a> <a href="#">标签2</a>
-						<a href="#">标签3</a>
 					</div>
 					<span class="view"> <i class="icon-view2"></i> 
 						<span id="info_views"></span>
@@ -42,7 +40,7 @@
 					<p>主讲老师：${info.customs['teacherName']}</p>
 					<p>开课时间：${info.customs['courseDate']}</p>
 					<p>课程摘要：${info.customs['courseDESC']}</p>
-					<p>课程图片：<img alt="" src="${info.customs['photo']}" width="553" height="356"></p>
+					<p>课程图片：<img alt="" src="${info.smallImage}" width="553" height="356"></p>
 					<p>时长：${info.customs['costTime']}</p>
 					<p>视频链接：<a href="${info.customs['video']}">${info.customs['video']}</a></p>
 					<!--富文本-->

@@ -21,9 +21,9 @@
         <h1 class="com_tit">${node.name}</h1>
         <div class="ct">
             <div class="main">
-               [@InfoPage nodeId=node.id pageSize='10';pagedList]
+               [@InfoList nodeId=node.id limit='10'; pagedList]
                 <ul class="post_list">
-                  	[#list pagedList.content as info]
+                  	[#list pagedList as info]
                     <li>
                         <a href="${info.url}">
                             <img src="${info.smallImageUrl}" alt=""><!--尺寸235x160-->
@@ -39,7 +39,7 @@
                     </li>
                     [/#list]
                 </ul>
-                [/@InfoPage]
+                [/@InfoList]
                 <div class="more_btn">
                     <a href="javascript:;" class="get_more" id="div1">查看更多文章 <span class="icon-double-arrow-d"></span></a>
                 </div>

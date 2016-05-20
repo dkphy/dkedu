@@ -30,7 +30,7 @@
                     <div class="box">
                         <a href="${info.url}">
                             <img src="${info.customs['teacherPhoto']}"  width="120" height="174" alt=""><!--尺寸120x174-->
-                            <b>${info.customs['teacherName']}</b>
+                            <b>${info.title}</b>
                             <span>[#noescape]${info.customs['teacherZc']}[/#noescape]</span>
                         </a>
                     </div>
@@ -50,24 +50,25 @@
                 </div>
                 
                 
-                <div class="proficients">
-                <div class="hot_tests">
-                [@InfoList nodeId=node.id  limit='5';list]
+              <div class="hot_tests">
+              [@InfoList nodeId=node.id  limit='5';list]
 				[#list list as info]
                     <div class="box">
-                        <a href="${info.url}">
-                            <img src="${info.smallImageUrl}" width="150" height="104" alt=""><!--尺寸120x174-->
+                        <a href="#">
+                            <img src="${info.customs['teacherPhoto']}" alt=""><!--尺寸120x174-->
                             <b>${info.title}</b>
-                            <span>${substring(info.description,60,'...')}</span>
+                            <span>${info.customs['teacherZc']}</span>
+                            <span>${info.customs['informationSummary']}</span>
                         </a>
                     </div>
-                  [/#list]
+                     [/#list]
                   [/@InfoList]
-                </div>
+             </div>
 	</div>
             </div>
              [/@Node]
              
+                          
              
 		[/#if]	
 
