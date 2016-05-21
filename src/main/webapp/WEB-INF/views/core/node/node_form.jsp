@@ -105,7 +105,7 @@ parent.frames['left'].location.href="left.do";
     <f:text name="name" value="${oprt=='edit' ? bean.name : ''}" class="required" maxlength="100" style="width:180px;"/>
   </c:when>
   <c:when test="${field.name eq 'number'}">
-    <f:text name="number" value="${bean.number}" maxlength="100" style="width:180px;"/>
+    <f:text name="number" value="${bean.number}" readonly="true" maxlength="100" style="width:180px;"/>
   </c:when>
   <c:when test="${field.name eq 'link'}">
     <f:text name="link" value="${bean.link}" maxlength="255" style="width:180px;"/><span class="in-prompt" title="<s:message code='node.link.prompt' htmlEscape='true'/>"></span>

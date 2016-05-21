@@ -510,7 +510,7 @@ public class NodeController {
 		ra.addAttribute("showDescendants", showDescendants);
 		ra.addFlashAttribute(MESSAGE, SAVE_SUCCESS);
 		ra.addFlashAttribute("refreshLeft", true);
-		return "redirect:move_input.do?ids=" + StringUtils.join(ids, "&ids=");
+		return "redirect:list.do?ids=" + StringUtils.join(ids, "&ids=");
 	}
 
 	@RequiresPermissions("core:node:merge_form")

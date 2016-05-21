@@ -21,22 +21,18 @@
                     <b>最热</b>
                     <a href="${node.url}">查看更多心理测试</a>
                 </div>
-                
-                
-                
                 <div class="hot_tests">
                 [@InfoList nodeId=node.id  limit='5';list]
 				[#list list as info]
                     <div class="box">
                         <a href="${info.url}">
                             <img src="${info.smallImageUrl}" width="150" height="105" alt=""><!--尺寸120x174-->
-                            <span>${substring(info.description,40,'...')}</span>
+                            <span>${info.title}</span>
                         </a>
                     </div>
                     [/#list]
                     [/@InfoList]
                 </div>
-				
             </div>
              [/@Node]	
              
@@ -48,9 +44,6 @@
                     <b>最热</b>
                     <a href="${node.url}">查看更多热门文章</a>
                 </div>
-                
-                
-                <div class="proficients">
                 <div class="hot_tests">
                 [@InfoList nodeId=node.id  limit='5';list]
 				[#list list as info]
@@ -58,14 +51,15 @@
                         <a href="${info.url}">
                             <img src="${info.smallImageUrl}" width="150" height="105" alt=""><!--尺寸120x174-->
                             <b>${info.title}</b>
+                            <!-- 
                             <span>${substring(info.description,40,'...')}</span>
+                             -->
                         </a>
                     </div>
                     [/#list]
                     [/@InfoList]
                 </div>
 			</div>
-            </div>
              [/@Node]
              
              
@@ -76,9 +70,6 @@
                     <b>最热</b>
                     <a href="${node.url}">查看更多热门资讯</a>
                 </div>
-                
-                
-                <div class="proficients">
                 <div class="hot_tests">
                 [@InfoList nodeId=node.id  limit='5';list]
 				[#list list as info]
@@ -86,14 +77,15 @@
                         <a href="${info.url}">
                             <img src="${info.smallImageUrl}" width="150" height="105" alt=""><!--尺寸120x174-->
                             <b>${info.title}</b>
+                            <!-- 
                             <span>${substring(info.description,40,'...')}</span>
+                             -->
                         </a>
                     </div>
                     [/#list]
                     [/@InfoList]
                 </div>
 			</div>
-            </div>
              [/@Node]
              
         [#elseif node.name=="沙龙讲座"]
@@ -103,9 +95,6 @@
                     <b>最热</b>
                     <a href="${node.url}">查看更多热门文章</a>
                 </div>
-                
-                
-                <div class="proficients">
                 <div class="hot_tests">
                 [@InfoList nodeId=node.id  limit='5';list]
 				[#list list as info]
@@ -113,13 +102,14 @@
                         <a href="${info.url}">
                             <img src="${info.smallImageUrl}" width="150" height="105" alt=""><!--尺寸120x174-->
                             <b>${info.title}</b>
+                            <!-- 
                             <span>${substring(info.description,40,'...')}</span>
+                             -->
                         </a>
                     </div>
                     [/#list]
                     [/@InfoList]
                 </div>
-		</div>
             </div>
              [/@Node] 
         
@@ -131,9 +121,6 @@
                     <b>最热</b>
                     <a href="${node.url}">查看更多热门案例</a>
                 </div>
-                
-                
-                <div class="proficients">
                	 <div class="hot_tests">
                 [@InfoList nodeId=node.id  limit='5';list]
 				[#list list as info]
@@ -141,15 +128,15 @@
                         <a href="${info.url}">
                             <img src="${info.smallImageUrl}" width="150" height="105" alt=""><!--尺寸120x174-->
                             <b>${info.title}</b>
+                            <!-- 
                             <span>${substring(info.description,40,'...')}</span>
+                             -->
                         </a>
                     </div>
                     [/#list]
                     [/@InfoList]
                 </div>
-
                 </div>
-            </div>
              [/@Node] 
                   
              

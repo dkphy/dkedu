@@ -70,14 +70,17 @@ html{height:100%;}
 </script>
 </head>
 <body class="left-body">
+<!-- 
 <div style="padding:7px 0 3px 0;text-align:center;">
 	<select id="queryNodeType">
 		<option value="0"><s:message code="info.queryNodeType.0"/></option>
 	<!-- <option value="1"><s:message code="info.queryNodeType.1"/></option> -->
+<!-- 
 		<option value="2"><s:message code="info.queryNodeType.2"/></option>
 	</select>
 	<%-- <label for="showChildren"><input id="showChildren" type="checkbox" checked="checked"/><s:message code="info.showChildren"/></label> --%>
 </div>
+ -->
 <hr/>
 <ul id="tree" class="ztree" style="padding-top:5px"></ul>
 </body>

@@ -21,6 +21,7 @@ function dblClickExpand(treeId, treeNode) {
 function onClick(event, treeId, treeNode, clickFlag) {
 	$.cookie('select_id',treeNode.id);
 	if($("#showList").prop("checked")) {
+		//alert('showList');
 		parent.frames["center"].location.href="list.do?queryParentId="+treeNode.id+"&showDescendants="+$("#showDescendants").prop("checked");
 	} else {
 		parent.frames["center"].location.href="edit.do?id="+treeNode.id+"&position="+treeNode.position+"&queryParentId="+(treeNode.pId?treeNode.pId:"")+"&showDescendants="+$("#showDescendants").prop("checked");		
@@ -78,6 +79,7 @@ function fireClick(){
 	var treeObj = $.fn.zTree.getZTreeObj("tree");
 	var treeNodeArr = treeObj.getSelectedNodes();
 	if(treeNodeArr.length>0) {
+		//alert('fireClick');
 		onClick(null,"tree",treeNodeArr[0],null);
 	}
 }
@@ -87,6 +89,7 @@ $(function(){
 		fireClick();
 	});
 	$("#showDescendants").click(function() {
+		//alert('showDescendants');
 		$.cookie('show_descendants',this.checked);
 		fireClick();
 	});
@@ -118,7 +121,7 @@ $(function(){
 </script>
 </head>
 <body class="left-body">
-<div style="padding:7px 0 3px 0;text-align:center;">
+<div style="padding:7px 0 3px 0;text-align:center;display:none">
   <label for="showList"><input id="showList" type="checkbox" checked="checked"/><s:message code="node.showList"/></label> &nbsp;
   <label for="showDescendants"><input id="showDescendants" type="checkbox"/><s:message code="node.showDescendants"/></label>
   <%-- <input type="button" value="<s:message code="refresh"/>" onclick="javascript:location.href=location.href"/> &nbsp; --%>

@@ -36,13 +36,11 @@
 			<div class="main">
 				<div class="post">
 					<!--富文本-->
-					<p>课程名：${info.title}</p>
-					<p>主讲老师：${info.customs['teacherName']}</p>
-					<p>开课时间：${info.customs['courseDate']}</p>
-					<p>课程摘要：${info.customs['courseDESC']}</p>
-					<p>课程图片：<img alt="" src="${info.smallImage}" width="553" height="356"></p>
-					<p>时长：${info.customs['costTime']}</p>
-					<p>视频链接：<a href="${info.customs['video']}">${info.customs['video']}</a></p>
+					<p><img alt="" src="${info.smallImage}" width="553" height="356"></p>
+					<p>主讲老师：${info.customs['course_teacher']}</p>
+					<p>开课时间：${info.customs['course_date']}</p>
+					<p>课程摘要：${info.metaDescription}</p>
+					<p>[#noescape]${text}[/#noescape]</p>
 					<!--富文本-->
 				</div>
 				<div class="share_box">
@@ -57,14 +55,14 @@
 				</div>
 
 				<div class="related">
-					<h2 class="com_tit">相关文章</h2>
+					<h2 class="com_tit">相关课程</h2>
 					<div class="list clearfix">
 						[@InfoPage nodeId=node.id excludeId=info.id pageSize='3';pagedList]
 						<ul>
 							[#list pagedList.content as info]
 							<li>
 								<div class="box">
-									<a href="${info.url}"> <img src="${info.customs['photo']}" width="240" height="156" alt="">
+									<a href="${info.url}"> <img src="${info.smallImage}" width="240" height="156" alt="">
 										<b>${info.title}</b> </a>
 								</div></li>
 							[/#list]

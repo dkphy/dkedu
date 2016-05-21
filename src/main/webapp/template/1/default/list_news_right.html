@@ -25,8 +25,8 @@
             
                 <div class="proficients">
                     [@Node number='consultationTeacher';node]   
-			[@InfoList nodeId=node.id  limit='5';list]
-			[#list list as info]
+					[@InfoList nodeId=node.id  limit='5';list]
+					[#list list as info]
                     <div class="box">
                         <a href="${info.url}">
                             <img src="${info.customs['teacherPhoto']}"  width="120" height="174" alt=""><!--尺寸120x174-->
@@ -48,27 +48,20 @@
                     <b>最热</b>
                     <a href="${node.url}">查看更多心理测试</a>
                 </div>
-                
-                
               <div class="hot_tests">
               [@InfoList nodeId=node.id  limit='5';list]
 				[#list list as info]
                     <div class="box">
                         <a href="#">
-                            <img src="${info.customs['teacherPhoto']}" alt=""><!--尺寸120x174-->
+                            <img src="${info.smallImage}" alt=""><!--尺寸120x174-->
                             <b>${info.title}</b>
-                            <span>${info.customs['teacherZc']}</span>
-                            <span>${info.customs['informationSummary']}</span>
                         </a>
                     </div>
                      [/#list]
                   [/@InfoList]
              </div>
-	</div>
             </div>
              [/@Node]
-             
-                          
              
 		[/#if]	
 

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="_files/css/swiper.min.css">
     <link rel="stylesheet" href="_files/css/common.css">
     <link rel="stylesheet" href="_files/css/list.css">
+    [#include 'inc_js.html'/]
 </head>
 <body>
     <!--通用顶部 start-->
@@ -36,10 +37,10 @@
                             </span>
                         </a>
                         <div class="tags">
-                            <span class="icon-tag"></span>
-                            <a href="#">标签1</a>
-                            <a href="#">标签2</a>
-                            <a href="#">标签3</a>
+	                        <span class="icon-tag"></span>
+                            [#list info.tags as tag]
+	                        <a href="${ctx}/tag/${tag.id?url}.jspx"> ${tag.name}</a>
+	                        [/#list]
                         </div>
 				</li>
 				[/#list]
@@ -76,12 +77,12 @@
              [/@Node]
 	[/#if]
 </div>
+</div>
 [/@InfoFulltextPage]
 
 [#include 'end.html'/]
-<script src="_files/js/jquery-1.9.1.min.js"></script>
-<script src="_files/js/swiper.min.js"></script>
-<script src="_files/js/common.js"></script>
 </body>
+<script src="_files/js/jquery-1.9.1.min.js"></script>
+<script src="_files/js/common.js"></script>
 </html>
 [/#escape]
