@@ -122,13 +122,13 @@
         </div>
         <div class="news_list">
             <div class="col_hd">
-            [@Node number='information';node]
+            [@Node number='news';node]
                 <b class="tit">最新资讯</b>
                 <a href="${node.url}" target="_blank">查看更多 <span class="icon-arrow-r"></span></a>
             [/@Node]
             </div>
             <ul class="list_main">
-            	[@InfoList node='information' isIncludeChildren='true' limit='8';list]
+            	[@InfoList node='news' isIncludeChildren='true' limit='8';list]
                   	[#list list as info]
                 <li>
                     <a href="${info.url}">

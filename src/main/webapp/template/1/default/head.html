@@ -17,7 +17,11 @@
             <ul class="menu clearfix">
                 <li class="current"><a href="${ctx}/">首页</a></li>
                 <li><a href="${ctx}/dk_building.jspx">大康教育</a></li>
-                <li><a href="https://jinshuju.net/f/x9Ls7G">心理咨询</a></li>
+                <li>
+                	[@Node number='consultationTeacher'; node]
+                		<a href="${node.url}">心理咨询</a>
+                    [/@Node]
+                </li>
                 <li><a href="${ctx}/dk_building.jspx">OPS</a></li>
                 <li>
                 	[@Node number='news'; node]
