@@ -104,9 +104,11 @@
                         <img src="${info.attrImageUrl}" width="270" height="480" alt=""><!--尺寸270x480-->
                         <span class="overlay"></span>
                         <div class="show_box">
-                            <img src="${info.attrImageUrl}" width="270" height="396" alt=""><!--270x396-->
-                            <p>${info.title}</p>
-                            <a href="${info.url}" class="btn">点击查看更多</a>
+                            <img src="${info.attrImageUrl}" alt=""><!--270x480-->
+                            <div class="bt">
+	                            <p>${info.title}</p>
+	                            <a href="${info.url}" class="btn">点击查看更多</a>
+                            </div>
                         </div>
                     </div>
                      [/#list]

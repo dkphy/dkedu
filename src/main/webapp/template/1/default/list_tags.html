@@ -21,7 +21,7 @@
         <h1 class="com_tit">${tag.name}</h1>
         <div class="ct">
             <div class="main">
-               [@InfoPage tagId=tag.id pageSize=8;pagedList]
+               [@InfoPage tagId=tag.id pageSize=2;pagedList]
                 <ul class="post_list">
                    [#list pagedList.content as info]
                     <li>
@@ -44,10 +44,13 @@
                         </div>
                     </li>
                     	[/#list]
-                </ul>
                 [/@InfoPage]
+                <!-- 记录已展示记录的offset -->
+                <div id="offset" style="display:none">1</div>
+                <div id="show_more_list"></div>
+                </ul>
                 <div class="more_btn">
-                    <a href="javascript:;">查看更多文章 <span class="icon-double-arrow-d"></span></a>
+                    <a href="javascript:loadMore(${tag.id}, 'tag');">查看更多文章 <span class="icon-double-arrow-d"></span></a>
                 </div>
             </div>
 
@@ -102,5 +105,24 @@
 </body>
 <script src="_files/js/jquery-1.9.1.min.js"></script>
 <script src="_files/js/common.js"></script>
+<script src="_files/js/common-dev.js"></script>
+<script type="text/javascript">
+	// 生成单条记录
+	function getOneRecordHTML(infoObj) {
+		var html = '<li>';
+		html += '<a href="' + infoObj.url + '">';
+		html += '<img src="' + infoObj.smallImageUrl + '}" alt="">';
+        html += '<div class="wd" >';
+        html += '<b>'+ infoObj.title +'</b>';
+        var describ = infoObj.description.substring(80);
+        html += '<p>' + describ + '</p>';
+        html += '</div>';
+        html += ' <span class="view">';
+        html += '<i class="icon-view2"></i>';
+        html += '<span id="info_views">' + infoObj.bufferViews + '</span>';
+        html += '</span></a></li>';
+        return html;
+	}
+</script>
 </html>
 [/#escape]

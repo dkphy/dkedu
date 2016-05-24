@@ -612,7 +612,7 @@ function append(tag) {
 	</div>
 	<div>
 	<c:choose>
-	<c:when test="${field.name eq 'text'}">	
+	<c:when test="${field.name eq 'text'}">
 	  <f:textarea id="clobs_text" name="clobs_text" value="${bean.text}"/>
 	  <script type="text/javascript">
 	  $(function() {

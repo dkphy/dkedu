@@ -16,23 +16,12 @@
 
             <ul class="menu clearfix">
                 <li class="current"><a href="${ctx}/">首页</a></li>
-                <li>
-                    <a href="${ctx}/dk_building.jspx">网络课程</a>
-                    <span class="sub_menu">
-                        <a href="${ctx}/dk_building.jspx">在线课程</a>
-                        <a href="${ctx}/dk_building.jspx">行业快递</a>
-                        <a href="${ctx}/dk_building.jspx">心知文库</a>
-                        <a href="${ctx}/dk_building.jspx">专业题库</a>
-                        <a href="${ctx}/dk_building.jspx">名师查询</a>
-                        <a href="${ctx}/dk_building.jspx">学习中心</a>
-                    </span>
-                </li>
-                <li><a href="https://jinshuju.net/f/x9Ls7G" target="_blank">在线报名</a></li>
-                <li><a href="${ctx}/dk_building.jspx">督导系统</a></li>
+                <li><a href="${ctx}/dk_building.jspx">大康教育</a></li>
+                <li><a href="https://jinshuju.net/f/x9Ls7G">心理咨询</a></li>
                 <li><a href="${ctx}/dk_building.jspx">OPS</a></li>
                 <li>
-                	[@Node number='information'; node]
-                    <a href="${node.url}">心理氧吧</a>
+                	[@Node number='news'; node]
+                    <a href="${node.url}">心理百科</a>
                     [/@Node]
                     <span class="sub_menu">
                     [@NodeList parent='news' limit='6';list]
@@ -48,6 +37,7 @@
                      [/@NodeList]   
                     </span>
                 </li>
+                <li><a href="${ctx}/dk_building.jspx">校友会</a></li>
                  
                 <li>
                     <a href="${ctx}/dk_introduce.jspx">关于我们</a>

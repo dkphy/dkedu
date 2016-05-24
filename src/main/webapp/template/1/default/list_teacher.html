@@ -33,11 +33,14 @@
                     </li>
  					[/#list]	
 					[/@InfoList]
+					<!-- 记录已展示记录的offset -->
+	                <div id="offset" style="display:block">1</div>
+	                <div id="show_more_list"></div>
                 </ul>
                
                
                 <div class="more_btn">
-                    <a href="javascript:;">查看更多文章 <span class="icon-double-arrow-d"></span></a>
+                    <a href="javascript:loadMore('${dy}', ${node.id}, 'info');" class="get_more">查看更多名师 <span class="icon-double-arrow-d"></span></a>
                 </div>
             </div>
 
@@ -53,7 +56,7 @@
                 
                 
                 <div class="hot_tests">
-                [@InfoList nodeId=node.id  limit='5';list]
+                [@InfoList nodeId=node.id  limit='9';list]
 				[#list list as info]
                     <div class="box">
                         <a href="${info.url}">
@@ -77,5 +80,17 @@
 </body>
 <script src="_files/js/jquery-1.9.1.min.js"></script>
 <script src="_files/js/common.js"></script>
+<script src="_files/js/common-dev.js"></script>
+<script type="text/javascript">
+	// 生成单条记录
+	function getOneRecordHTML(infoObj) {
+		var html = '<li><a href="'+infoObj.url+'">';
+		html += '<img src="'+infoObj.customs["teacherPhoto"] + '" width="110" height="160" alt="">';
+        html += '<div class="wd"><b>' + infoObj.title + '</b>';
+        html += '<span>'+infoObj.customs["teacherZc"]+'</span>';
+        html += '<p>' + infoObj.customs["informationSummary"] + '</p></div></a></li>';
+        return html;
+	}
+</script>
 </html>
 [/#escape]

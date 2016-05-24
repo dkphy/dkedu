@@ -206,7 +206,7 @@ a:hover{text-decoration:none;}
 .foot_bt .br span i{font-size:22px;margin-right:10px;vertical-align: middle;}
 
 
-.side_fixed{width:50px;position:fixed;right:20px;bottom:60px;z-index:999;}
+.side_fixed{width:50px;position:fixed;right:20px;bottom:90px;z-index:999;}
 .side_fixed:before{content:"";position:absolute;top:-12px;left:50%;margin-left:-4px;border-width:6px 4px;border-style: solid;border-color: transparent transparent #1bbc9b transparent}
 .side_fixed a{position:relative;width:50px;height:50px;display:block;margin-bottom:1px;background:#1bbc9b;color:#fff;text-align: center;line-height:50px;font-size:14px;}
 .side_fixed a span{font-size:30px;}

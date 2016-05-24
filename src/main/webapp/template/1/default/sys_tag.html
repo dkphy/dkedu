@@ -21,7 +21,7 @@
         <h1 class="com_tit">${tag.name}</h1>
         <div class="ct">
             <div class="main">
-               [@InfoPage tagId=tag.id pageSize=8;pagedList]
+               [@InfoPage tagId=tag.id pageSize=10;pagedList]
                 <ul class="post_list">
                    [#list pagedList.content as info]
                     <li>
@@ -36,7 +36,7 @@
                                 <span id="info_views">${info.bufferViews}</span>
                             </span>
                         </a>
-                        <div class="tags">
+                        <div class="tags" style="display:none">
                             <span class="icon-tag"></span>
                             [#list info.tags as tag]
                             <a href="${ctx}/tag/${tag.id?url}.jspx">${tag.name}</a>
@@ -44,10 +44,13 @@
                         </div>
                     </li>
                     	[/#list]
-                </ul>
                 [/@InfoPage]
+                <!-- 记录已展示记录的offset -->
+                <div id="offset" style="display:none">9</div>
+                <div id="show_more_list"></div>
+                </ul>
                 <div class="more_btn">
-                    <a href="javascript:;">查看更多文章 <span class="icon-double-arrow-d"></span></a>
+                    <a href="javascript:loadMore('${dy}', ${tag.id}, 'tag');" class="get_more">查看更多文章 <span class="icon-double-arrow-d"></span></a>
                 </div>
             </div>
 
@@ -102,5 +105,24 @@
 </body>
 <script src="_files/js/jquery-1.9.1.min.js"></script>
 <script src="_files/js/common.js"></script>
+<script src="_files/js/common-dev.js"></script>
+<script type="text/javascript">
+	// 生成单条记录
+	function getOneRecordHTML(infoObj) {
+		var html = '<li>';
+		html += '<a href="' + infoObj.url + '">';
+		html += '<img src="' + infoObj.smallImageUrl + '}" alt="">';
+        html += '<div class="wd" >';
+        html += '<b>'+ infoObj.title +'</b>';
+        var describ = infoObj.description.substring(80);
+        html += '<p>' + describ + '</p>';
+        html += '</div>';
+        html += ' <span class="view">';
+        html += '<i class="icon-view2"></i>';
+        html += '<span id="info_views">' + infoObj.bufferViews + '</span>';
+        html += '</span></a></li>';
+        return html;
+	}
+</script>
 </html>
 [/#escape]

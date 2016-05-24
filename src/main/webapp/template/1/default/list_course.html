@@ -16,7 +16,7 @@
         <h1 class="com_tit">${node.name}</h1>
         <div class="ct">
             <div class="main">
-               [@InfoPage nodeId=node.id pageSize='10';pagedList]
+               [@InfoPage nodeId=node.id pageSize='2';pagedList]
                 <ul class="thumb_list">
                   [#list pagedList.content as info]
                     <li>
@@ -26,10 +26,13 @@
                         </a>
                     </li>
                 [/#list]
+                <!-- 记录已展示记录的offset -->
+                <div id="offset" style="display:none">1</div>
+                <div id="show_more_list"></div>
                 </ul>
                 [/@InfoPage]
                 <div class="more_btn">
-                    <a href="javascript:;">查看更多文章 <span class="icon-double-arrow-d"></span></a>
+                    <a href="javascript:loadMore(${node.id});">查看更多文章 <span class="icon-double-arrow-d"></span></a>
                 </div>
             </div>
 
@@ -68,5 +71,57 @@
 </body>
 <script src="_files/js/jquery-1.9.1.min.js"></script>
 <script src="_files/js/common.js"></script>
+<script type="text/javascript">
+	/**
+	 加载更多记录
+	 =====================
+	 本功能在该页面未完成测试 by lvbin 2016-05-23
+	 =====================
+	 **/
+	function loadMore(nodeId) {
+		var loadCount = 2;
+		var pageNum = $("#pageNum")[0].innerHTML;
+		$.post("${dy}/ajaxInfo/"+nodeId+"_"+pageNum+".jspx",
+		{
+			pageSize:loadCount
+		},
+		function(data, status) {
+			var json = eval(data);
+			$.each(json, function(index, item){
+				var oldMsg = $("#show_more_list")[0].innerHTML;
+				$("#show_more_list")[0].innerHTML = oldMsg + "<br/>" + getOneRecordHTML(json[index]);
+				$("#pageNum")[0].innerHTML = ++pageNum;
+			});
+			if(json.length < loadCount) {
+				$(".get_more")[0].innerHTML = "--- 到底了 ---";
+			}
+		});
+	}
+	// 生成单条记录
+	function getOneRecordHTML(infoObj) {
+	
+		var html = '<li>
+                        <a href="${info.url}">
+                            <img src="${info.smallImage}" alt="" width="735" height="363"><!--尺寸735x363-->
+                            <b>${info.title}</b>
+                        </a>
+                    </li>';
+        /**
+		var html = '<li>';
+		html += '<a href="' + infoObj.url + '">';
+		html += '<img src="' + infoObj.smallImageUrl + '}" alt="">';
+        html += '<div class="wd" >';
+        html += '<b>'+ infoObj.title +'</b>';
+        var describ = infoObj.description.substring(80);
+        html += '<p>' + describ + '</p>';
+        html += '</div>';
+        html += ' <span class="view">';
+        html += '<i class="icon-view2"></i>';
+        html += '<span id="info_views">' + infoObj.bufferViews + '</span>';
+        html += '</span></a></li>';
+		**/
+        return html;
+	}
+</script>
 </html>
 [/#escape]

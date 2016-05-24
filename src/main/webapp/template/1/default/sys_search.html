@@ -16,7 +16,7 @@
     [#include 'head.html'/]
     <!--通用顶部 end-->
 
-[@InfoFulltextPage q=Param.q title=Param.title keyword=Param.keyword description=Param.description text=Param.text nodeId=Param.nodeId beginDate=Param.beginDate endDate=Param.endDate sort=Param.sort pageSize=10;pagedList]
+[@InfoFulltextPage q=Param.q title=Param.title keyword=Param.keyword description=Param.description text=Param.text nodeId=Param.nodeId beginDate=Param.beginDate endDate=Param.endDate sort=Param.sort pageSize=2;pagedList]
 <div class="wrap">
 	<h1 class="com_tit">搜索 <span class="highlight">${Param.q}</span> 的结果</h1>
 	[#if pagedList.totalElements > 0]
@@ -36,7 +36,7 @@
                                 <span>${info.bufferViews}</span>
                             </span>
                         </a>
-                        <div class="tags">
+                        <div class="tags" style="display:none">
 	                        <span class="icon-tag"></span>
                             [#list info.tags as tag]
 	                        <a href="${ctx}/tag/${tag.id?url}.jspx"> ${tag.name}</a>
@@ -44,11 +44,16 @@
                         </div>
 				</li>
 				[/#list]
+				<!-- 记录已展示记录的offset -->
+                <div id="offset" style="display:block">1</div>
+                <div id="show_more_list"></div>
 			</ul>
 			<div class="more_btn">
-                <a href="javascript:;">查看更多文章 <span class="icon-double-arrow-d"></span></a>
+                <a href="javascript:loadMore('${dy}', '${Param.q}', 'search');" class="get_more">查看更多文章 <span class="icon-double-arrow-d"></span></a>
             </div>
 		</div>
+		
+		[#include "page.html"/]
 		
 		[@Node number='article';node]
             <div class="sidebar">
@@ -84,5 +89,19 @@
 </body>
 <script src="_files/js/jquery-1.9.1.min.js"></script>
 <script src="_files/js/common.js"></script>
+<script src="_files/js/common-dev.js"></script>
+<script type="text/javascript">
+	// 生成单条记录
+	function getOneRecordHTML(infoObj) {
+		var html = '<li>';
+		html += '<a href="'+infoObj.url+'">';
+		html += '<img src="'+infoObj.smallImageUrl+'" alt="">';
+		html += '<div class="wd">';
+		html += '<b>'+ infoObj.highlightTitle +'</b>';
+		html += '<p>'+ infoObj.highlightText + '</p>';
+		html += '</div><span class="view"><i class="icon-view2"></i><span>'+infoObj.bufferViews+'</span></span></a></li>';
+        return html;
+	}
+</script>
 </html>
 [/#escape]
