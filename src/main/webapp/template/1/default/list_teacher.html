@@ -44,39 +44,9 @@
                 </div>
             </div>
 
+[#include 'list_news_right.html'/]
 
-
-             [@Node number='test';node]
-            <div class="sidebar">
-                <div class="side_tit">
-                    <b>最热</b>
-                    <a href="${node.url}">查看更多心理测试</a>
-                </div>
-                
-                
-                
-                <div class="hot_tests">
-                [@InfoList nodeId=node.id  limit='9';list]
-				[#list list as info]
-                    <div class="box">
-                        <a href="${info.url}">
-                            <img src="${info.smallImageUrl}" width="150" height="104" alt=""><!--尺寸120x174-->
-                            <span>${substring(info.description,40,'...')}</span>
-                        </a>
-                    </div>
-                    [/#list]
-                    [/@InfoList]
-                </div>
-
-            </div>
-             [/@Node]
-        </div>
-    </div>
-
-
-
-
- [#include 'end.html'/]
+[#include 'end.html'/]
 </body>
 <script src="_files/js/jquery-1.9.1.min.js"></script>
 <script src="_files/js/common.js"></script>

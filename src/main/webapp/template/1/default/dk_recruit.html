@@ -23,11 +23,11 @@
                 <li>
                     <div class="box">
                         <b class="tit">${info.title}</b>
-                        <p>[#noescape]${info.customs['positionIntroduction']}[/#noescape]</p>
+                        <p>[#noescape]${info.customs['positionIntroduction']!}[/#noescape]</p>
                         <strong class="tit">你的工作内容</strong>
-                           [#noescape] ${info.customs['jobs']}[/#noescape]
+                           [#noescape] ${info.customs['jobs']!}[/#noescape]
                         <strong class="tit">岗位要求</strong>
-                            [#noescape] ${info.customs['jobRequirement']}[/#noescape]
+                            [#noescape] ${info.customs['jobRequirement']!}[/#noescape]
 
                     </div>
                 </li>

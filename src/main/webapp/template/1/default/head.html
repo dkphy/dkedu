@@ -15,17 +15,18 @@
 
 
             <ul class="menu clearfix">
-                <li class="current"><a href="${ctx}/">首页</a></li>
-                <li><a href="${ctx}/dk_building.jspx">大康教育</a></li>
+                <li><a href="${ctx}/">首页</a></li>
+                <li><a href="${ctx}/dk_building.jspx">心理教育</a></li>
                 <li>
                 	[@Node number='consultationTeacher'; node]
                 		<a href="${node.url}">心理咨询</a>
                     [/@Node]
                 </li>
                 <li><a href="${ctx}/dk_building.jspx">OPS</a></li>
+                <!-- 心理氧吧 -->
                 <li>
                 	[@Node number='news'; node]
-                    <a href="${node.url}">心理百科</a>
+                    <a href="${node.url}">${node.name}</a>
                     [/@Node]
                     <span class="sub_menu">
                     [@NodeList parent='news' limit='6';list]
@@ -33,12 +34,6 @@
                         <a href="${node.url}">${node.name}</a>
                      [/#list]
                      [/@NodeList]
-                      
-                    [@NodeList parent='information' limit='6';list]
-					[#list list as node]
-                        <a href="${node.url}">${node.name}</a>
-                     [/#list]
-                     [/@NodeList]   
                     </span>
                 </li>
                 <li><a href="${ctx}/dk_building.jspx">校友会</a></li>
@@ -47,13 +42,13 @@
                     <a href="${ctx}/dk_introduce.jspx">关于我们</a>
                     <span class="sub_menu">
                     	[@Node number='teacherManager';node]
-                        <a href="${node.url}">师资力量</a>
+                        <a href="${node.url}">${node.name}</a>
                      	[/@Node]
                         <a href="${ctx}/dk_introduce.jspx">大康简介</a>
                         <a href="${ctx}/dk_process.jspx">发展历程</a>
                         <a href="${ctx}/dk_exchange.jspx">对外交流</a>
                         [@Node number='recruit';node]
-                        <a href="${node.url}">诚聘英才</a>
+                        <a href="${node.url}">${node.name}</a>
                         [/@Node]
                         <a href="${ctx}/dk_connection.jspx">联系我们</a>
                     </span>

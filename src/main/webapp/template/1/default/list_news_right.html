@@ -13,12 +13,12 @@
 </head>
 <body>
 	 
-            
-		[#if node.name=="心理测试" || node.name=="案例分享"]
+        <!-- 心理测试右侧：心理咨询师 -->
+		[#if node.number=="test"]
 				 <div class="sidebar">
                 <div class="side_tit">
-                    <b>心理咨询师</b>
-                    [@Node number='teacherManager';node]
+                    [@Node number='consultationTeacher';node]
+                   		<b>${node.name}</b>
                         <a href="${node.url}">>查看更多名师</a>
                      	[/@Node]
                 </div>
@@ -41,18 +41,19 @@
                
             </div>
 		
-		[#elseif node.name=="心理咨询"]
+		<!-- 心理咨询右侧：心理测试 -->
+		[#elseif node.number=="consultationTeacher" || node.number=="teacherManager"]
 				 [@Node number='test';node]
             <div class="sidebar">
                 <div class="side_tit">
                     <b>最热</b>
-                    <a href="${node.url}">查看更多心理测试</a>
+                    <a href="${node.url}">查看更多测试</a>
                 </div>
               <div class="hot_tests">
-              [@InfoList nodeId=node.id  limit='5';list]
+              [@InfoList nodeId=node.id limit='5';list]
 				[#list list as info]
                     <div class="box">
-                        <a href="#">
+                        <a href="${info.url}">
                             <img src="${info.smallImage}" alt=""><!--尺寸120x174-->
                             <b>${info.title}</b>
                         </a>
@@ -62,9 +63,53 @@
              </div>
             </div>
              [/@Node]
-             
-		[/#if]	
-
+        [#else]
+		<!-- 其余右侧：最新课程 -->
+        <div class="sidebar">
+                <div class="side_tit">
+                    <b>精品课程</b>
+                    <a href="#">查看更多课程</a>
+                </div>
+                <div class="hot_lessons">
+                    <div class="box">
+                        <img src="_files/img/p1-kqcc.jpg" width="320" height="200" alt=""><!--尺寸330x200-->
+                        <b>三天搞懂所有考点</b>
+                        <div class="price_bar">
+                            <strong>¥ 399</strong>
+                            <span>已有<i>56</i>人购买该课程</span>
+                        </div>
+                        <a href="#" class="buy_btn">购买该课程</a>
+                    </div>
+                    <div class="box">
+                        <img src="_files/img/p2-fzxlx.jpg" width="320" height="200" alt=""><!--尺寸330x200-->
+                        <b>发展心理学:读懂孩子到青少年</b>
+                        <div class="price_bar">
+                            <strong>¥ 199</strong>
+                            <span>已有<i>29</i>人购买该课程</span>
+                        </div>
+                        <a href="#" class="buy_btn">购买该课程</a>
+                    </div>
+                    <div class="box">
+                        <img src="_files/img/p3-shxlx.jpg" width="320" height="200" alt=""><!--尺寸330x200-->
+                        <b>社会心理学</b>
+                        <div class="price_bar">
+                            <strong>¥ 299</strong>
+                            <span>已有<i>119</i>人购买该课程</span>
+                        </div>
+                    	<a href="#" class="buy_btn">购买该课程</a>
+                	</div>
+                	<div class="box">
+                        <img src="_files/img/p4-yjzx.jpg" width="320" height="200" alt=""><!--尺寸330x200-->
+                        <b>领袖心理课易经的真相</b>
+                        <div class="price_bar">
+                            <strong>¥ 299</strong>
+                            <span>已有<i>69</i>人购买该课程</span>
+                        </div>
+                    	<a href="#" class="buy_btn">购买该课程</a>
+                	</div>
+            	</div>
+        </div>
+		[/#if]
 
 </body>
 <script src="_files/js/jquery-1.9.1.min.js"></script>
