@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.jspxcms.common.freemarker.Freemarkers;
 import com.jspxcms.common.orm.LimitRequest;
 import com.jspxcms.common.orm.Limitable;
 import com.jspxcms.common.util.JsonMapper;
 import com.jspxcms.common.web.Servlets;
 import com.jspxcms.core.domain.Info;
 import com.jspxcms.core.domain.Node;
+import com.jspxcms.core.domain.Tag;
 import com.jspxcms.core.fulltext.InfoFulltextService;
 import com.jspxcms.core.service.InfoQueryService;
 import com.jspxcms.core.service.NodeQueryService;
@@ -62,15 +62,18 @@ public class AjaxPageController {
 		List<SimpleInfoDTO> simpleList = new ArrayList<SimpleInfoDTO>();
 		for (Info info : list) {
 			SimpleInfoDTO si = new SimpleInfoDTO();
-//			si.setId(info.getId());
-//			si.setTitle(info.getTitle());
-//			si.setUrl(info.getUrl());
-//			si.setSmallImageUrl(info.getSmallImageUrl());
-//			si.setDescription(info.getDescription());
-//			si.setBufferViews(info.getBufferViews());
-//			si.setCustoms(info.getCustoms());
-//			si.setHighlightText(info.getHighlightText());
 			BeanUtils.copyProperties(info, si);
+			if(info.getTags() != null && !info.getTags().isEmpty()) {
+				Integer[] tagIds = new Integer[info.getTags().size()];
+				String[] tagNames = new String[info.getTags().size()];
+				List<Tag> tags = info.getTags();
+				for(int i=0; i<tags.size(); i++) {
+					tagIds[i] = tags.get(i).getId();
+					tagNames[i] = tags.get(i).getName();
+				}
+				si.setTagIds(tagIds);
+				si.setTagNames(tagNames);
+			}
 			simpleList.add(si);
 		}
 		
@@ -88,7 +91,7 @@ public class AjaxPageController {
 		Integer[] siteId = null;
 		Integer[] modelId = null;
 
-		Integer[] nodeIds = new Integer[]{};
+		Integer[] nodeIds = (nodeId==null) ? new Integer[]{} : new Integer[]{nodeId};
 		Integer[] tagIds = (tagId==null) ? new Integer[]{} : new Integer[]{tagId};
 		String[] treeNumber = null;
 		Integer[] attrId = null;
@@ -119,13 +122,15 @@ public class AjaxPageController {
 		Integer[] p4 = null;
 		Integer[] p5 = null;
 		Integer[] p6 = null;
-		
 		if(nodeId != null) {
-			treeNumber = getNodeTreeNumberList(nodeIds).toArray(
-					new String[nodeIds.length]);
-			nodeIds = new Integer[]{nodeId};
+			Node node = nodeQuery.get(nodeId);
+			// 如果node有子节点，会取出子节点的所有文章
+			if(node.getChildren() != null && !node.getChildren().isEmpty()) {
+				treeNumber = getNodeTreeNumberList(nodeIds).toArray(
+						new String[nodeIds.length]);
+				nodeIds = null;
+			}
 		}
-
 		Sort defSort = new Sort(Direction.DESC, "priority", "publishDate", "id");
 		Limitable limitable = new LimitRequest(offset, count, defSort);
 		return query.findList(modelId, nodeIds, attrId,
@@ -153,9 +158,11 @@ public class AjaxPageController {
 		Integer fragmentSize = null;
 		org.apache.lucene.search.Sort sort = null;
 		Limitable limitable = new LimitRequest(offset, count, null);
-		return fulltext.list(siteId, nodeId, null, beginDate,
+		List<Info> list = fulltext.list(siteId, nodeId, null, beginDate,
 					endDate, status, excludeId, q, title, keyword, description,
 					text, creator, author, fragmentSize, limitable, sort);
+		// XXX 原框架代码有bug，并未对结果集进行分页，此处手动分页
+		return list.subList(offset, offset+count);
 	}
 
 	private List<String> getNodeTreeNumberList(Integer[] nodeList) {

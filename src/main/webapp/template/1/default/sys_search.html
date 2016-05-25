@@ -16,7 +16,7 @@
     [#include 'head.html'/]
     <!--通用顶部 end-->
 
-[@InfoFulltextPage q=Param.q title=Param.title keyword=Param.keyword description=Param.description text=Param.text nodeId=Param.nodeId beginDate=Param.beginDate endDate=Param.endDate sort=Param.sort pageSize=2;pagedList]
+[@InfoFulltextPage q=Param.q title=Param.title keyword=Param.keyword description=Param.description text=Param.text nodeId=Param.nodeId beginDate=Param.beginDate endDate=Param.endDate sort=Param.sort pageSize=10;pagedList]
 <div class="wrap">
 	<h1 class="com_tit">搜索 <span class="highlight">${Param.q}</span> 的结果</h1>
 	[#if pagedList.totalElements > 0]
@@ -45,15 +45,13 @@
 				</li>
 				[/#list]
 				<!-- 记录已展示记录的offset -->
-                <div id="offset" style="display:block">1</div>
+                <div id="offset" style="display:none">9</div>
                 <div id="show_more_list"></div>
 			</ul>
 			<div class="more_btn">
-                <a href="javascript:loadMore('${dy}', '${Param.q}', 'search');" class="get_more">查看更多文章 <span class="icon-double-arrow-d"></span></a>
+                <a href="javascript:loadMore('${dy}', '${Param.q}', 'search');" class="get_more">查看更多 <span class="icon-double-arrow-d"></span></a>
             </div>
 		</div>
-		
-		[#include "page.html"/]
 		
 		[@Node number='article';node]
             <div class="sidebar">

@@ -1,6 +1,9 @@
 package com.jspxcms.core.web.fore;
 
+import java.util.List;
 import java.util.Map;
+
+import com.jspxcms.core.domain.Tag;
 
 public class SimpleInfoDTO {
 
@@ -17,10 +20,30 @@ public class SimpleInfoDTO {
 	private Integer bufferViews;
 
 	private Map<String, String> customs;
-	
+
 	private String highlightTitle;
-	
+
 	private String highlightText;
+
+	private Integer[] tagIds;
+
+	private String[] tagNames;
+
+	public Integer[] getTagIds() {
+		return tagIds;
+	}
+
+	public void setTagIds(Integer[] tagIds) {
+		this.tagIds = tagIds;
+	}
+
+	public String[] getTagNames() {
+		return tagNames;
+	}
+
+	public void setTagNames(String[] tagNames) {
+		this.tagNames = tagNames;
+	}
 
 	public Integer getId() {
 		return id;

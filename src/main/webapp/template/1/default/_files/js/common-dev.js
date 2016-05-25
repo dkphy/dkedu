@@ -37,3 +37,15 @@ function loadMore(ctx, targetId, type) {
 		}
 	});
 }
+
+// 生成标签
+function genTagHtml(infoObj) {
+	if(infoObj.tagIds == null || infoObj.tagIds == undefined || infoObj.tagIds.length == 0) {
+		return '';
+	}
+	var tagHtml = '';
+    for(var i=0; i<infoObj.tagIds.length; i++) {
+    	tagHtml += '<a href="' + infoObj.tagIds[i] + '.jspx">'+ infoObj.tagNames[i] +'</a>';
+    }
+	return '<div class="tags"><span class="icon-tag"></span>' + tagHtml + '</div>';
+}

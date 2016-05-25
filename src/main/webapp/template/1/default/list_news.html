@@ -37,6 +37,12 @@
                                 <span id="info_views">${info.bufferViews}</span>
                             </span>
                         </a>
+                        <div class="tags">
+                            [#if info.tags?size>0]<span class="icon-tag"></span>[/#if]
+                            [#list info.tags as tag]
+                            <a href="${ctx}/tag/${tag.id}.jspx">${tag.name}</a>
+                        	[/#list]
+                        </div>
                     </li>
                     [/#list]
                 [/@InfoPage]
@@ -45,7 +51,7 @@
                 <div id="show_more_list"></div>
                 </ul>
                 <div class="more_btn">
-                    <a href="javascript:loadMore('${dy}', ${node.id}, 'info');" class="get_more">查看更多 <span class="icon-double-arrow-d"></span></a>
+                    <a href="javascript:loadMore('${dy}', ${node.id}, 'info');" class="get_more">查看更多<span class="icon-double-arrow-d"></span></a>
                 </div>
             </div>
 	
@@ -74,7 +80,9 @@
         html += ' <span class="view">';
         html += '<i class="icon-view2"></i>';
         html += '<span id="info_views">' + infoObj.bufferViews + '</span>';
-        html += '</span></a></li>';
+        html += '</span></a>';
+        html += genTagHtml(infoObj);
+        html += '</li>';
         return html;
 	}
 </script>
