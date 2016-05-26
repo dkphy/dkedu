@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+body{padding:0;margin:0;font-size:12px;font-family:"Helvetica Neue", Helvetica , Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei";color:#545c66;text-align:center;background:#fff;}
+div,form,p,ul,li,ol,dl,dt,dd,h1,h2,h3,h4,h5,h6{ margin:0;padding:0;}
+button{ margin:0;padding:0; font-size:12px;}
+ul,ol,li,dl,dt,dd{list-style:none;}
+img{border:0;display:block;}
+table,td,tr,th,select,input,textarea{font-size:12px;font-family:"Helvetica Neue", Helvetica , Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei";}
+
+
+a{color:#9B9B9B;text-decoration:none;-webkit-transition:all .4s ease;-moz-transition:all .4s ease;-o-transition:all .4s ease;transition:all .4s ease;}
+a:hover{text-decoration:none;}
+
+html,body{height:100%;}
+body{background:url(img/error_page_bg.jpg) no-repeat center center;background-size:cover;}
+
+.box{width:700px;height:400px;position:absolute;top:50%;left:50%;margin-top:-200px;margin-left:-350px;border-radius:8px;background:#fff;box-shadow:0 3px 4px rgba(194,194,194,0.5);text-align: center;}
+h1{font-size:80px;color:#414550;font-family: Verdana;line-height:100px;padding:20px 0 26px;}
+h3{font-size:16px;color:#999;line-height:26px;font-weight: normal;}
+h2{font-size:56px;color:#222;line-height:80px;}
+.red{color:#ff0000;}
+h4{font-size:16px;color:#222;line-height:26px;font-weight: normal;}
+.box a{display:block;width:150px;height:40px;line-height:40px;border-radius:4px;margin:45px auto 0;background:#00BC9C;color:#BCEDE4;font-size:14px;text-align: center;}

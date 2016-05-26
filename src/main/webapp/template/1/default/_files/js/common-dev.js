@@ -45,7 +45,7 @@ function genTagHtml(infoObj) {
 	}
 	var tagHtml = '';
     for(var i=0; i<infoObj.tagIds.length; i++) {
-    	tagHtml += '<a href="' + infoObj.tagIds[i] + '.jspx">'+ infoObj.tagNames[i] +'</a>';
+    	tagHtml += '<a href="../tag/' + infoObj.tagIds[i] + '.jspx">'+ infoObj.tagNames[i] +'</a>';
     }
 	return '<div class="tags"><span class="icon-tag"></span>' + tagHtml + '</div>';
 }

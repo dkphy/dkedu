@@ -126,6 +126,7 @@ a:hover{text-decoration:none;}
 .header .menu li:hover>a{color:#1bbc9b;border-color:#1bbc9b;}
 .header .menu li .sub_menu{display:none;position:absolute;background:#fff;top:43px;width:90px;left:50%;margin-left:-45px;box-shadow:0 0 18px 0 rgba(0,0,0,0.3);}
 .header .menu li .sub_menu a{display:block;height:30px;line-height: 30px;color:#4a4a4a;font-size:14px;font-weight:bold;padding:8px 17px;float:none;}
+.header .menu li.current .sub_menu a{border:0 none;}
 .header .menu li .sub_menu a:hover{background:#1bbc9b;color:#fff;}
 .header .menu li:hover .sub_menu{display:block;}
 .header .search_box{position:absolute;right:0;top:42px;height:35px;border:1px solid #D3D3D3;border-color:transparent;border-radius: 3px;background:#fff;transition:all .4s ease;-webkit-transition:all .4s ease;-moz-transition:all .4s ease;-o-transition:all .4s ease;-ms-transition:all .4s ease;}
