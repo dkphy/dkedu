@@ -79,9 +79,11 @@
 var nodeNumber = '${info.node.hierarchy[1].number}';
 [#elseif node??]
 	[#if node.treeLevel == 0]
-	var nodeNumber = 'index';
+		var nodeNumber = 'index';
+	[#elseif node.number == 'teacherManager']
+		var nodeNumber = 'about';//师资力量高亮显示[关于我们]
 	[#else]
-	var nodeNumber = '${node.hierarchy[1].number}';
+		var nodeNumber = '${node.hierarchy[1].number}';
 	[/#if]
 [#elseif tag??]
 	var nodeNumber = 'none';
