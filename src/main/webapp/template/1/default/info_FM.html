@@ -70,13 +70,18 @@
             jPlayer: "#fm_player",
             cssSelectorAncestor: "#fm_player_container"
         }, [
+        	[#if info??]
             {
                 title:"${info.title}",
                 artist:"${info.customs['artist']}",
                 detail:"${info.customs['detail']}",
                 mp3:"${info.customs['mp3']}"
             },
-            [@InfoList node='FM' excludeId=info.id;list]
+            	[#assign exId=info.id]
+            [#else]
+            	[#assign exId=0]
+            [/#if]
+            [@InfoList node='FM' excludeId=exId;list]
 			[#list list as info]
             {
                 title:"${info.title}",
