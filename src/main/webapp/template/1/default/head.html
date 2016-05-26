@@ -13,18 +13,17 @@
                 </a>
             </span>
 
-
             <ul class="menu clearfix">
-                <li><a href="${ctx}/">首页</a></li>
+                <li id="index"><a href="${ctx}/">首页</a></li>
                 <li><a href="${ctx}/dk_building.jspx">心理教育</a></li>
-                <li>
+                <li id="teacherManager">
                 	[@Node number='consultationTeacher'; node]
                 		<a href="${node.url}">心理咨询</a>
                     [/@Node]
                 </li>
                 <li><a href="${ctx}/dk_building.jspx">OPS</a></li>
                 <!-- 心理氧吧 -->
-                <li>
+                <li id="news">
                 	[@Node number='news'; node]
                     <a href="${node.url}">${node.name}</a>
                     [/@Node]
@@ -38,7 +37,7 @@
                 </li>
                 <li><a href="${ctx}/dk_building.jspx">校友会</a></li>
                  
-                <li>
+                <li id="about">
                     <a href="${ctx}/dk_introduce.jspx">关于我们</a>
                     <span class="sub_menu">
                     	[@Node number='teacherManager';node]
@@ -71,6 +70,40 @@
     <!--顶部菜单与logo end-->
     <!--通用顶部 end-->
 
+<script type="text/javascript">
+/**
+	设置导航栏当前模块的下划线
+*/
+// 获取当前页面位置
+[#if info??]
+var nodeNumber = '${info.node.hierarchy[1].number}';
+[#elseif node??]
+	[#if node.treeLevel == 0]
+	var nodeNumber = 'index';
+	[#else]
+	var nodeNumber = '${node.hierarchy[1].number}';
+	[/#if]
+[#elseif tag??]
+	var nodeNumber = 'none';
+[#elseif Param.q??]
+	var nodeNumber = 'none';
+[#else]
+	var nodeNumber = 'about';
+[/#if]
+// 设置li的class属性为current，从而修改展示效果
+setCurrent(nodeNumber);
+function setCurrent(li) {
+	switch(li) {
+	case 'none':
+		return;
+	case 'recruit':
+		li = 'about';
+		break;
+	default:
+	}
+	document.getElementById(li).setAttribute("class", "current");
+}
+</script>
 
 </body>
 </html>

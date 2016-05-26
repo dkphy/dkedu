@@ -70,8 +70,13 @@
             jPlayer: "#fm_player",
             cssSelectorAncestor: "#fm_player_container"
         }, [
-            
-             [@InfoList node='FM';list]
+            {
+                title:"${info.title}",
+                artist:"${info.customs['artist']}",
+                detail:"${info.customs['detail']}",
+                mp3:"${info.customs['mp3']}"
+            },
+            [@InfoList node='FM' excludeId=info.id;list]
 			[#list list as info]
             {
                 title:"${info.title}",
