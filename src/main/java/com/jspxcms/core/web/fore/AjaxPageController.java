@@ -161,8 +161,12 @@ public class AjaxPageController {
 		List<Info> list = fulltext.list(siteId, nodeId, null, beginDate,
 					endDate, status, excludeId, q, title, keyword, description,
 					text, creator, author, fragmentSize, limitable, sort);
-		// XXX 原框架代码有bug，并未对结果集进行分页，此处手动分页
-		return list.subList(offset, offset+count);
+		// XXX 原框架代码有bug，并未对结果集进行分页，因此查出来的是符合条件的全部记录
+		if(list.size() < offset) {
+			return new ArrayList<Info>(0);
+		}
+		int endIndex = offset+count > list.size() ? list.size() : offset+count;
+		return list.subList(offset, endIndex);
 	}
 
 	private List<String> getNodeTreeNumberList(Integer[] nodeList) {
