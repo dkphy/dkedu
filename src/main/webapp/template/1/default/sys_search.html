@@ -60,8 +60,6 @@
                     <a href="${node.url}">查看更多热门文章</a>
                 </div>
                 
-                
-                <div class="proficients">
                 <div class="hot_tests">
                 [@InfoList nodeId=node.id  limit='10';list]
 				[#list list as info]
@@ -69,13 +67,14 @@
                         <a href="${info.url}">
                             <img src="${info.smallImageUrl}" width="150" height="105" alt=""><!--尺寸120x174-->
                             <b>${info.title}</b>
+                            <!-- 
                             <span>${substring(info.description,40,'...')}</span>
+                             -->
                         </a>
                     </div>
                     [/#list]
                     [/@InfoList]
                 </div>
-		</div>
             </div>
              [/@Node]
 	[/#if]

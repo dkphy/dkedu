@@ -21,7 +21,7 @@
         <h1 class="com_tit">${tag.name}</h1>
         <div class="ct">
             <div class="main">
-               [@InfoPage tagId=tag.id pageSize=2;pagedList]
+               [@InfoPage tagId=tag.id pageSize=10;pagedList]
                 <ul class="post_list">
                    [#list pagedList.content as info]
                     <li>
@@ -46,7 +46,7 @@
                     	[/#list]
                 [/@InfoPage]
                 <!-- 记录已展示记录的offset -->
-                <div id="offset" style="display:none">1</div>
+                <div id="offset" style="display:none">9</div>
                 <div id="show_more_list"></div>
                 </ul>
                 <div class="more_btn">
