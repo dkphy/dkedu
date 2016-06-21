@@ -47,6 +47,7 @@ public class AntZipUtils {
 	}
 
 	public static void zip(File[] srcFiles, FileFilter filter, String encoding) {
+		StringUtils.isBlank("");
 		Assert.notEmpty(srcFiles);
 		File destFile = new File(srcFiles[0].getParentFile(),
 				srcFiles[0].getName() + ".zip");
