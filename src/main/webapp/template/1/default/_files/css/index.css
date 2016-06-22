@@ -175,7 +175,13 @@
     .class_slide .swiper-slide .box a span{font-size:16px;}
 
     .col_hd a{font-size:12px;}
+
+    .news_slide_wrap{display:none;}
+    .news .news_list{margin: 50px 10px 0;}
     .news .news_list li p .text{font-size:14px;}
 
-    .fm .fm_list li{width:100%;}
+    .fm .fm_list li{width:100%;display:none;}
+    .fm .fm_list li:nth-of-type(1){display:block;}
+
+    .teacher_list .list_box:nth-of-type(2){display:none;}
 }
