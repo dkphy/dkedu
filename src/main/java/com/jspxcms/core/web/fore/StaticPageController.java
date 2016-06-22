@@ -69,5 +69,13 @@ public class StaticPageController {
 		return site.getTemplate("dk_building.html");
 	}
 	
+	@RequestMapping(value = "/list_new_news.jspx")
+	public String newNews(Integer page,Integer userId,Model modMap,HttpServletRequest request){
+		Site site = Context.getCurrentSite(request);
+		Map<String, Object> data = modMap.asMap();
+		ForeContext.setData(data, request);
+		ForeContext.setPage(data, page);
+		return site.getTemplate("list_new_news.html");
+	}
 	
 }

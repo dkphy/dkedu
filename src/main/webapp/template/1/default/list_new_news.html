@@ -1,0 +1,133 @@
+[#escape x as (x)!?html]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>最新资讯-陕西大康心理培训学校</title>
+    <meta name="keywords" content="">
+	<meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="_files/css/swiper.min.css">
+    <link rel="stylesheet" href="_files/css/common.css">
+    <link rel="stylesheet" href="_files/css/list.css">
+    [#include 'inc_js.html'/]
+</head>
+<body>
+
+	 [#include 'head.html'/]
+	
+	
+	 
+    <div class="wrap">
+        <h1 class="com_tit">最新资讯</h1>
+        <div class="ct">
+            <div class="main">
+                [@InfoPage nodeNumber='industry' pageSize='10';pagedList]
+                
+                <ul class="post_list">
+                	[#list pagedList.content as info]
+                    <li>
+                        <a href="${info.url}">
+                            <img src="${info.smallImageUrl}" alt=""><!--尺寸235x160-->
+                            <div class="wd" >
+                                <b>${info.title}</b>
+                                <p>${substring(info.description,80,'...')}</p>
+                            </div>
+                            <span class="view">
+                                <i class="icon-view2"></i>
+                                <span id="info_views">${info.bufferViews}</span>
+                            </span>
+                        </a>
+                        <div class="tags">
+                            [#if info.tags?size>0]<span class="icon-tag"></span>[/#if]
+                            [#list info.tags as tag]
+                            <a href="${ctx}/tag/${tag.id}.jspx">${tag.name}</a>
+                        	[/#list]
+                        </div>
+                    </li>
+                    [/#list]
+                </ul>
+                [/@InfoPage]
+                
+           [@InfoPage nodeNumber='article' pageSize='10';pagedList]
+                <ul class="post_list">
+                	[#list pagedList.content as info]
+                    <li>
+                        <a href="${info.url}">
+                            <img src="${info.smallImageUrl}" alt=""><!--尺寸235x160-->
+                            <div class="wd" >
+                                <b>${info.title}</b>
+                                <p>${substring(info.description,80,'...')}</p>
+                            </div>
+                            <span class="view">
+                                <i class="icon-view2"></i>
+                                <span id="info_views">${info.bufferViews}</span>
+                            </span>
+                        </a>
+                        <div class="tags">
+                            [#if info.tags?size>0]<span class="icon-tag"></span>[/#if]
+                            [#list info.tags as tag]
+                            <a href="${ctx}/tag/${tag.id}.jspx">${tag.name}</a>
+                        	[/#list]
+                        </div>
+                    </li>
+                    [/#list]
+                </ul>
+                [/@InfoPage]
+                
+		</div>
+		[@Node number='test';node]
+            <div class="sidebar">
+                <div class="side_tit">
+                    <b>最热</b>
+                    <a href="${node.url}">查看更多测试</a>
+                </div>
+              <div class="hot_tests">
+              [@InfoList nodeId=node.id limit='5';list]
+				[#list list as info]
+                    <div class="box">
+                        <a href="${info.url}">
+                            <img src="${info.smallImage}" alt=""><!--尺寸120x174-->
+                            <b>${info.title}</b>
+                        </a>
+                    </div>
+                     [/#list]
+                  [/@InfoList]
+             </div>
+             <div class="adv">
+                 <img src="_files/img/shizililiang.png" alt="">
+             </div>
+            </div>
+             [/@Node]
+	</div>
+	</div>
+		
+  [#include 'end.html'/]
+
+</body>
+<script src="_files/js/jquery-1.9.1.min.js"></script>
+<script src="_files/js/common.js"></script>
+<script src="_files/js/common-dev.js"></script>
+<script type="text/javascript">
+	// 生成单条记录
+	function getOneRecordHTML(infoObj) {
+		var html = '<li>';
+		html += '<a href="' + infoObj.url + '">';
+		html += '<img src="' + infoObj.smallImageUrl + '" alt="">';
+        html += '<div class="wd" >';
+        html += '<b>'+ infoObj.title +'</b>';
+        var describ = infoObj.description.substring(80);
+        html += '<p>' + describ + '</p>';
+        html += '</div>';
+        html += ' <span class="view">';
+        html += '<i class="icon-view2"></i>';
+        html += '<span id="info_views">' + infoObj.bufferViews + '</span>';
+        html += '</span></a>';
+        html += genTagHtml(infoObj);
+        html += '</li>';
+        return html;
+	}
+</script>
+</html>
+[/#escape]

@@ -65,7 +65,7 @@
             </div>
         </div>
     </div>
-    <!-- 最新资讯 start -->
+    
     <div class="news">
         <div class="news_slide_wrap">
             <div class="swiper-container news_slide">
@@ -92,12 +92,12 @@
                 <div class="swiper-button-prev swiper-button-white"></div>
             </div>
         </div>
+        
+    <!-- 最新资讯 start -->
         <div class="news_list">
             <div class="col_hd">
-            [@Node number='news';node]
                 <b class="tit">最新资讯</b>
-                <a href="${node.url}" target="_blank">查看更多 <span class="icon-arrow-r"></span></a>
-            [/@Node]
+                <a href="${ctx}/list_new_news.jspx" target="_blank">查看更多 <span class="icon-arrow-r"></span></a>
             </div>
             <ul class="list_main">
             	[@InfoList node='news' isIncludeChildren='true' limit='8';list]
@@ -203,7 +203,6 @@
     </div>
 
 [#include 'end.html'/]
-
 
 
 <script src="_files/js/jquery-1.9.1.min.js"></script>

@@ -39,7 +39,7 @@ public class HtmlUpdateJob implements Job {
 			Integer userId = map.getIntegerFromString(USER_ID);
 			htmlGenerator.makeAll(siteId, siteName, userId, true);
 			context.setResult(null);
-			logger.info("run html home job");
+			logger.info("run html all site job");
 		} catch (SchedulerException e) {
 			throw new JobExecutionException("Cannot get ApplicationContext", e);
 		}
