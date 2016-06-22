@@ -32,7 +32,7 @@ function loadMore(ctx, targetId, type) {
 					+ getOneRecordHTML(json[index]);
 			$("#offset")[0].innerHTML = ++offset;
 		});
-		if (json.length < loadCount) {
+		if (json.length <= 0) {
 			$(".get_more")[0].innerHTML = "--- 到底了 ---";
 		}
 	});
