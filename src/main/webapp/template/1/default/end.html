@@ -1,8 +1,4 @@
 [#escape x as (x)!?html]
-<html><head>
-<meta charset="UTF-8">
-</head>
-<body>
 <script type="text/javascript" src=_files/chatOnline.js></script>
 <script type="text/javascript" src=_files/chatOnline2.js></script>
  <!--通用底部 start-->
@@ -66,8 +62,19 @@
     <!--通用底部 end-->
 <script type="text/javascript">
 document.write(unescape("%3Cscript src='${ctx}/visit_log.jspx%3FsiteId%3D${site.id}%26url%3D")+document.location.href+unescape("%26referrer%3D")+document.referrer+unescape("' type='text/javascript'%3E%3C/script%3E"));
-</script>
-</body>
-</html>
 
+//SEO脚本
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
 [/#escape]

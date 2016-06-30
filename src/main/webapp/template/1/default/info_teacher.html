@@ -12,7 +12,6 @@
 <link rel="stylesheet" href="_files/css/swiper.min.css">
 <link rel="stylesheet" href="_files/css/common.css">
 <link rel="stylesheet" href="_files/css/detail.css">
-[#include 'inc_js.html'/]
 </head>
 <body>
 	[#include 'head.html'/]
@@ -38,29 +37,7 @@
         </div>
     </div>
 
-
-
 	[#include 'end.html'/]
 </body>
-<script src="_files/js/jquery-1.9.1.min.js"></script>
-<script src="_files/js/common.js"></script>
-<script type="text/javascript">
-	var share_tit = $("h1").eq(0).text(), share_desc = $(".post p").eq(0)
-			.text(), share_pic = $(".post img").eq(0).attr("src");
-	window._bd_share_config = {
-		common : {
-			bdText : share_tit,
-			bdDesc : share_desc,
-			bdPic : share_pic
-		},
-		share : [ {
-			"bdSize" : 16
-		} ]
-	}
-	with (document)
-		0[(getElementsByTagName('head')[0] || body)
-				.appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='
-				+ ~(-new Date() / 36e5)];
-</script>
 </html>
 [/#escape]
