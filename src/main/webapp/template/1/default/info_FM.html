@@ -74,7 +74,7 @@
             {
                 title:"${info.title}",
                 artist:"${info.customs['artist']}",
-                detail:"${info.customs['detail']}",
+                detail: "${info.customs['detail']}",
                 mp3:"${info.customs['mp3']}"
             },
             	[#assign exId=info.id]
@@ -84,9 +84,10 @@
             [@InfoList node='FM' excludeId=exId;list]
 			[#list list as info]
             {
+            	[#assign detail=1]
                 title:"${info.title}",
                 artist:"${info.customs['artist']}",
-                detail:"${info.customs['detail']}",
+                detail: ${detail},
                 mp3:"${info.customs['mp3']}"
             },
            	[/#list] 
@@ -106,7 +107,10 @@
 
             });
 
-
+function clearBr(detail) {
+alert('1');
+	return detail.replace("\n", "");
+}
 
 </script>
 
