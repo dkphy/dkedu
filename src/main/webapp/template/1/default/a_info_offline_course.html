@@ -1,0 +1,87 @@
+[#escape x as (x)!?html]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>${title}_${node.name}_${site.name}${global.customs['poweredby']}</title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta content="webkit" name="renderer" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="_files/a_css/common.css">
+    <link rel="stylesheet" href="_files/a_css/detail.css">
+</head>
+<body>
+
+    <!--通用顶部 start-->
+   [#include 'a_head.html'/]
+    <!--通用顶部 end-->
+    <div class="wrap page_post_detail">
+        <h1>${title}</h1>
+        <div class="main">
+            <!--富文本-->
+            [#noescape]${info.customs['courseNote']}[/#noescape]
+            <!--富文本-->
+        </div>
+
+        <div class="classes">
+            <div class="com_tit">
+                <h2>相关课程</h2>
+            </div>
+            <div class="class_list clearfix">
+                <div class="box_wrap">
+                    <div class="box">
+                        <a href="#"><img src="upload/class.jpg" alt=""></a><!--270x155-->
+                        <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
+                        <span>230人已购买</span>
+                        <a href="#" class="btn">￥199</a>
+                    </div>
+                </div>
+                <div class="box_wrap">
+                    <div class="box">
+                        <a href="#"><img src="upload/class.jpg" alt=""></a><!--270x155-->
+                        <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
+                        <span>230人已购买</span>
+                        <a href="#" class="btn">￥199</a>
+                    </div>
+                </div>
+                <div class="box_wrap">
+                    <div class="box">
+                        <a href="#"><img src="upload/class.jpg" alt=""></a><!--270x155-->
+                        <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
+                        <span>230人已购买</span>
+                        <a href="#" class="btn">￥199</a>
+                    </div>
+                </div>
+                <div class="box_wrap">
+                    <div class="box">
+                        <a href="#"><img src="upload/class.jpg" alt=""></a><!--270x155-->
+                        <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
+                        <span>230人已购买</span>
+                        <a href="#" class="btn">￥199</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!--通用底部start-->
+    [#include 'a_end.html'/]
+    <!--通用底部end-->
+
+
+    <!--侧边滑动通用start-->
+    [#include 'a_side.html'/]
+    <!--侧边滑动通用end-->
+</body>
+<script src="_files/a_js/jquery-1.9.1.min.js"></script>
+
+<script src="_files/a_js/common.js"></script>
+<script>
+
+</script>
+</html>
+[/#escape]

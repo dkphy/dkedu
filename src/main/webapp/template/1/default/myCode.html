@@ -1,0 +1,76 @@
+[#escape x as (x)!?html]
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title>查询成绩</title>
+<link href="_files/global.css" rel="stylesheet" />
+<link href="_files/style.css" rel="stylesheet" />
+[#include 'inc_js.html'/]
+<script type="text/javascript" src="${fore}/jquery.validation_zh_CN.js"></script>
+<script type="text/javascript"
+	src="${ctx}/static/vendor/My97DatePicker/cn_WdatePicker.js"></script>
+<style>
+.form-item {
+	margin-top: 20px;
+}
+
+.form-label {
+	float: left;
+	padding-left: 20px;
+	width: 150px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.form-input {
+	float: left;
+}
+
+label.error {
+	color: red;
+	font-style: italic;
+}
+
+em.required {
+	color: red;
+	font-style: normal;
+}
+</style>
+<script type="text/javascript">
+	$(function() {
+		$("#validForm").validate();
+	});
+</script>
+</head>
+<body>
+	[#include 'inc_header.html'/]
+	<br/>
+
+	<table align="center" border="1px" width="300px" height="100px">
+		<tr weight="20px">
+			<td colspan="4">查询成绩：</td>
+		</tr>
+		<tr>
+			<td>姓名</td>
+			<td>身份证号</td>
+			<td>成绩</td>
+			<td>操作</td>
+		</tr>
+		<tr>
+			<td>${codeList.name}</td>
+			<td>${codeList.idCard}</td>
+			<td>${codeList.score}</td>
+			<td><a href="updateCode.jspx">修改</a>&nbsp;&nbsp;&nbsp;
+				<a href="deleteCode.jspx">删除</a></td>
+		</tr>
+	</table>
+
+
+	<br>
+	<br> [#include 'inc_friendlink.html'/] 
+	[#include 'inc_footer.html'/]
+</body>
+</html>
+[/#escape]
+

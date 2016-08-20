@@ -177,7 +177,7 @@ parent.frames["left"].location.href="left.do";
      </td>
     <td><c:out value="${bean.id}"/><f:hidden name="id" value="${bean.id}"/></td>
     <td><span style="padding-left:${showDescendants ? bean.treeLevel*12 : 0}px"><f:text name="name" value="${bean.name}" style="width:120px;"/></span></td>
-    <td align="center"><f:text name="number" value="${bean.number}" readonly="true" style="width:120px;"/></td>
+    <td align="center"><f:text name="number" value="${bean.number}" style="width:120px;"/></td>
     <td align="left">${bean.nodeModel.name}<c:if test='${!empty bean.infoModel}'>,${bean.infoModel.name}</c:if></td>
     <td align="center"><f:text name="views" value="${bean.views}" style="width:50px;text-align:right;"/></td>
     <td align="center"><f:checkbox name="hidden" value="${bean.hidden}"/></td>

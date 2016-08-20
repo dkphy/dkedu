@@ -1,0 +1,121 @@
+[#escape x as (x)!?html]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>${title}_${node.name}_${site.name}${global.customs['poweredby']}</title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta content="webkit" name="renderer" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="_files/a_css/common.css">
+    <link rel="stylesheet" href="_files/a_css/detail.css">
+</head>
+<body>
+    <!--通用顶部 start-->
+
+    [#include 'a_head.html'/]
+    <!--通用顶部 end-->
+    <div class="wrap page_psychology_detail">
+            <div class="ct clearfix">
+                <div class="post_head">
+                    <h1>${info.title}</h1>
+                    <div class="info">
+                        <span>
+                            <i class="icon-tag2"></i>
+                            <a href="#">标签1</a>
+                            <a href="#">标签2</a>
+                        </span>
+                        <span>
+                            <i class="icon-view"></i>
+                            <span id="info_views"></span>
+                        </span>
+						<script type="text/javascript">
+							$("#info_views").load("${dy}/info_views/${info.id}.jspx?d="+new Date()*1);
+						</script>
+                    </div>
+                </div>
+                <div class="post_main">
+                    <!--富文本-->
+                    [#noescape]${info.customs['note']}[/#noescape]
+                    <!--富文本-->
+                </div>
+                <div class="share_box">
+                    <div class="share bdsharebuttonbox">
+                        <span>分享至：</span>
+                        <a class="bds_weixin icon-wx" data-cmd="weixin" title="分享到微信" href="#"></a>
+                        <a class="bds_qzone icon-qqzone" data-cmd="qzone" title="分享到QQ空间" href="#"></a>
+                        <a class="bds_douban icon-douban" data-cmd="douban" title="分享到豆瓣网" href="#"></a>
+                        <a class="bds_tsina icon-weibo" data-cmd="tsina" title="分享到新浪微博" href="#"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="qrcode">
+                    <img src="_files/a_upload/sidebar_qrcode.png" alt="">
+                    <b>报名电话：029-89399618</b>
+                </div>
+
+            </div>
+
+            <div class="classes">
+                <div class="com_tit">
+                    <h2>相关课程</h2>
+                </div>
+                <div class="class_list clearfix">
+                    <div class="box_wrap">
+                        <div class="box">
+                            <a href="#"><img src="upload/class.jpg" alt=""></a><!--270x155-->
+                            <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
+                            <span>230人已购买</span>
+                            <a href="#" class="btn">￥199</a>
+                        </div>
+                    </div>
+                    <div class="box_wrap">
+                        <div class="box">
+                            <a href="#"><img src="upload/class.jpg" alt=""></a><!--270x155-->
+                            <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
+                            <span>230人已购买</span>
+                            <a href="#" class="btn">￥199</a>
+                        </div>
+                    </div>
+                    <div class="box_wrap">
+                        <div class="box">
+                            <a href="#"><img src="upload/class.jpg" alt=""></a><!--270x155-->
+                            <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
+                            <span>230人已购买</span>
+                            <a href="#" class="btn">￥199</a>
+                        </div>
+                    </div>
+                    <div class="box_wrap">
+                        <div class="box">
+                            <a href="#"><img src="upload/class.jpg" alt=""></a><!--270x155-->
+                            <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
+                            <span>230人已购买</span>
+                            <a href="#" class="btn">￥199</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    </div>
+
+
+
+    <!--通用底部start-->
+    [#include 'a_end.html'/]
+    <!--通用底部end-->
+
+
+    <!--侧边滑动通用start-->
+    [#include 'a_side.html'/]
+    <!--侧边滑动通用end-->
+</body>
+<script src="_files/a_js/jquery-1.9.1.min.js"></script>
+
+<script src="_files/a_js/common.js"></script>
+<script>
+
+</script>
+</html>
+[/#escape]

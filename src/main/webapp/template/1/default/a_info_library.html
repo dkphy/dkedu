@@ -1,0 +1,124 @@
+[#escape x as (x)!?html]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>大康</title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta content="webkit" name="renderer" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="_files/a_css/common.css">
+    <link rel="stylesheet" href="_files/a_css/detail.css">
+</head>
+<body>
+
+    <!--通用顶部 start-->
+	[#include 'a_head.html'/]
+    <!--通用顶部 end-->
+    <div class="wrap page_database_detail">
+        <div class="ct">
+            <h1><span class="icon-pdf"></span>摄影基本功，你必须要理解的构图真谛！</h1>
+            <div class="intro">
+                上传于  2016-07-04 ｜ 暂无评价 ｜ 3人阅读  ｜  9次下载
+            </div>
+            <div class="main" id="pdf">
+
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="share_box">
+                <div class="share bdsharebuttonbox">
+                    <span>分享至：</span>
+                    <a class="bds_weixin icon-wx" data-cmd="weixin" title="分享到微信" href="#"></a>
+                    <a class="bds_qzone icon-qqzone" data-cmd="qzone" title="分享到QQ空间" href="#"></a>
+                    <a class="bds_douban icon-douban" data-cmd="douban" title="分享到豆瓣网" href="#"></a>
+                    <a class="bds_tsina icon-weibo" data-cmd="tsina" title="分享到新浪微博" href="#"></a>
+                </div>
+            </div>
+
+            <a href="javascript:;" class="btn save">收藏</a>
+            <a href="#" class="btn download">下载</a>
+
+            <div class="database_hot_list">
+                <div class="com_tit long">
+                    <h2>热门题库</h2>
+                </div>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span>&gt;</span>手机直播的连麦功能分析与交互建议
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span>&gt;</span>2015年部分主题作品整理
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span>&gt;</span>米吸艺术小店手绘教程
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span>&gt;</span>直播App的概念动效A Live Stream
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span>&gt;</span>万达30周年LOGO设计
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span>&gt;</span>SA9527-长沙地标性建筑引导页SA9527-长沙地标性建筑引导页
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span>&gt;</span>【艾佳品牌】吉祥物&信息图
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--通用底部start-->
+    [#include 'a_end.html'/]
+    <!--通用底部end-->
+
+
+    <!--侧边滑动通用start-->
+    [#include 'a_side.html'/]
+    <!--侧边滑动通用end-->
+</body>
+<script src="_files/a_js/jquery-1.9.1.min.js"></script>
+<script src="_files/a_js/pdfobject.min.js"></script>
+<script src="_files/a_js/common.js"></script>
+<script>
+    /*PDF插件,文档地址:https://pdfobject.com/*/
+    PDFObject.embed("https://pdfobject.com/pdf/sample-3pp.pdf", "#pdf");
+    /*分享*/
+    var share_tit=$("h1").eq(0).text(),
+            share_desc='',
+            share_pic='';
+    window._bd_share_config = {
+        common : {
+            bdText : share_tit,
+            bdDesc : share_desc,
+            bdPic : share_pic
+        },
+        share : [{
+            "bdSize" : 16
+        }]
+    }
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+
+</script>
+</html>
+[/#escape]

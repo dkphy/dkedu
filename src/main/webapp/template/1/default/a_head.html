@@ -1,0 +1,42 @@
+[#escape x as (x)!?html]
+    <div class="header">
+        <div class="wrap">
+            <span class="menu_btn" id="menu_btn">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+            <ul class="menu clearfix">
+                <li class="current">
+                	<a href="${ctx}/dk_edu.jspx">首页</a></li>
+                <li>
+                [@Node number='offlineCourse'; node]
+                	<a href="${node.url}">线下课程</a>
+                [/@Node]
+                </li>
+                <li>
+                [@Node number='internetCourse'; node]
+                	<a href="#">网络课程</a>
+                [/@Node]
+                </li>
+                <li>
+                [@Node number='leaderCourse'; node]
+                	<a href="${node.url}">领袖心理课</a>
+                [/@Node]
+                </li>
+                <li><a href="#">在线报名</a></li>
+                
+                <li>
+                [@Node number = 'questions'; node]
+                	<a href="${node.url}">文库题库</a>
+                [/@Node]
+                </li>
+                <li><a href="#">学习中心</a></li>
+            </ul>
+            <div class="login_box">
+                <a href="#">登录</a>
+                <a href="#">注册</a>
+            </div>
+        </div>
+    </div>
+[/#escape]

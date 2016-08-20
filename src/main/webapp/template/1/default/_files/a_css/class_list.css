@@ -1,0 +1,120 @@
+@charset "utf-8";
+
+.live_class{padding:40px 0 150px;}
+.live_class .list{padding:50px 0;margin:0 -10px;}
+.live_class .list .box{width:25%;float:left;overflow:hidden;}
+.live_class .list .box a{display:block;margin:10px;background:#fff;padding:15px;position: relative;border-bottom:10px solid #e5e6e6;border-radius:8px;-webkit-backface-visibility: hidden;backface-visibility: hidden;}
+.live_class .list .box a:hover{ -webkit-transform: translateY(-5px);-moz-transform: translateY(-5px);-o-transform: translateY(-5px);transform: translateY(-5px);}
+.live_class .list .box img{width:90px;position:absolute;right:15px;top:15px;}
+.live_class .list .box b{display: block;margin-right:105px;font-weight:normal;color:#333;font-size:18px;line-height:30px;height:90px;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;}
+.live_class .list .box p{padding-top:21px;margin-bottom:8px;line-height:24px;font-size:14px;color:#777;height:120px;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 5;-webkit-box-orient: vertical;}
+.live_class .list .box.long img{display:block;position:static;width:100%;}
+.live_class .list .box.long b{margin:0;padding-top:14px;height:30px;-webkit-line-clamp: 1;}
+.live_class .list .box.long p{padding-top:18px;}
+.live_class .list .box .over{border-radius:8px 8px 2px 2px;position: absolute;left:0;right:0;top:0;bottom:0;filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e4d1433b',endColorstr='#e4d1433b');     /* IE6,IE7 */
+    -ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#e4d1433b, endColorstr=#e4d1433b)";     /* IE8 */
+    background: rgba(209,67,59,0.9);opacity: 0;transition:all .4s ease;-webkit-transition:all .4s ease;-moz-transition:all .4s ease;-o-transition:all .4s ease;-ms-transition:all .4s ease;}
+.live_class .list .box .over .tit{position:absolute;font-size:18px;text-align: center;line-height: 28px;bottom:50%;left:0;right:0;padding:0 10px;color:#fff;overflow: hidden;height: 56px;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;}
+.live_class .list .box .over .btn{position:absolute;top:50%;margin-top:30px;left:60px;right:60px;height:38px;line-height: 38px;color:#fff;font-size:18px;background:#7dc9c2;border-bottom:3px solid #68bcb3;border-radius:4px;text-align: center;}
+.live_class .list .box a:hover .over{opacity:1;}
+
+.online_class{padding:40px 0 200px;}
+.online_class .sort{text-align: center;}
+.online_class .sort a{display:inline-block;margin:0 10px;border-bottom:3px solid #ebbebc;font-size:18px;color:#333;width:102px;text-align: center;height:28px;line-height: 28px;}
+.online_class .sort a.current{border-color:#e2534b;}
+.online_class .list{padding:20px 0;}
+.online_class .list .box{float:left;width:25%;}
+.online_class .list .box a{display: block;margin:14px;padding-bottom:70px;background:#fff;position: relative;border-radius:4px;box-shadow:0 0 6px rgba(0,0,0,0.2);-webkit-backface-visibility: hidden;backface-visibility: hidden;}
+.online_class .list .box a:hover{ -webkit-transform: translateY(-5px);-moz-transform: translateY(-5px);-o-transform: translateY(-5px);transform: translateY(-5px);}
+.online_class .list .box img{width:100%;display:block;border-radius:4px 4px 0 0;}
+.online_class .list .box b{display:block;margin:10px 10px 0;height:30px;line-height:30px;font-size:16px;color:#333;font-weight:normal;text-overflow:ellipsis;overflow:hidden; white-space:nowrap;-webkit-transition:all .4s ease;-moz-transition:all .4s ease;-o-transition:all .4s ease;transition:all .4s ease;}
+.online_class .list .box a:hover b{color:#e8645a;}
+.online_class .list .box .info{height:22px;overflow:hidden;margin:0 10px;}
+.online_class .list .box .count{float:left;font-size:14px;color:#777;line-height:22px;}
+.online_class .list .box .cat{float:left;font-size:14px;color:#777;line-height:22px;background:#eaeaea;padding:0 12px;margin-left:10px;display: inline;}
+.online_class .list .box .price{font-size:20px;color:#e2534b;position:absolute;left:10px;bottom:16px;line-height:32px;}
+.online_class .list .box .try{font-size:14px;color:#528b86;position:absolute;right:15px;bottom:15px;line-height:34px;width:34px;text-align: center;border:1px solid #528b86;border-radius:100%;}
+.online_class .more{font-size:16px;display:block;margin:40px auto 0;color:#333;width:172px;height:30px;line-height: 30px;text-align: center;border:1px solid #0f090b;}
+
+.databases{padding:40px 0 130px;}
+.databases .main{position:relative;min-height: 1400px;padding-right:350px;}
+.database_list{margin:0 -12px;}
+.database_list ul{padding-bottom:80px;}
+.database_list li{float: left;width:25%;}
+.database_list li a{margin:8px 12px;display:block;}
+.database_list li img{display:block;width:100%;-webkit-transition:all .4s ease;-moz-transition:all .4s ease;-o-transition:all .4s ease;transition:all .4s ease;}
+.database_list li a:hover img{ -webkit-transform: translateY(-5px);-moz-transform: translateY(-5px);-o-transform: translateY(-5px);transform: translateY(-5px);}
+.database_list li .ft{padding:16px 0;border-bottom:1px solid #dfdfdf;}
+.database_list li .ft b{height:30px;line-height: 30px;text-align:center;display:block;font-weight: normal;color:#333333;font-size:16px;text-overflow:ellipsis;overflow:hidden; white-space:nowrap;-webkit-transition:all .4s ease;-moz-transition:all .4s ease;-o-transition:all .4s ease;transition:all .4s ease;}
+.database_list li .ft b:hover{color:#E2534B;}
+.database_list li .ft span{display:block;height:30px;line-height: 30px;text-align:center;color:#c0c0c0;font-size: 14px;}
+.database_list li .ft span strong{font-weight: normal;color:#e2534b;}
+.database_list li .ft span i{font-size:18px;margin-right:4px;vertical-align: middle;}
+.database_list .more{font-size:16px;display:block;margin:40px auto 0;color:#333;width:172px;height:30px;line-height: 30px;text-align: center;border:1px solid #0f090b;}
+
+.databases .sidebar{position:absolute;right:0;top:0;width:280px;}
+.databases .sidebar .list .box{margin-top:20px;}
+.databases .sidebar .list .box a{display: block;padding-bottom:70px;background:#fff;position: relative;border-radius:4px;box-shadow:0 0 6px rgba(0,0,0,0.2);-webkit-backface-visibility: hidden;backface-visibility: hidden;}
+.databases .sidebar .list .box a:hover{ -webkit-transform: translateY(-5px);-moz-transform: translateY(-5px);-o-transform: translateY(-5px);transform: translateY(-5px);}
+.databases .sidebar .list .box img{width:100%;display:block;border-radius:4px 4px 0 0;}
+.databases .sidebar .list .box b{display:block;margin:10px 10px 0;height:30px;line-height:30px;font-size:16px;color:#333;font-weight:normal;text-overflow:ellipsis;overflow:hidden; white-space:nowrap;-webkit-transition:all .4s ease;-moz-transition:all .4s ease;-o-transition:all .4s ease;transition:all .4s ease;}
+.databases .sidebar .list .box a:hover b{color:#e8645a;}
+.databases .sidebar .list .box .info{height:22px;overflow:hidden;margin:0 10px;}
+.databases .sidebar .list .box .count{float:left;font-size:14px;color:#777;line-height:22px;}
+.databases .sidebar .list .box .cat{float:left;font-size:14px;color:#777;line-height:22px;background:#eaeaea;padding:0 12px;margin-left:10px;display: inline;}
+.databases .sidebar .list .box .price{font-size:20px;color:#e2534b;position:absolute;left:10px;bottom:16px;line-height:32px;}
+.databases .sidebar .list .box .try{font-size:14px;color:#528b86;position:absolute;right:15px;bottom:15px;line-height:34px;width:34px;text-align: center;border:1px solid #528b86;border-radius:100%;}
+
+.psychology{padding:44px 0 86px;}
+.psychology .psychology_list{margin-right:355px;padding:25px 15px 55px;background:#fff;}
+.psychology .psychology_list ul{padding-top:36px;}
+.psychology .psychology_list li{margin-bottom:40px;}
+.psychology .psychology_list li a{display:block;position:relative;padding-left:275px;min-height: 140px;}
+.psychology .psychology_list li a img{width:255px;position: absolute;left:0;top:0;}
+.psychology .psychology_list li a b{display: block;line-height:24px;color:#333;font-weight: normal;font-size:20px;margin-bottom:16px;transition:all .4s ease;-webkit-transition:all .4s ease;-moz-transition:all .4s ease;-o-transition:all .4s ease;-ms-transition:all .4s ease;}
+.psychology .psychology_list li a:hover b{color:#e8645a;}
+.psychology .psychology_list li a p{line-height:24px;color:#777;font-size:16px;}
+.psychology .psychology_list .more{font-size:16px;display:block;margin:40px auto 0;color:#333;width:172px;height:30px;line-height: 30px;text-align: center;border:1px solid #0f090b;}
+
+.psychology .sidebar{position:absolute;right:0;top:0;width:330px;}
+.psychology .sidebar .qrcode{box-shadow:0 0 8px rgba(9,2,4,0.06);padding:40px 0;background:#fff;}
+.psychology .sidebar .qrcode img{display:block;margin:0 auto;border:1px solid #090204;}
+.psychology .sidebar .qrcode b{margin-top:40px;line-height: 40px;font-size:18px;color:#000;display:block;font-weight: normal;text-align: center;}
+
+
+@media screen and (max-width: 1200px) {
+    .live_class .com_tit h2{text-align: center;margin:0 auto;}
+    .live_class .list .box.long{display:none;}
+}
+@media screen and (max-width: 1000px) {
+    .live_class .list .box,.online_class .list .box{width:33.3%;}
+
+    .psychology .psychology_list{margin-right:0;}
+    .psychology .sidebar{display:none;}
+
+    .database_list li{width: 33.3%;}
+}
+@media screen and (max-width: 880px) {
+    .databases .main{padding-right: 0;}
+    .databases .sidebar{position: static;width: 100%;padding-top:60px;}
+    .databases .sidebar .list{margin:0 -10px;overflow: hidden;}
+    .databases .sidebar .list .box{width:50%;float:left;}
+    .databases .sidebar .list .box a{margin:10px;}
+    .database_list ul{padding-bottom: 10px;}
+}
+
+@media screen and (max-width: 760px) {
+    .live_class .list .box,.online_class .list .box{width:50%;}
+}
+@media screen and (max-width: 480px) {
+    .live_class,.online_class{padding:30px 0 80px;}
+    .live_class .list .box,.online_class .list .box{width:100%;}
+    .online_class .sort a{font-size: 16px;margin:0 5px;    width: 74px;}
+
+    .psychology .psychology_list li a{padding-left:0;}
+    .psychology .psychology_list li a img{position: static;width: 100%;}
+    .psychology .psychology_list li a b{margin-top:20px;}
+
+    .database_list li{width: 50%;}
+    .databases .sidebar .list .box{width:100%;}
+}

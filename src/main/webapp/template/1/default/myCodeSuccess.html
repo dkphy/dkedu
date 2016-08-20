@@ -1,0 +1,38 @@
+[#escape x as (x)!?html]
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<title>操作成功</title>
+<link href="_files/global.css" rel="stylesheet"/>
+<link href="_files/style.css" rel="stylesheet"/>
+[#include 'inc_js.html'/]
+<script type="text/javascript" src="${fore}/jquery.validation_zh_CN.js"></script>
+<script type="text/javascript" src="${ctx}/static/vendor/My97DatePicker/cn_WdatePicker.js"></script>
+<style>
+.form-item{margin-top:20px;}
+.form-label{float:left;padding-left:20px;width:150px;font-size:14px;font-weight:bold;}
+.form-input{float:left;}
+label.error {color:red;font-style:italic;}
+em.required {color:red;font-style:normal;}
+</style>
+<script type="text/javascript">
+$(function() {
+	$("#validForm").validate();
+});
+</script>
+</head>
+<body>
+[#include 'inc_header.html'/]
+	<br>
+<center>
+<b>	
+<font color="red" size="20"> 操作成功！！！</font>
+</b>
+</center>
+<br><br>
+[#include 'inc_friendlink.html'/]
+[#include 'inc_footer.html'/]
+</body>
+</html>
+[/#escape]
