@@ -106,7 +106,9 @@ public class RegisterController {
 		resp.addData("verifyMode", verifyMode);
 		resp.addData("id", user.getId());
 		resp.addData("username", user.getUsername());
-		resp.addData("email", user.getEmail());
+		if(StringUtils.isNotBlank(user.getEmail())) {
+			resp.addData("email", user.getEmail());
+		}
 		return resp.post();
 	}
 
@@ -247,9 +249,10 @@ public class RegisterController {
 			Response resp, GlobalRegister reg, String captcha, String username,
 			String password, String email, String gender) {
 		List<String> messages = resp.getMessages();
-		if (!Captchas.isValid(captchaService, request, captcha)) {
-			return resp.post(100, "error.captcha");
-		}
+		// 不使用验证码
+		// if (!Captchas.isValid(captchaService, request, captcha)) {
+		// return resp.post(100, "error.captcha");
+		// }
 		if (reg.getMode() == GlobalRegister.MODE_OFF) {
 			return resp.post(501, "register.off");
 		}
@@ -306,9 +309,9 @@ public class RegisterController {
 		if (!Validations.exist(registerUser)) {
 			return resp.notFound();
 		}
-		if (!registerUser.getEmail().equals(email)) {
-			return resp.notFound("email not found: " + email);
-		}
+//		if (!registerUser.getEmail().equals(email)) {
+//			return resp.notFound("email not found: " + email);
+//		}
 		if (reg.getMode() == GlobalRegister.MODE_OFF) {
 			return resp.warning("register.off");
 		}

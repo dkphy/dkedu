@@ -36,13 +36,34 @@
 	<div class="left" style="width:672px;">
 		[#if info.video??]
 		<div id="video"></div>
+		<div id="nowTime"></div>
 		<script type="text/javascript">
+		function loadedHandler(){
+	        if(CKobject.getObjectById('ckplayer_video').getType()){
+	            alert('播放器已加载，调用的是HTML5播放模块');
+	            CKobject.getObjectById('ckplayer_video').addListener('play',playHandler);
+	        }
+	        else{
+	            //alert('播放器已加载，调用的是Flash播放模块');
+	        	//CKobject.getObjectById('ckplayer_video').addListener('play','playHandler');
+	        	//CKobject.getObjectById('ckplayer_video').addListener('pause','pauseHandler');
+	        	CKobject.getObjectById('ckplayer_video').addListener('time','seekHandler');
+	        }
+	    }
+	    function seekHandler(t) {
+	    	CKobject._K_('nowTime').innerHTML='当前播放的时间点是(此值精确到小数点后三位，即毫秒)：'+t;
+	    	if(t > 60) {
+	    		alert('请付费');
+	    		CKobject.getObjectById('ckplayer_video').videoPause();
+	    	}
+	    }
 		var flashvars={
 			f:"${info.video}",
-			c:0，
-			p:1
+			c:0,
+			p:0,
+			loaded:'loadedHandler'
 		};
-		CKobject.embedSWF("_files/ckplayer/ckplayer.swf","video","ckplayer_video","672","449",flashvars);
+		var player = CKobject.embedSWF("_files/ckplayer/ckplayer.swf","video","ckplayer_video","672","449",flashvars);
 		</script>
 		[#else]
 		<embed src="${info.customs['flashaddr']}" allowFullScreen="true" quality="high" width="672" height="449" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
@@ -103,6 +124,10 @@
 </div>
 [#include 'inc_friendlink.html'/]
 [#include 'inc_footer.html'/]
+<script type="text/javascript">
+	//alert('pause');
+	//CKobject.getObjectById('ckplayer_video').playOrPause();
+</script>
 </body>
 </html>
 [/#escape]

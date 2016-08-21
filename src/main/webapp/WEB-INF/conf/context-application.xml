@@ -18,9 +18,9 @@
 			<list>
 				<!-- 其他模块也需要定义类似属性时，可以使用 -->
 				<value>/WEB-INF/conf/plugin/**/application*.properties</value>
-        <value>/WEB-INF/conf/application-menu.properties</value>
-        <value>/WEB-INF/conf/application-jpa.properties</value>
-        <value>/WEB-INF/conf/application.properties</value>
+		        <value>/WEB-INF/conf/application-menu.properties</value>
+		        <value>/WEB-INF/conf/application-jpa.properties</value>
+		        <value>/WEB-INF/conf/application.properties</value>
 				<value>/WEB-INF/conf/custom.properties</value>
 			</list>
 		</property>
