@@ -87,4 +87,53 @@ public class StaticPageController {
 		return site.getTemplate("a_index.html");
 	}
 	
+	/**
+	 * 网络课程列表页跳转
+	 * @param page
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(value = "/list_online.jspx")
+	public String indexListOnline(Integer page, HttpServletRequest request,
+			org.springframework.ui.Model modelMap) {
+		Site site = Context.getCurrentSite(request);
+		Map<String, Object> data = modelMap.asMap();
+		ForeContext.setData(data, request);
+		ForeContext.setPage(data, page);
+		return site.getTemplate("a_list_online_course.html");
+	}
+	/**
+	 * 认证考试跳转
+	 * @param page
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(value = "/list_online_test.jspx")
+	public String indexTest(Integer page, HttpServletRequest request,
+			org.springframework.ui.Model modelMap) {
+		Site site = Context.getCurrentSite(request);
+		Map<String, Object> data = modelMap.asMap();
+		ForeContext.setData(data, request);
+		ForeContext.setPage(data, page);
+		return site.getTemplate("a_list_online_course_test.html");
+	}
+	/**
+	 * 个人成长
+	 * @param page
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(value = "/list_online_person.jspx")
+	public String indexPerson(Integer page, HttpServletRequest request,
+			org.springframework.ui.Model modelMap) {
+		Site site = Context.getCurrentSite(request);
+		Map<String, Object> data = modelMap.asMap();
+		ForeContext.setData(data, request);
+		ForeContext.setPage(data, page);
+		return site.getTemplate("a_list_online_course_person.html");
+	}
+	
 }

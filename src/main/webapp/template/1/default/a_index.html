@@ -32,7 +32,7 @@
                         手机学习
 
                         <span class="qrcode">
-                            <img src="upload/side_qrcode4.png" alt="">
+                            <img src="_files/a_upload/side_qrcode4.png" alt="">
 
                         </span>
                     </a>
@@ -96,7 +96,7 @@
                     <h2><a href="#">最新课表</a></h2>
                 </div>
                 <div class="timetable">
-                    <img src="upload/timetable.jpg" alt="">
+                    <img src="_files/a_upload/timetable.jpg" alt="">
                 </div>
             </div>
         </div>
@@ -109,13 +109,16 @@
                 <h2><a href="#">热门课程</a></h2>
             </div>
             <div class="filter clearfix">
-                <a href="#">认证考试</a>
-                <a href="#">个人成长</a>
+               [@SpecialCategoryList;list]
+				[#list list as sc]
+                <a href="${ctx}/specials/${sc.id}.jspx">${sc.name}</a>
+                [/#list]
+                [/@SpecialCategoryList]
             </div>
             <div class="sidebar">
 
                 <div class="box">
-                    <a href="#"><img src="upload/class2.jpg" alt=""></a><!--270x155-->
+                    <a href="#"><img src="_files/a_upload/class2.jpg" alt=""></a><!--270x155-->
                     <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
                     <span>230人已购买</span>
                     <a href="#" class="btn">￥199</a>
@@ -125,37 +128,37 @@
 
                 <div class="class_list clearfix">
                     <div class="box">
-                        <a href="#"><img src="upload/class.jpg" alt=""></a><!--270x155-->
+                        <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->
                         <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
                         <span>230人已购买</span>
                         <a href="#" class="btn">￥199</a>
                     </div>
                     <div class="box">
-                        <a href="#"><img src="upload/class.jpg" alt=""></a><!--270x155-->
+                        <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->
                         <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
                         <span>230人已购买</span>
                         <a href="#" class="btn">￥199</a>
                     </div>
                     <div class="box">
-                        <a href="#"><img src="upload/class.jpg" alt=""></a><!--270x155-->
+                        <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->
                         <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
                         <span>230人已购买</span>
                         <a href="#" class="btn">￥199</a>
                     </div>
                     <div class="box">
-                        <a href="#"><img src="upload/class.jpg" alt=""></a><!--270x155-->
+                        <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->
                         <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
                         <span>230人已购买</span>
                         <a href="#" class="btn">￥199</a>
                     </div>
                     <div class="box">
-                        <a href="#"><img src="upload/class.jpg" alt=""></a><!--270x155-->
+                        <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->
                         <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
                         <span>230人已购买</span>
                         <a href="#" class="btn">￥199</a>
                     </div>
                     <div class="box">
-                        <a href="#"><img src="upload/class.jpg" alt=""></a><!--270x155-->
+                        <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->
                         <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
                         <span>230人已购买</span>
                         <a href="#" class="btn">￥199</a>
@@ -176,75 +179,38 @@
                 </a>
             </div>
             <div class="list">
+            	[@Node number = 'file'; node]
                 <div class="com_tit long">
-                    <h2><a href="#">文库</a></h2>
+                    <h2><a href="${node.url}">${node.title}</a></h2>
+                    
                 </div>
                 <ul>
+                	[@InfoList nodeId=node.id limit='9';list]
+                	[#list list as info]
                     <li>
-                        <a href="#">公务员结构化面试精品课</a>
+                        <a href="${info.url}">${info.title}</a>
                     </li>
-                    <li>
-                        <a href="#">构化面试精品课</a>
-                    </li>
-                    <li>
-                        <a href="#">公务员结构化面试</a>
-                    </li>
-                    <li>
-                        <a href="#">试精品课</a>
-                    </li>
-                    <li>
-                        <a href="#">员结构化面试精品课</a>
-                    </li>
-                    <li>
-                        <a href="#">公务员结构精品课</a>
-                    </li>
-                    <li>
-                        <a href="#">公务员结构化面精品课</a>
-                    </li>
-                    <li>
-                        <a href="#">务员结构官方的风格asd化面试精品课</a>
-                    </li>
-                    <li>
-                        <a href="#">务员结构试精品课</a>
-                    </li>
+                    [/#list]
+                    [/@InfoList]
                 </ul>
-
+			[/@Node]
             </div>
 
             <div class="list">
+            	[@Node number = 'topic'; node]
                 <div class="com_tit long">
                     <h2><a href="#">题库</a></h2>
                 </div>
                 <ul>
+                	[@InfoList nodeId=node.id limit='9';list]
+                	[#list list as info]
                     <li>
-                        <a href="#">公务员结构化面试精品课</a>
+                        <a href="${info.url}">${info.title}</a>
                     </li>
-                    <li>
-                        <a href="#">构化面试精品课</a>
-                    </li>
-                    <li>
-                        <a href="#">公务员结构化面试</a>
-                    </li>
-                    <li>
-                        <a href="#">试精品课</a>
-                    </li>
-                    <li>
-                        <a href="#">员结构化面试精品课</a>
-                    </li>
-                    <li>
-                        <a href="#">公务员结构精品课</a>
-                    </li>
-                    <li>
-                        <a href="#">公务员结构化面精品课</a>
-                    </li>
-                    <li>
-                        <a href="#">务员结构官方的风格asd化面试精品课</a>
-                    </li>
-                    <li>
-                        <a href="#">务员结构试精品课</a>
-                    </li>
+                    [/#list]
+                    [/@InfoList]
                 </ul>
-
+				[/@Node]
             </div>
         </div>
     </div>

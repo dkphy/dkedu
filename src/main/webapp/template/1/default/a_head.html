@@ -6,6 +6,11 @@
                 <i></i>
                 <i></i>
             </span>
+            <span class="logo">
+                <a href="${ctx}">
+                    <img src="_files/a_css/img/logo.png" alt="">
+                </a>
+            </span>
             <ul class="menu clearfix">
                 <li class="current">
                 	<a href="${ctx}/dk_edu.jspx">首页</a></li>
@@ -15,8 +20,8 @@
                 [/@Node]
                 </li>
                 <li>
-                [@Node number='internetCourse'; node]
-                	<a href="#">网络课程</a>
+                [@Node number = 'onlineCourse'; node]
+                	<a href="${node.url}">网络课程</a>
                 [/@Node]
                 </li>
                 <li>
@@ -33,6 +38,12 @@
                 </li>
                 <li><a href="#">学习中心</a></li>
             </ul>
+             <div class="search_box">
+                <form action="">
+                    <button type="submit" class="icon-search"></button>
+                    <span class="ipt"><input type="text" placeholder="输入搜索内容"></span>
+                </form>
+            </div>
             <div class="login_box">
                 <a href="#">登录</a>
                 <a href="#">注册</a>

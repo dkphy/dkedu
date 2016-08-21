@@ -22,9 +22,10 @@ a.zt-a1{color:#252525;font-size:20px;font-family:"Microsoft YaHei";text-decorati
 		<a href="${dy}/specials.jspx" class="zt-a1">专题</a>
 	</div>
 </div>
+<!-- 主题列表 -->
 <div class="w center">
 	<ul class="list-unstyled">
-		[@SpecialList isRecommend='true' limit='5';list]
+		[@SpecialList isRecommend ='true' limit='5';list]
 		[#list list as special]
 		<li class="left" style="[#if (special_index+1) % 5 != 0]margin-right:25px;[/#if]">
 			<a href="${ctx}/special/${special.id}.jspx" target="_blank" class="a fs14">

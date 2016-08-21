@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>大康</title>
+    <title>${info.title}</title>
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
     <meta content="webkit" name="renderer" />
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -18,9 +18,9 @@
     <!--通用顶部 end-->
     <div class="wrap page_database_detail">
         <div class="ct">
-            <h1><span class="icon-pdf"></span>摄影基本功，你必须要理解的构图真谛！</h1>
+            <h1><span class="icon-pdf"></span>${info.title}</h1>
             <div class="intro">
-                上传于  2016-07-04 ｜ 暂无评价 ｜ 3人阅读  ｜  9次下载
+                上传于  ${info.publishDate} ｜ 暂无评价 ｜ 3人阅读  ｜  9次下载
             </div>
             <div class="main" id="pdf">
 
@@ -46,41 +46,18 @@
                     <h2>热门题库</h2>
                 </div>
                 <ul>
+                    [@Node number='topic';node]
+                    [@InfoList nodeId=node.id  limit='5';list]
+					[#list list as info]
                     <li>
-                        <a href="#">
-                            <span>&gt;</span>手机直播的连麦功能分析与交互建议
+                        <a href="${info.url}">
+                            <span>&gt;</span>${info.title}
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
-                            <span>&gt;</span>2015年部分主题作品整理
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span>&gt;</span>米吸艺术小店手绘教程
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span>&gt;</span>直播App的概念动效A Live Stream
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span>&gt;</span>万达30周年LOGO设计
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span>&gt;</span>SA9527-长沙地标性建筑引导页SA9527-长沙地标性建筑引导页
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span>&gt;</span>【艾佳品牌】吉祥物&信息图
-                        </a>
-                    </li>
+                    [/#list]
+                    [/@InfoList]
+                    [/@Node]
+                    
                 </ul>
             </div>
         </div>
