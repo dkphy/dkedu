@@ -1,0 +1,214 @@
+[#escape x as (x)!?html]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>${category.name}</title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta content="webkit" name="renderer" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="_files/a_css/common.css">
+    <link rel="stylesheet" href="_files/a_css/detail.css">
+</head>
+<body>
+    <!--通用顶部 start-->
+
+    [#include 'a_head.html'/]
+    <!--通用顶部 end-->
+    <div class="page_online_detail">
+        <div class="page_head">
+            <div class="wrap ">
+                <img src="${special.smallImage}" alt=""><!--524x288-->
+                <div class="main">
+                    <h1>${special.title}</h1>
+                    <div class="score">
+                        <span class="icon-star active"></span>
+                        <span class="icon-star active"></span>
+                        <span class="icon-star active"></span>
+                        <span class="icon-star"></span>
+                        <span class="icon-star"></span>
+                        <span class="star_num">3</span>
+                        <span class="comment_num">(9人已评价)</span>
+                    </div>
+                    <ul class="info clearfix">
+                        <li>课时：${special.customs['courseCount']}</li>
+                        <li>浏览次数：11058</li>
+                        <li><a href="#">讲师：${special.customs['teacherName']}</a></li>
+                    </ul>
+                    <div class="btns">
+                        <a href="#" class="btn btn_buy"><b>${special.customs['price']}</b><span>购买该课程</span></a>
+                        <a href="#" class="btn">收藏</a>
+                        <a href="#" class="btn">立即试听</a>
+                    </div>
+
+                    <div class="share_box">
+                        <div class="share bdsharebuttonbox">
+                            <span>分享至：</span>
+                            <a class="bds_weixin icon-wx" data-cmd="weixin" title="分享到微信" href="#"></a>
+                            <a class="bds_qzone icon-qqzone" data-cmd="qzone" title="分享到QQ空间" href="#"></a>
+                            <a class="bds_douban icon-douban" data-cmd="douban" title="分享到豆瓣网" href="#"></a>
+                            <a class="bds_tsina icon-weibo" data-cmd="tsina" title="分享到新浪微博" href="#"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="wrap ct clearfix">
+            <div class="main">
+                <div class="nav clearfix">
+                    <a href="#" class="current" onclick="showDiv('c_post_main')">课程介绍</a>
+                    <a href="#" onclick="showDiv('c_schedule')">课时列表 (12)</a>
+                    <a href="#" onclick="showDiv('c_comment')">课程评价</a>
+                </div>
+                <div class="content">
+                    <!-- 课程介绍 -->
+                    <div id="c_post_main" class="post_main">
+                    [#noescape] ${special.customs['courseDesc']}[/#noescape]
+                    </div>
+                    
+                    <!-- 课时列表 -->
+                    <div id="c_schedule" class="schedule" style="display:none">
+                        <table>
+                            <tbody>
+                            	[@InfoPage specialId=special.id pageSize='10';pagedList]
+                            	[#list pagedList.content as info]
+                                <tr>
+                                    <td class="c_name">课时1：  ◇${info.title}</td>
+                                    <td class="c_time">${info.customs['courseTime']}</td>
+                                    <td class="c_btn"><a href="#">立即试看</a></td>
+                                </tr>
+                                [/#list]
+                                [/@InfoPage]
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- 课程评价 -->
+                    <div id="c_comment" class="comment" style="display:none">
+                        <div class="in">
+                            <div class="in_box">
+                                <textarea name="" id=""></textarea>
+                            </div>
+                            <div class="in_ft">
+                                <div class="set_score">
+                                    <b>评分:</b>
+                                    <div class="stars">
+                                        <span class="icon-star active"></span>
+                                        <span class="icon-star active"></span>
+                                        <span class="icon-star active"></span>
+                                        <span class="icon-star active"></span>
+                                        <span class="icon-star"></span>
+                                    </div>
+                                    <input type="hidden" value="4" id="grade_val">
+                                </div>
+                                <a href="javascript:;" class="sub_comment">发表评论</a>
+                            </div>
+                        </div>
+                        <div class="list">
+                            
+                            <div class="item">
+                                <img src="http://tva1.sinaimg.cn/crop.0.0.512.512.50/d0c2c2a7jw8f5ici98oi5j20e80e8jro.jpg" alt="">
+                                <b>用户名</b>
+                                <div class="stars">
+                                    <span class="icon-star active"></span>
+                                    <span class="icon-star active"></span>
+                                    <span class="icon-star active"></span>
+                                    <span class="icon-star active"></span>
+                                    <span class="icon-star"></span>
+                                </div>
+                                <div class="con">
+                                    <p>很棒，很不错，对机器很镜头多了一份了解。</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+           
+            <div class="sidebar">
+                <div class="com_tit long">
+                    <h2>课程教师</h2>
+                </div>
+                <div class="teacher_summary">
+                    <div class="hd">
+                        <a href="#">
+                        <img src="http://tva1.sinaimg.cn/crop.0.0.512.512.50/d0c2c2a7jw8f5ici98oi5j20e80e8jro.jpg" alt="">
+                        <b>北京雅趣摄影</b>
+                        </a>
+                    </div>
+                    <p>未来的车联网我们可以畅想，我今天想跟大家分享未来的出行体验，未来我管它叫私人管家式的体验，它是可关怀的。所以包括我们引入整个私人管家的设计。</p>
+                    <p>包括会基于凯迪拉克、别克和雪佛兰不同的车以及车辆的诊断的安全报告的输入。</p>
+                </div>
+            </div>
+
+            <div class="classes">
+                <div class="com_tit">
+                    <h2>相关课程</h2>
+                </div>
+                <div class="class_list clearfix">
+                   [@SpecialPage specialId=special.id pageSize='4';pagedList]
+					[#list pagedList.content as course] 
+                    <div class="box_wrap">
+                        <div class="box">
+                            <a href="${ctx}/special/${course.id}.jspx"><img src="${course.smallImage}" alt=""></a><!--270x155-->
+                            <b><a href="${ctx}/special/${course.id}.jspx">${course.title}</a></b>
+                            <span>230人已购买</span>
+                            <a href="${ctx}/special/${course.id}.jspx" class="btn">￥${course.customs['price']}</a>
+                        </div>
+                    </div>
+					[/#list]
+					[/@SpecialPage]
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--通用底部start-->
+    [#include 'a_end.html'/]
+    <!--通用底部end-->
+
+
+    <!--侧边滑动通用start-->
+    [#include 'a_side.html'/]
+    <!--侧边滑动通用end-->
+</body>
+<script src="_files/a_js/jquery-1.9.1.min.js"></script>
+
+<script src="_files/a_js/common.js"></script>
+<script>
+    /*分享*/
+    var share_tit=$("h1").eq(0).text(),
+            share_desc='',
+            share_pic='';
+    window._bd_share_config = {
+        common : {
+            bdText : share_tit,
+            bdDesc : share_desc,
+            bdPic : share_pic
+        },
+        share : [{
+            "bdSize" : 16
+        }]
+    }
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+
+	function showDiv(div) {
+		// hidden all
+		$('#c_post_main').css("display","none");
+		$('#c_comment').css("display","none");
+		$('#c_schedule').css("display","none");
+		
+		$('#c_post_main').removeClass("current");
+		$('#c_comment').removeClass("current");
+		$('#c_schedule').removeClass('current');
+		// show div
+		$('#' + div).css("display","block");
+		$('#' + div).addClass('current');
+	}
+</script>
+</html>
+[/#escape]

@@ -34,9 +34,10 @@
                 <a href="#">价格排序</a>
             </div>
             
-            <div class="list clearfix">
- 				[@SpecialList  limit='8';list]
-				[#list list as course]               
+			
+			<div class="list clearfix">
+ 				[@SpecialPage categoryId=category.id pageSize='8';pagedList]
+				[#list pagedList.content as course]               
                 <div class="box">
                     <a href="${ctx}/special/${course.id}.jspx">
                         <img src="${course.smallImage}" alt=""><!--270x155-->
@@ -50,10 +51,10 @@
                     </a>
                 </div>
                 [/#list]
-                [/@SpecialList]
+                [/@SpecialPage]
             </div>
 			
-			
+				
             <a href="javascript:;" class="more">点击查看更多</a>
         </div>
     </div>

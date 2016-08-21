@@ -23,9 +23,13 @@ import com.jspxcms.core.support.ForeContext;
  */
 @Controller
 public class SpecialsController {
-	public static final String TEMPLATE = "sys_specials.html";
-	public static final String TEMPLATE_LIST = "sys_specials_list.html";
+	//public static final String TEMPLATE = "sys_specials.html";
+	//	public static final String TEMPLATE_LIST = "sys_specials_list.html";
 
+	public static final String TEMPLATE = "a_list_online_course.html";
+	public static final String TEMPLATE_LIST = "a_list_online_course_special.html";
+	
+	
 	@RequestMapping(value = "/specials.jspx")
 	public String index(Integer page, HttpServletRequest request,
 			org.springframework.ui.Model modelMap) {
