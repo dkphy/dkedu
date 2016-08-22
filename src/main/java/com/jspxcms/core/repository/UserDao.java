@@ -36,6 +36,10 @@ public interface UserDao extends Repository<User, Integer>, UserDaoPlus {
 	public User findByQqOpenid(String qqOpenid);
 
 	public User findByWeiboUid(String weiboUid);
+	
+	public User findByMobile(String mobile);
+	
+	public User findByEmail(String email);
 
 	public User findByValidationTypeAndValidationKey(String type, String key);
 

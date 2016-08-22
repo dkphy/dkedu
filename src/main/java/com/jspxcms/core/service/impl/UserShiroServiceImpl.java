@@ -76,4 +76,20 @@ public class UserShiroServiceImpl implements UserShiroService {
 	public void setDao(UserDao dao) {
 		this.dao = dao;
 	}
+
+	@Override
+	public User findByMobile(String mobile) {
+		return dao.findByMobile(mobile);
+	}
+
+	@Override
+	public User findByEmail(String email) {
+		return dao.findByEmail(email);
+	}
+
+	@Override
+	public User findByWeixinUid(String weixinUid) {
+		// FIXME LVBIN Auto-generated method stub
+		return null;
+	}
 }

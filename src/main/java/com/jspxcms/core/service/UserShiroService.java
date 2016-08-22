@@ -11,9 +11,15 @@ import com.jspxcms.core.domain.User;
 public interface UserShiroService {
 	public User findByUsername(String username);
 
+	public User findByMobile(String mobile);
+	
+	public User findByEmail(String email);
+
 	public User findByQqOpenid(String qqOpenid);
 
 	public User findByWeiboUid(String weiboUid);
+	
+	public User findByWeixinUid(String weixinUid);
 
 	public User get(Integer id);
 

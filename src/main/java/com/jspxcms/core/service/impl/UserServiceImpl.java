@@ -336,13 +336,14 @@ public class UserServiceImpl implements UserService, OrgDeleteListener,
 	 */
 	@Transactional
 	public User register(String ip, int groupId, int orgId, int status,
-			String username, String password, String email, String qqOpenid,
+			String username, String password, String email, String mobile, String qqOpenid,
 			String weiboUid, String gender, Date birthDate, String bio,
 			String comeFrom, String qq, String msn, String weixin) {
 		User user = new User();
 		user.setUsername(username);
 		user.setRawPassword(password);
 		user.setEmail(email);
+		user.setMobile(mobile);
 		user.setQqOpenid(qqOpenid);
 		user.setWeiboUid(weiboUid);
 		user.setGender(gender);

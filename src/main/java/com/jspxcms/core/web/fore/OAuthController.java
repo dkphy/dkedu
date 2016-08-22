@@ -114,7 +114,7 @@ public class OAuthController {
 
 	@RequestMapping(value = "/oauth/register.jspx", method = RequestMethod.POST)
 	public String oauthRegisterSubmit(String username, String password,
-			String email, String gender, Date birthDate, String bio,
+			String email, String mobile, String gender, Date birthDate, String bio,
 			String comeFrom, String qq, String msn, String weixin,
 			HttpServletRequest request, HttpServletResponse response,
 			org.springframework.ui.Model modelMap) {
@@ -144,7 +144,7 @@ public class OAuthController {
 			weiboUid = token.getOpenid();
 		}
 		userService.register(ip, groupId, orgId, status, username, password,
-				email, qqOpenid, weiboUid, gender, birthDate, bio, comeFrom,
+				email, mobile, qqOpenid, weiboUid, gender, birthDate, bio, comeFrom,
 				qq, msn, weixin);
 		return "redirect:/oauth/authc/session.jspx?session=true";
 	}

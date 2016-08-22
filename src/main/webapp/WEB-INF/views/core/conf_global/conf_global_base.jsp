@@ -54,10 +54,12 @@ $(function() {
         <f:options itemLabel="name" itemValue="id" selected="${bean.uploadsPublishPoint.id}" items="${uploadsPublishPointList}"/>
       </select>
     </td>
+    <!-- 
     <td class="in-lab" width="15%"><s:message code="global.captchaErrors"/>:</td>
     <td class="in-ctt" width="35%">
     	<f:text name="captchaErrors" value="${bean.captchaErrors}" class="{'range':[0,65535]}" style="width:180px;"/><span class="in-prompt" title="<s:message code='global.captchaErrors.prompt'/>">&nbsp;</span>
     </td>
+     -->
   </tr>
   <tr>
     <td colspan="4" class="in-opt">

@@ -1,5 +1,8 @@
 package com.jspxcms.core.security;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.SavedRequest;
@@ -62,14 +66,22 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
 	@Override
 	protected boolean executeLogin(ServletRequest request,
 			ServletResponse response) throws Exception {
-		AuthenticationToken token = createToken(request, response);
+		// 按照用户名、邮箱或手机号查找用户
+		String principal = request.getParameter("username");
+		User user = findUser(principal);
+		if(user == null) {
+			AuthenticationToken token = createToken(request, response);
+			return onLoginFailure(token, new UnknownAccountException("no such user"), request, response);
+		}
+		
+		AuthenticationToken token = createToken(user.getUsername(), request, response);
 		if (token == null) {
 			String msg = "createToken method implementation returned null. A valid non-null AuthenticationToken "
 					+ "must be created in order to execute a login attempt.";
 			throw new IllegalStateException(msg);
 		}
-		String username = (String) token.getPrincipal();
-		User user = userShiroService.findByUsername(username);
+		// String username = (String) token.getPrincipal();
+		// User user = userShiroService.findByUsername(username);
 		HttpServletRequest hsr = (HttpServletRequest) request;
 		HttpServletResponse hsp = (HttpServletResponse) response;
 		Global global = globalShiroService.findUnique();
@@ -113,9 +125,38 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
 			// 将SavedRequest放回session
 			hsr.getSession().setAttribute(WebUtils.SAVED_REQUEST_KEY,
 					savedRequest);
-			logService.loginFailure(username + ":" + password, ip);
+			logService.loginFailure(principal + ":" + password, ip);
 			return onLoginFailure(token, e, request, response);
 		}
+	}
+
+	private User findUser(String principal) {
+		User user = null;
+		if(principal.contains("@")) {
+			// email
+			user = userShiroService.findByEmail(principal);
+		} else if(isMobile(principal)) {
+			// mobile
+			user = userShiroService.findByMobile(principal);
+		} else {
+			// username
+			user = userShiroService.findByUsername(principal);
+		}
+		return user;
+	}
+	
+	private static boolean isMobile(String principal) {
+		Pattern p = Pattern.compile("1\\d{10}$");
+		Matcher m = p.matcher(principal);
+		while(m.find()) {
+			return true;
+		}
+		return false;
+	}
+	
+	protected AuthenticationToken createToken(String username, ServletRequest request,
+			ServletResponse response) {
+		return super.createToken(username, getPassword(request), request, response);
 	}
 
 	@Override

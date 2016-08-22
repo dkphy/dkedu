@@ -75,7 +75,7 @@ public class RegisterController {
 
 	@RequestMapping(value = "/register.jspx", method = RequestMethod.POST)
 	public String registerSubmit(String captcha, String username,
-			String password, String email, String gender, Date birthDate,
+			String password, String email, String mobile, String gender, Date birthDate,
 			String bio, String comeFrom, String qq, String msn, String weixin,
 			HttpServletRequest request, HttpServletResponse response,
 			org.springframework.ui.Model modelMap) {
@@ -95,7 +95,7 @@ public class RegisterController {
 		int status = verifyMode == GlobalRegister.VERIFY_MODE_NONE ? User.NORMAL
 				: User.UNACTIVATED;
 		User user = userService.register(ip, groupId, orgId, status, username,
-				password, email, null, null, gender, birthDate, bio, comeFrom,
+				password, email, mobile, null, null, gender, birthDate, bio, comeFrom,
 				qq, msn, weixin);
 		if (verifyMode == GlobalRegister.VERIFY_MODE_EMAIL) {
 			GlobalMail mail = site.getGlobal().getMail();

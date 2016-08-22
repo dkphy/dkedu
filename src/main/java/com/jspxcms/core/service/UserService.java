@@ -62,7 +62,7 @@ public interface UserService {
 			Integer groupId, String ip);
 
 	public User register(String ip, int groupId, int orgId, int status,
-			String username, String password, String email, String qqOpenid,
+			String username, String password, String email, String mobile, String qqOpenid,
 			String weiboUid, String gender, Date birthDate, String bio,
 			String comeFrom, String qq, String msn, String weixin);
 
