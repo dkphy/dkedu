@@ -17,7 +17,7 @@ import com.jspxcms.plug.repository.UserCodeDaoPlus;
 @Component
 public class UserCodeDaoImpl implements UserCodeDaoPlus{
 
-	@Override
+	 
 	public UserCode find(String id, String name) {
 		JpqlBuilder jpql = new JpqlBuilder();
 		jpql.append("from UserCode ub where ub.name in (:name) " +
@@ -34,7 +34,7 @@ public class UserCodeDaoImpl implements UserCodeDaoPlus{
 		return jpql.list(em);
 	}
 	
-	@Override
+	 
 	public UserCode find(Integer id) {
 		JpqlBuilder jpql = new JpqlBuilder();
 		jpql.append("from UserCode ub where ub.id in (:id)");
