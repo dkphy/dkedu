@@ -16,15 +16,28 @@
     <!--通用顶部 start-->
    [#include 'a_head.html'/]
     <!--通用顶部 end-->
-
+	[#if Param.regType == 'byMobile']
 	<div class="wrap">
         <div class="res_col">
             <h1>注册成功</h1>
-            <h2>当前页面正在跳转，请稍后…</h2>
+            <h2>请点击以下按钮登录网站</h2>
             <p class="count" id="count"></p>
-            <a href="" class="jump_btn">手动跳转</a>
+            <a href="login.jspx" class="jump_btn">立刻登录</a>
         </div>
     </div>
+    [#else]
+    <input type="hidden" id="email" value="${Param.email}"/>
+    <div class="wrap">
+        <div class="res_col">
+            <div class="mail_res">
+                <img src="_files/a_css/img/logo.png" alt="">
+                <b>${Param.username}，欢迎您来到大康网校！</b>
+                <p>注册邮件已经发到您的邮箱，请登录邮箱激活帐号以完成验证</p>
+            </div>
+            <a href="" class="jump_btn" target="_blank">查看邮件</a>
+        </div>
+    </div>
+    [/#if]
 
     <!--通用底部start-->
     [#include 'a_end.html'/]
@@ -36,5 +49,39 @@
 </body>
 <script src="_files/a_js/jquery-1.9.1.min.js"></script>
 <script src="_files/a_js/common.js"></script>
+<script type="text/javascript">
+var hash = {
+    'qq.com': 'http://mail.qq.com',
+    'gmail.com': 'http://mail.google.com',
+    'sina.com': 'http://mail.sina.com.cn',
+    '163.com': 'http://mail.163.com',
+    '126.com': 'http://mail.126.com',
+    'yeah.net': 'http://www.yeah.net/',
+    'sohu.com': 'http://mail.sohu.com/',
+    'tom.com': 'http://mail.tom.com/',
+    'sogou.com': 'http://mail.sogou.com/',
+    '139.com': 'http://mail.10086.cn/',
+    'hotmail.com': 'http://www.hotmail.com',
+    'live.com': 'http://login.live.com/',
+    'live.cn': 'http://login.live.cn/',
+    'live.com.cn': 'http://login.live.com.cn',
+    '189.com': 'http://webmail16.189.cn/webmail/',
+    'yahoo.com.cn': 'http://mail.cn.yahoo.com/',
+    'yahoo.cn': 'http://mail.cn.yahoo.com/',
+    'eyou.com': 'http://www.eyou.com/',
+    '21cn.com': 'http://mail.21cn.com/',
+    '188.com': 'http://www.188.com/',
+    'foxmail.com': 'http://www.foxmail.com',
+    'outlook.com': 'http://www.outlook.com'
+}
+
+// 点击登录邮箱
+var _mail = $("#email").val().split('@')[1];    //获取邮箱域
+for (var j in hash){
+    if(j == _mail){
+        $(".jump_btn").show().attr("href", hash[_mail]);    //替换登陆链接
+    }
+}
+</script>
 </html>
 [/#escape]

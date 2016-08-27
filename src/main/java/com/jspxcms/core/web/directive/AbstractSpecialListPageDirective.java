@@ -56,7 +56,7 @@ public abstract class AbstractSpecialListPageDirective {
 		Date beginDate = Freemarkers.getDate(params, BEGIN_DATE);
 		Date endDate = Freemarkers.getEndDate(params, END_DATE);
 		Boolean isWithImage = Freemarkers.getBoolean(params, IS_WITH_IMAGE);
-		Boolean isRecommend = Freemarkers.getBoolean(params, IS_RECOMMEND);
+		Integer isRecommend = Freemarkers.getInteger(params, IS_RECOMMEND);
 
 		Sort defSort = new Sort(Direction.DESC, "creationDate", "id");
 		if (isPage) {

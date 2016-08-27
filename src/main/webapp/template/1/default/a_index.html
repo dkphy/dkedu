@@ -51,6 +51,12 @@
                 <div class="com_tit">
                     <h2><a href="#">精品课程</a></h2>
                 </div>
+                <!-- isRecommend: 1-精品课程，2-热门课程，0-不推荐 -->
+                [@SpecialList isRecommend=2; specList] 
+                [#list specList as info]
+                ${info.title}
+                [/#list]
+                [/@SpecialList]
                 <div class="class_list clearfix">
                     <div class="box">
                         <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->

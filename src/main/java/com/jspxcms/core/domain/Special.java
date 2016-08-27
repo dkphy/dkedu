@@ -1,7 +1,11 @@
 package com.jspxcms.core.domain;
 
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,6 +25,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
@@ -32,10 +37,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.MapKeyType;
 import org.hibernate.annotations.Type;
 
+import com.jspxcms.common.util.Reflections;
 import com.jspxcms.common.web.Anchor;
 import com.jspxcms.common.web.ImageAnchor;
 import com.jspxcms.common.web.ImageAnchorBean;
+import com.jspxcms.core.support.Commentable;
 import com.jspxcms.core.support.Siteable;
+import com.sun.star.uno.RuntimeException;
 
 /**
  * Special
@@ -45,7 +53,7 @@ import com.jspxcms.core.support.Siteable;
  */
 @Entity
 @Table(name = "cms_special")
-public class Special implements java.io.Serializable, Anchor, Siteable {
+public class Special implements java.io.Serializable, Anchor, Siteable, Commentable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String DEF_TEMPLATE = "sys_special.html";
@@ -182,7 +190,7 @@ public class Special implements java.io.Serializable, Anchor, Siteable {
 			setViews(0);
 		}
 		if (getRecommend() == null) {
-			setRecommend(false);
+			setRecommend(0);
 		}
 	}
 
@@ -211,7 +219,7 @@ public class Special implements java.io.Serializable, Anchor, Siteable {
 	private Integer refers;
 	private Integer views;
 	private Boolean withImage;
-	private Boolean recommend;
+	private Integer recommend;
 
 	public Special() {
 	}
@@ -449,12 +457,26 @@ public class Special implements java.io.Serializable, Anchor, Siteable {
 		this.withImage = withImage;
 	}
 
-	@Column(name = "f_is_recommend", nullable = false, length = 1)
-	public Boolean getRecommend() {
+	@Column(name = "f_is_recommend", nullable = false)
+	public Integer getRecommend() {
 		return this.recommend;
 	}
 
-	public void setRecommend(Boolean recommend) {
+	public void setRecommend(Integer recommend) {
 		this.recommend = recommend;
+	}
+	
+	@Override
+	public void addComments(int comments) {
+		// TODO 
+		throw new RuntimeException("hahaha");
+	}
+
+	@Override
+	public int getCommentStatus(User user, Collection<MemberGroup> groups) {
+		if (user == null) {
+			return SiteComment.STATUS_LOGIN;
+		}
+		return SiteComment.STATUS_ALLOWED;
 	}
 }

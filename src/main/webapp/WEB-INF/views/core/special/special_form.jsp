@@ -124,8 +124,9 @@ function imgCrop(name) {
     </script>
   </c:when>
   <c:when test="${field.name eq 'recommend'}">
-    <label><f:radio name="recommend" value="true" checked="${bean.recommend}" class="required" /><s:message code="yes"/></label>
-    <label><f:radio name="recommend" value="false" checked="${bean.recommend}" default="false" class="required" /><s:message code="no"/></label>
+    <label><f:radio name="recommend" value="1" checked="${bean.recommend}" class="required" />精品课程</label>
+    <label><f:radio name="recommend" value="2" checked="${bean.recommend}" class="required" />热门课程</label>
+    <label><f:radio name="recommend" value="0" checked="${bean.recommend}" class="required" />不推荐</label>
   </c:when>
   <c:when test="${field.name eq 'views'}">
     <f:text name="views" value="${oprt=='edit' ? bean.views : '0'}" class="required digit" style="width:180px;"/></td>

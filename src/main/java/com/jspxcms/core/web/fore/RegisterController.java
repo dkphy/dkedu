@@ -117,6 +117,7 @@ public class RegisterController {
 		resp.addData("verifyMode", verifyMode);
 		resp.addData("id", user.getId());
 		resp.addData("username", user.getUsername());
+		resp.addData("regType", regType);
 		if(StringUtils.isNotBlank(user.getEmail())) {
 			resp.addData("email", user.getEmail());
 		}
