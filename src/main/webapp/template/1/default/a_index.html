@@ -21,51 +21,21 @@
         <div class="wrap clearfix">
             <div class="main jp">
                 <div class="com_tit">
-                    <h2><a href="#">精品课程</a></h2>
+                    <h2>精品课程</h2>
                 </div>
                 <!-- isRecommend: 1-精品课程，2-热门课程，0-不推荐 -->
-                [@SpecialList isRecommend=2; specList] 
-                [#list specList as info]
-                ${info.title}
-                [/#list]
-                [/@SpecialList]
                 <div class="class_list clearfix">
+                 [@SpecialList isRecommend=1 limit='6'; specList] 
+                 [#list specList as info]
                     <div class="box">
-                        <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->
-                        <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
+                        <a href="${ctx}/special/${info.id}.jspx"><img src="${info.smallImage}" alt=""></a><!--270x155-->
+                        <b><a href="${ctx}/special/${info.id}.jspx">${info.title}</a></b>
                         <span>230人已购买</span>
-                        <a href="#" class="btn">￥199</a>
+                        <a href="${ctx}/special/${info.id}.jspx" class="btn">￥${info.customs['price']}</a>
                     </div>
-                    <div class="box">
-                        <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->
-                        <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
-                        <span>230人已购买</span>
-                        <a href="#" class="btn">￥199</a>
-                    </div>
-                    <div class="box">
-                        <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->
-                        <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
-                        <span>230人已购买</span>
-                        <a href="#" class="btn">￥199</a>
-                    </div>
-                    <div class="box">
-                        <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->
-                        <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
-                        <span>230人已购买</span>
-                        <a href="#" class="btn">￥199</a>
-                    </div>
-                    <div class="box">
-                        <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->
-                        <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
-                        <span>230人已购买</span>
-                        <a href="#" class="btn">￥199</a>
-                    </div>
-                    <div class="box">
-                        <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->
-                        <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
-                        <span>230人已购买</span>
-                        <a href="#" class="btn">￥199</a>
-                    </div>
+                    [/#list]
+                	[/@SpecialList]
+                    
                 </div>
 
             </div>
@@ -92,7 +62,7 @@
     <div class="col hot_col">
         <div class="wrap clearfix">
             <div class="com_tit long">
-                <h2><a href="#">热门课程</a></h2>
+                <h2>热门课程</h2>
             </div>
             <div class="filter clearfix">
                [@SpecialCategoryList;list]
@@ -101,57 +71,32 @@
                 [/#list]
                 [/@SpecialCategoryList]
             </div>
+            [@SpecialList isRecommend=2 limit='7'; specList] 
+            [#list specList as info]
+            [#if info_index==0]
             <div class="sidebar">
-
                 <div class="box">
-                    <a href="#"><img src="_files/a_upload/class2.jpg" alt=""></a><!--270x155-->
-                    <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
+                    <a href="${ctx}/special/${info.id}.jspx"><img src="${info.smallImage}" alt=""></a><!--270x155-->
+                    <b><a href="${ctx}/special/${info.id}.jspx">${info.title}</a></b>
                     <span>230人已购买</span>
-                    <a href="#" class="btn">￥199</a>
+                    <a href="${ctx}/special/${info.id}.jspx" class="btn">￥${info.customs['price']}</a>
                 </div>
             </div>
+            [#else]
             <div class="main">
-
                 <div class="class_list clearfix">
                     <div class="box">
-                        <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->
-                        <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
+                        <a href="${ctx}/special/${info.id}.jspx"><img src="${info.smallImage}" alt=""></a><!--270x155-->
+                        <b><a href="${ctx}/special/${info.id}.jspx">${info.title}</a></b>
                         <span>230人已购买</span>
-                        <a href="#" class="btn">￥199</a>
+                        <a href="${ctx}/special/${info.id}.jspx" class="btn">￥${info.customs['price']}</a>
                     </div>
-                    <div class="box">
-                        <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->
-                        <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
-                        <span>230人已购买</span>
-                        <a href="#" class="btn">￥199</a>
-                    </div>
-                    <div class="box">
-                        <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->
-                        <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
-                        <span>230人已购买</span>
-                        <a href="#" class="btn">￥199</a>
-                    </div>
-                    <div class="box">
-                        <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->
-                        <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
-                        <span>230人已购买</span>
-                        <a href="#" class="btn">￥199</a>
-                    </div>
-                    <div class="box">
-                        <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->
-                        <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
-                        <span>230人已购买</span>
-                        <a href="#" class="btn">￥199</a>
-                    </div>
-                    <div class="box">
-                        <a href="#"><img src="_files/a_upload/class.jpg" alt=""></a><!--270x155-->
-                        <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
-                        <span>230人已购买</span>
-                        <a href="#" class="btn">￥199</a>
-                    </div>
+                    
                 </div>
-
             </div>
+			[/#if]
+			[/#list]
+            [/@SpecialList]
 
         </div>
     </div>
