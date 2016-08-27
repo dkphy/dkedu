@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="_files/css/swiper.min.css">
     <link rel="stylesheet" href="_files/css/common.css">
     <link rel="stylesheet" href="_files/css/list.css">
+    <script src="_files/js/jquery-1.9.1.min.js"></script>
+	<script src="_files/js/common.js"></script>
+	<script src="_files/js/common-dev.js"></script>
+   
     [#include 'common_head.html'/]
 </head>
 <body>
@@ -33,7 +37,7 @@
                             </div>
                             <span class="view">
                                 <i class="icon-view2"></i>
-                                <span id="info_views">${info.bufferViews}</span>
+                                <span id="info_views_1">${info.bufferViews}</span>
                             </span>
                         </a>
                         <div class="tags">
@@ -62,9 +66,7 @@
   [#include 'end.html'/]
 
 </body>
-<script src="_files/js/jquery-1.9.1.min.js"></script>
-<script src="_files/js/common.js"></script>
-<script src="_files/js/common-dev.js"></script>
+
 <script type="text/javascript">
 	// 生成单条记录
 	function getOneRecordHTML(infoObj) {

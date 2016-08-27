@@ -135,5 +135,38 @@ public class StaticPageController {
 		ForeContext.setPage(data, page);
 		return site.getTemplate("a_list_online_course_person.html");
 	}
+	/**
+	 * 帮助中心
+	 * @param page
+	 * @param userId
+	 * @param modMap
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/dk_help.jspx")
+	public String helpCenter(Integer page,Integer userId,Model modMap,HttpServletRequest request){
+		Site site = Context.getCurrentSite(request);
+		Map<String, Object> data = modMap.asMap();
+		ForeContext.setData(data, request);
+		ForeContext.setPage(data, page);
+		return site.getTemplate("a_help_center.html");
+	}
+	/**
+	 * 成绩查询跳转
+	 * @param page
+	 * @param userId
+	 * @param modMap
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/dk_codeSearch.jspx")
+	public String myCodeSearch(Integer page,Integer userId,Model modMap,HttpServletRequest request){
+		Site site = Context.getCurrentSite(request);
+		Map<String, Object> data = modMap.asMap();
+		ForeContext.setData(data, request);
+		ForeContext.setPage(data, page);
+		return site.getTemplate("a_code_search.html");
+	}
+	
 	
 }

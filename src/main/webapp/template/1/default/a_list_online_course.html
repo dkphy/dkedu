@@ -29,9 +29,11 @@
             
             </div>
             <div class="sort">
-                <a href="#" class="current">综合排序</a>
-                <a href="#">最新</a>
+            	[@Node number = 'onlineCourse';node]
+                <a href="${node.url}" class="current">综合排序</a>
+                <a href="${node.url}">最新</a>
                 <a href="#">价格排序</a>
+                [/@Node]
             </div>
             
             <div class="list clearfix">

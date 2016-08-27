@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="_files/css/swiper.min.css">
 <link rel="stylesheet" href="_files/css/common.css">
 <link rel="stylesheet" href="_files/css/detail.css">
+<script src="_files/js/jquery-1.9.1.min.js"></script>
+<script src="_files/js/common.js"></script>
 [#include 'common_head.html'/]
 </head>
 <body>
@@ -28,11 +30,12 @@
                         [/#list]
                     </div>
 						
-					<span class="view"> <i class="icon-view2"></i> 
-						<span id="info_views"></span>
+					<span class="view">
+						 <i class="icon-view2"></i> 
+						<span id="info_views_1"></span>
 					</span>
 					<script type="text/javascript">
-						$("#info_views").load("${dy}/info_views/${info.id}.jspx?d="+new Date()*1);
+						$("#info_views_1").load("${dy}/info_views_1/${info.id}.jspx?d="+new Date()*1);
 					</script>
 					
 				</div>
@@ -84,8 +87,7 @@
 
 	[#include 'end.html'/]
 </body>
-<script src="_files/js/jquery-1.9.1.min.js"></script>
-<script src="_files/js/common.js"></script>
+
 <script type="text/javascript">
 	var share_tit = $("h1").eq(0).text(), share_desc = $(".post p").eq(0)
 			.text(), share_pic = $(".post img").eq(0).attr("src");

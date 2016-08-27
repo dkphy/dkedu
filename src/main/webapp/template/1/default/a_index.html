@@ -12,35 +12,7 @@
     <link rel="stylesheet" href="_files/a_css/index.css">
 </head>
 <body>
-    <div class="top_bar">
-        <div class="dark_bar">
-            <div class="wrap clearfix">
-                <div class="citys">
-                    城市:
-                    <a href="#" class="active">西安</a>
-                    <a href="#">广州</a>
-                </div>
-                <div class="opr">
-                    <div class="search_box">
-                        <form action="">
-                            <button type="submit" class="icon-search"></button>
-                            <span class="ipt"><input type="text" placeholder="输入搜索内容"></span>
-                        </form>
-                    </div>
-                    <a href="javascript:;" class="down_app">
-                        <span class="icon-app"></span>
-                        手机学习
-
-                        <span class="qrcode">
-                            <img src="_files/a_upload/side_qrcode4.png" alt="">
-
-                        </span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="banner"></div>
-    </div>
+    [#include 'a_index_poster.html'/]
     <!--通用顶部 start-->
    [#include 'a_head.html'/]
     <!--通用顶部 end-->
@@ -91,14 +63,22 @@
                 </div>
 
             </div>
+           
             <div class="sidebar zx">
+            	[@Node number = 'shcoolPoster';node]
+       			[@InfoList nodeId=node.id limit='1';list]
+				[#list list as info]
                 <div class="com_tit">
-                    <h2><a href="#">最新课表</a></h2>
+                    <h2>最新课表</h2>
                 </div>
                 <div class="timetable">
-                    <img src="_files/a_upload/timetable.jpg" alt="">
+                    <img src="${info.customs['newCourse']}" alt="">
                 </div>
+                [/#list]
+   				[/@InfoList]
+   				[/@Node]
             </div>
+        
         </div>
     </div>
 
