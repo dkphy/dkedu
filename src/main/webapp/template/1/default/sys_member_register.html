@@ -10,9 +10,14 @@
 	<meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="_files/a_css/common.css">
     <link rel="stylesheet" href="_files/a_css/ucenter.css">
+    <script src="_files/a_js/jquery-1.9.1.min.js"></script>
+	<script src="_files/a_js/common.js"></script>
+	<script src="_files/a_js/member.js"></script>
     <script type="text/javascript">
     	function showDiv(div) {
     		if(div == 'mobile') {
+    			// 设置隐藏域参数
+    			$('#regType').val('byMobile');
     			// 控制表单展示
     			$('#mobile_div').css('display', 'block');
     			$('#email_div').css('display', 'none');
@@ -20,6 +25,8 @@
     			$('#mobile_reg_selector').attr('class', 'current');
     			$('#email_reg_selector').attr('class', '');
     		} else {
+    			// 设置隐藏域参数
+    			$('#regType').val('byEmail');
     			// 控制表单展示
     			$('#mobile_div').css('display', 'none');
     			$('#email_div').css('display', 'block');
@@ -28,79 +35,6 @@
 	    		$('#email_reg_selector').attr('class', 'current');
     		}
     	}
-    	
-    	function checkmobile() {
-    		var mobile = $("#mobile").val();
-    		if(!isMobile(mobile)) {
-    			$("#warn_mobile").css('display', 'block');
-    			$("#warn_mobile").html('！请输入正确的手机号');
-    			return false;
-    		} else {
-    			$("#warn_mobile").css('display', 'none');
-	    		return true;
-    		}
-    	}
-    	function isMobile(str) {
-    		var reg = /^1\d{10}$/;
-    		return reg.test(str);
-    	}
-    	function checkname(){
-		    var name = $("#username").val();  
-		    if(name.length<6|| name.length>15)    
-		    {   
-		        $("#warn_username").html("！用户名长度须在6-15之间");
-		        $("#warn_username").css("display", "block");
-		        return false;
-		    }
-		    
-		    //$.post("checkUserName.action", {" userName": name },function(data){
-		        //var d = $.parseJSON(data);
-		        //if(d.success!=true){
-		             //return true;
-		        //}
-		    //});
-		    $("#warn_username").css("display", "none");
-		    return true;
-		}
-		function checkpass(){
-		    var userPass = $("#password").val();
-		    if(userPass.length<6 || userPass.length >15)  {
-		     	$("#warn_password").html("！密码长度须在6-15之间");
-		    	$("#warn_password").css("display", "block");
-		        return false;
-		    } else {
-				$("#warn_password").css("display", "none");
-			    return true;
-		    }
-		}
-		function checkrpass(){
-		    var userPass = $("#password").val();
-		    var userRPass = $("#passwordAgain").val();
-		    if (userPass != userRPass) {
-		        $("#warn_passwordAgain").html("！两次输入的密码不一致");
-		    	$("#warn_passwordAgain").css("display", "block");
-		        return false;
-		    } else {
-				$("#warn_passwordAgain").css("display", "none");
-			    return true;
-		    }
-		}
-		function checkemail(){
-		    var userEmail = $("#email").val();
-		    if(!isEmail(userEmail)){
-		    	$("#warn_email").html("！邮箱格式不正确");
-		    	$("#warn_email").css("display", "block");
-		        return false;
-		    } else {
-		    	$("#warn_email").css("display", "none");
-				return true;
-		    }
-		}
-		function isEmail(str){
-		    var reg = /[a-z0-9-]{1,30}@[a-z0-9-]{1,65}.[a-z]{3}/;
-		    return reg.test(str);
-		}
-		
 		function register() {
 		    if(!checkname()){
 		        return false;
@@ -108,8 +42,22 @@
 		        return false;
 		    } else if(!checkrpass()){
 		        return false;
-		    } else if(!checkmobile() && !checkemail()) {
-		    	return false;
+		    }
+		    if($("#regType").val() == "byMobile") {
+		    	if(!checkmobile()) {
+		    		return false;
+		    	}
+		    	// 验证码检查
+		    	var verifyCode = $("#smsVerifyCode").val();
+		    	if(verifyCode.length == 0) {
+			    	$("#warn_code").css('display', 'block');
+	    			$("#warn_code").html("！请填写验证码");
+		    		return false;
+		    	}
+		    } else {
+		    	if(!checkemail()) {
+		    		return false;
+		    	}
 		    }
 		    $('#mobileForm').submit();
 		    return true;
@@ -134,7 +82,8 @@
             </div>
             <div class="form_group">
 	        <form id="mobileForm" action="${ctx}/register.jspx" method="post">
-	            <input type="hidden" name="redirectUrl" value="${ctx}/register_message.jspx?username={username}&email={email}&verifyMode={verifyMode}"/>
+	            <input type="hidden" name="redirectUrl" id="redirectUrl" value="${ctx}/register_message.jspx?username={username}&email={email}&verifyMode={verifyMode}"/>
+	            <input type="hidden" name="regType" id="regType" value="byMobile"/>
 	            <!-- 手机注册 -->
                 <div id="mobile_div">
                 <div class="line with_icon">
@@ -146,8 +95,9 @@
                 </div>
                 <div class="line with_icon with_btn">
                     <span class="icon icon-yanzheng"></span>
-                    <input type="text" placeholder="验证码">
-                    <a href="#" class="btn">获取验证码</a>
+                    <input type="text" id="smsVerifyCode" name="smsVerifyCode" placeholder="验证码">
+                    <a href="#" class="btn" onclick="return sendSmsCode('register_send_sms_verify_code.jspx')">获取验证码</a>
+                    <p id="warn_code" class="warn" style="display:none">! 请输入验证码</p>
                 </div>
                 </div>
             	<!-- 邮箱注册 -->
@@ -174,10 +124,9 @@
                     <p id="warn_passwordAgain" class="warn" style="display:none"></p>
                 </div>
                 <div class="check_line">
-                    <label for="readed"><input type="checkbox" class="check_box" id="readed">
-                        用户注册即代表同意服务条款</label>
+                    <label for="readed"><input type="checkbox" class="check_box" id="readed" checked="checked">用户注册即代表同意服务条款</label>
                 </div>
-                <a href="#" class="long_btn" onclick="javascript:return register()">注册</a>
+                <a href="#" class="long_btn" onclick="return register()">注册</a>
             </form>
 			</div>
             <div class="quick_link">
@@ -198,7 +147,5 @@
     [#include 'a_side.html'/]
     <!--侧边滑动通用end-->
 </body>
-<script src="_files/a_js/jquery-1.9.1.min.js"></script>
-<script src="_files/a_js/common.js"></script>
 </html>
 [/#escape]
