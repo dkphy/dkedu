@@ -19,9 +19,9 @@ public interface SpecialDaoPlus {
 
 	public List<Special> findList(Integer[] siteId, Integer[] categoryId,
 			Date beginDate, Date endDate, Boolean isWithImage,
-			Boolean isRecommend, Limitable limitable);
+			Integer isRecommend, Limitable limitable);
 
 	public Page<Special> findPage(Integer[] siteId, Integer[] categoryId,
 			Date beginDate, Date endDate, Boolean isWithImage,
-			Boolean isRecommend, Pageable pageable);
+			Integer isRecommend, Pageable pageable);
 }

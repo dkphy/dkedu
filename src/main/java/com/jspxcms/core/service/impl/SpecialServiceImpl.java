@@ -94,14 +94,14 @@ public class SpecialServiceImpl implements SpecialService, ModelDeleteListener,
 
 	public List<Special> findList(Integer[] siteId, Integer[] categoryId,
 			Date beginDate, Date endDate, Boolean isWithImage,
-			Boolean isRecommend, Limitable limitable) {
+			Integer isRecommend, Limitable limitable) {
 		return dao.findList(siteId, categoryId, beginDate, endDate,
 				isWithImage, isRecommend, limitable);
 	}
 
 	public Page<Special> findPage(Integer[] siteId, Integer[] categoryId,
 			Date beginDate, Date endDate, Boolean isWithImage,
-			Boolean isRecommend, Pageable pageable) {
+			Integer isRecommend, Pageable pageable) {
 		return dao.findPage(siteId, categoryId, beginDate, endDate,
 				isWithImage, isRecommend, pageable);
 	}

@@ -28,7 +28,7 @@ import com.mysema.query.jpa.impl.JPAQuery;
 public class SpecialDaoImpl implements SpecialDaoPlus {
 	public List<Special> findList(Integer[] siteId, Integer[] categoryId,
 			Date beginDate, Date endDate, Boolean isWithImage,
-			Boolean isRecommend, Limitable limitable) {
+			Integer isRecommend, Limitable limitable) {
 		JPAQuery query = new JPAQuery(this.em);
 		query.setHint(QueryHints.HINT_CACHEABLE, true);
 		QSpecial special = QSpecial.special;
@@ -39,7 +39,7 @@ public class SpecialDaoImpl implements SpecialDaoPlus {
 
 	public Page<Special> findPage(Integer[] siteId, Integer[] categoryId,
 			Date beginDate, Date endDate, Boolean isWithImage,
-			Boolean isRecommend, Pageable pageable) {
+			Integer isRecommend, Pageable pageable) {
 		JPAQuery query = new JPAQuery(this.em);
 		query.setHint(QueryHints.HINT_CACHEABLE, true);
 		QSpecial special = QSpecial.special;
@@ -50,7 +50,7 @@ public class SpecialDaoImpl implements SpecialDaoPlus {
 
 	private void predicate(JPAQuery query, QSpecial special, Integer[] siteId,
 			Integer[] categoryId, Date beginDate, Date endDate,
-			Boolean isWithImage, Boolean isRecommend) {
+			Boolean isWithImage, Integer isRecommend) {
 		query.from(special);
 		BooleanBuilder exp = new BooleanBuilder();
 		if (ArrayUtils.isNotEmpty(siteId)) {
@@ -69,7 +69,7 @@ public class SpecialDaoImpl implements SpecialDaoPlus {
 			exp = exp.and(special.withImage.eq(isWithImage));
 		}
 		if (isRecommend != null) {
-			exp = exp.and(special.recommend.eq(isRecommend));
+			exp = exp.and(special.recommend.in(isRecommend));
 		}
 		query.where(exp);
 	}

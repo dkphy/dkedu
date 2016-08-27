@@ -134,7 +134,9 @@ function optDelete(form) {
     <td><c:out value="${bean.model.name}"/></td>
     <td><c:out value="${bean.title}"/></td>
     <td><c:out value="${bean.views}"/></td>
-    <td><c:choose><c:when test="${bean.recommend}"><b><s:message code="yes"/></b></c:when><c:otherwise><s:message code="no"/></c:otherwise></c:choose></td>
+    <td>
+    	
+    </td>
     <td align="center"><fmt:formatDate value="${bean.creationDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
   </tr>
   </c:forEach>

@@ -49,7 +49,7 @@ public class QSpecial extends EntityPathBase<Special> {
 
     public final QModel model;
 
-    public final BooleanPath recommend = createBoolean("recommend");
+    public final NumberPath<Integer> recommend = createNumber("recommend", Integer.class);
 
     public final NumberPath<Integer> refers = createNumber("refers", Integer.class);
 

@@ -10,6 +10,20 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="_files/a_css/common.css">
     <link rel="stylesheet" href="_files/a_css/detail.css">
+    <script src="_files/a_js/jquery-1.9.1.min.js"></script>
+	<script src="_files/a_js/common.js"></script>
+	<script type="text/javascript">
+		function submitComment() {
+			var text = $("#commentText").val();
+			if(text.length < 5) {
+				alert("请认真评论！");
+				return false;
+			}
+			$("#commentForm").submit();
+		}
+		
+		
+	</script>
 </head>
 <body>
     <!--通用顶部 start-->
@@ -93,8 +107,9 @@
                     
                     <div id="c_comment" class="comment" style="display:none">
                         <div class="in">
+                        	<form id="commentForm" action="${ctx}/comment_submit.jspx" method="post">
                             <div class="in_box">
-                                <textarea name="" id=""></textarea>
+                                <textarea name="text" id="commentText"></textarea>
                             </div>
                             <div class="in_ft">
                                 <div class="set_score">
@@ -106,10 +121,16 @@
                                         <span class="icon-star active"></span>
                                         <span class="icon-star"></span>
                                     </div>
-                                    <input type="hidden" value="4" id="grade_val">
                                 </div>
-                                <a href="javascript:;" class="sub_comment">发表评论</a>
+                                <a href="#" class="sub_comment" onclick="return submitComment()">发表评论</a>
                             </div>
+                            <input type="hidden" value="4" id="grade_val">
+                            <input type="hidden" name="ftype" value="Special"/>
+							<input type="hidden" name="fid" value="${special.id}"/>
+							<input type="hidden" name="status_0" value="评论成功！"/>
+							<input type="hidden" name="status_1" value="评论成功，请等待管理员审核！"/>
+							<input type="hidden" name="nextUrl" value="${url}"/>
+							</form>
                         </div>
                         <div class="list">
                             
@@ -181,9 +202,6 @@
     [#include 'a_side.html'/]
     <!--侧边滑动通用end-->
 </body>
-<script src="_files/a_js/jquery-1.9.1.min.js"></script>
-
-<script src="_files/a_js/common.js"></script>
 <script>
     /*分享*/
     var share_tit=$("h1").eq(0).text(),

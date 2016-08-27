@@ -17,6 +17,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jspxcms.common.captcha.Captchas;
+import com.jspxcms.common.freemarker.Freemarkers;
+import com.jspxcms.common.orm.LimitRequest;
+import com.jspxcms.common.orm.Limitable;
 import com.jspxcms.common.web.Anchor;
 import com.jspxcms.common.web.Servlets;
 import com.jspxcms.common.web.Validations;
@@ -155,6 +158,12 @@ public class CommentController {
 			if (!Captchas.isValid(captchaService, request, captcha)) {
 				return resp.post(100, "error.captcha");
 			}
+		}
+		// 不允许重复评论
+		Limitable limitable = new LimitRequest(0, 1);
+		List<Comment> existComments = service.findList(ftype, fid, user.getId(), null, null, limitable);
+		if(existComments != null && !existComments.isEmpty()) {
+			// return resp.post(502, "您已经评论过了！");
 		}
 
 		text = sensitiveWordService.replace(text);
