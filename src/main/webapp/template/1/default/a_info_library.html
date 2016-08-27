@@ -23,7 +23,7 @@
         <div class="ct">
             <h1><span class="icon-pdf"></span>${info.title}</h1>
             <div class="intro">
-                上传于  ${info.publishDate} ｜ 暂无评价 ｜ <span id="info_views"></span>人阅读  ｜  9次下载
+                上传于  ${info.publishDate?string('yyyy-MM-dd')} ｜ 暂无评价 ｜ <span id="info_views"></span>人阅读  ｜  9次下载
             </div>
             <script type="text/javascript">
 							$("#info_views").load("${dy}/info_views/${info.id}.jspx?d="+new Date()*1);

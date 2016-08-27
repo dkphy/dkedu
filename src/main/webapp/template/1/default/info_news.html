@@ -32,10 +32,10 @@
 						
 					<span class="view">
 						 <i class="icon-view2"></i> 
-						<span id="info_views_1"></span>
+						<span id="info_views"></span>
 					</span>
 					<script type="text/javascript">
-						$("#info_views_1").load("${dy}/info_views_1/${info.id}.jspx?d="+new Date()*1);
+						$("#info_views").load("${dy}/info_views/${info.id}.jspx?d="+new Date()*1);
 					</script>
 					
 				</div>
@@ -87,7 +87,6 @@
 
 	[#include 'end.html'/]
 </body>
-
 <script type="text/javascript">
 	var share_tit = $("h1").eq(0).text(), share_desc = $(".post p").eq(0)
 			.text(), share_pic = $(".post img").eq(0).attr("src");

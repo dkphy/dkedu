@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hsmf.datatypes.RecipientChunks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +25,12 @@ import com.jspxcms.core.domain.User;
 import com.jspxcms.core.service.MemberGroupService;
 import com.jspxcms.core.service.OrgService;
 import com.jspxcms.core.service.UserService;
+import com.jspxcms.core.service.UserShiroService;
 import com.jspxcms.core.support.Constants;
 import com.jspxcms.core.support.Context;
 import com.jspxcms.core.support.ForeContext;
 import com.jspxcms.core.support.Response;
+import com.jspxcms.plug.service.MobileVerifyService;
 import com.octo.captcha.service.CaptchaService;
 
 /**
@@ -74,16 +77,17 @@ public class RegisterController {
 	}
 
 	@RequestMapping(value = "/register.jspx", method = RequestMethod.POST)
-	public String registerSubmit(String captcha, String username,
-			String password, String email, String mobile, String gender, Date birthDate,
+	public String registerSubmit(String regType, String captcha, String username,
+			String password, String email, String mobile, String smsVerifyCode, String gender, Date birthDate,
 			String bio, String comeFrom, String qq, String msn, String weixin,
 			HttpServletRequest request, HttpServletResponse response,
 			org.springframework.ui.Model modelMap) {
 		Response resp = new Response(request, response, modelMap);
 		Site site = Context.getCurrentSite(request);
 		GlobalRegister reg = site.getGlobal().getRegister();
-		String result = validateRegisterSubmit(request, resp, reg, captcha,
-				username, password, email, gender);
+		// 参数检验
+		String result = validateRegisterSubmit(request, resp, reg, regType, captcha,
+				username, password, email, gender, mobile, smsVerifyCode);
 		if (resp.hasErrors()) {
 			return result;
 		}
@@ -92,12 +96,19 @@ public class RegisterController {
 		String ip = Servlets.getRemoteAddr(request);
 		int groupId = reg.getGroupId();
 		int orgId = reg.getOrgId();
-		int status = verifyMode == GlobalRegister.VERIFY_MODE_NONE ? User.NORMAL
-				: User.UNACTIVATED;
+		// 邮箱注册设置账户未未激活，其他情况均设置为已激活
+		int status = User.NORMAL;
+		if(!"byMobile".equals(regType) && verifyMode != GlobalRegister.VERIFY_MODE_NONE) {
+			status = User.UNACTIVATED;
+		}
+//		int status = verifyMode == GlobalRegister.VERIFY_MODE_NONE ? User.NORMAL
+//				: User.UNACTIVATED;
+		// 注册账户
 		User user = userService.register(ip, groupId, orgId, status, username,
 				password, email, mobile, null, null, gender, birthDate, bio, comeFrom,
 				qq, msn, weixin);
-		if (verifyMode == GlobalRegister.VERIFY_MODE_EMAIL) {
+		// 如果是邮箱注册，发验证邮件
+		if (!"byMobile".equals(regType) && verifyMode == GlobalRegister.VERIFY_MODE_EMAIL) {
 			GlobalMail mail = site.getGlobal().getMail();
 			String subject = reg.getVerifyEmailSubject();
 			String text = reg.getVerifyEmailText();
@@ -183,7 +194,86 @@ public class RegisterController {
 		resp.addData("email", email);
 		return resp.post();
 	}
-
+	
+	@ResponseBody
+	@RequestMapping(value = "/forgot_password_send_email.jspx", method = RequestMethod.POST)
+	public String forgotPasswordSendEmail(String email, HttpServletRequest request,
+			HttpServletResponse response, org.springframework.ui.Model modelMap) {
+		Response resp = new Response(request, response, modelMap);
+		Site site = Context.getCurrentSite(request);
+		User forgotUser = userShiroService.findByEmail(email);
+		if(forgotUser == null) {
+			return "false";
+		}
+		GlobalRegister reg = site.getGlobal().getRegister();
+		GlobalMail mail = site.getGlobal().getMail();
+		String subject = reg.getPasswordEmailSubject();
+		String text = reg.getPasswordEmailText();
+		userService.sendPasswordEmail(site, forgotUser, mail, subject, text);
+		resp.addData("username", forgotUser.getUsername());
+		resp.addData("email", email);
+		return "true";
+	}
+	
+	/**
+	 * 忘记密码-发送手机验证码
+	 * @param mobile
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/forgot_send_sms_verify_code.jspx", method = RequestMethod.POST)
+	public String forgotSendSmsVerifyCode(String mobile, HttpServletRequest request,
+			HttpServletResponse response) {
+		if(StringUtils.isBlank(mobile)) {
+			return "false";
+		}
+		// 无此用户，不允许发短信
+		User user = userShiroService.findByMobile(mobile);
+		if(user == null) {
+			return "false";
+		}
+		String verifyCode = mobileVerifyService.generateNewVerifyCode(mobile);
+		// send sms
+		boolean sendSucc = mobileVerifyService.sendSmsVerifyCodeForReg(mobile, verifyCode);
+		if(sendSucc) {
+			return "true";
+		} else {
+			return "false";
+		}
+	}
+	
+	/**
+	 * 忘记密码-发送短信
+	 * @param mobile
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/register_send_sms_verify_code.jspx", method = RequestMethod.POST)
+	public String registerSendSmsVerifyCode(String mobile, HttpServletRequest request,
+			HttpServletResponse response) {
+		if(StringUtils.isBlank(mobile)) {
+			return "false";
+		}
+		// 不允许重复注册
+		User user = userShiroService.findByMobile(mobile);
+		if(user != null) {
+			return "false";
+		}
+		String verifyCode = mobileVerifyService.generateNewVerifyCode(mobile);
+		System.out.println(verifyCode);
+		// send sms
+		boolean sendSucc = mobileVerifyService.sendSmsVerifyCodeForReg(mobile, verifyCode);
+		if(sendSucc) {
+			return "true";
+		} else {
+			return "false";
+		}
+	}
+	
 	@RequestMapping(value = "/retrieve_password.jspx")
 	public String retrievePasswordForm(String key, HttpServletRequest request,
 			HttpServletResponse response, org.springframework.ui.Model modelMap) {
@@ -203,6 +293,15 @@ public class RegisterController {
 		return site.getTemplate(RETRIEVE_PASSWORD_TEMPLATE);
 	}
 
+	/**
+	 * 邮箱重置密码
+	 * @param key
+	 * @param password
+	 * @param request
+	 * @param response
+	 * @param modelMap
+	 * @return
+	 */
 	@RequestMapping(value = "/retrieve_password.jspx", method = RequestMethod.POST)
 	public String retrievePasswordSubmit(String key, String password,
 			HttpServletRequest request, HttpServletResponse response,
@@ -222,6 +321,44 @@ public class RegisterController {
 			return resp.post(501, "retrievePassword.invalidKey");
 		}
 		userService.passwordChange(retrieveUser, password);
+		return resp.post();
+	}
+	
+	/**
+	 * 通过手机重置密码
+	 * @param key
+	 * @param password
+	 * @param request
+	 * @param response
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(value = "/retrieve_password_by_mobile.jspx", method = RequestMethod.POST)
+	public String retrievePasswordSubmitByMobile(String mobile, String verifyCode, String password,
+			HttpServletRequest request, HttpServletResponse response,
+			org.springframework.ui.Model modelMap) {
+		Response resp = new Response(request, response, modelMap);
+		List<String> messages = resp.getMessages();
+		if (!Validations.notEmpty(mobile, messages, "mobile")) {
+			return resp.post(401);
+		}
+		if (!Validations.notNull(password, messages, "password")) {
+			return resp.post(402);
+		}
+		if (!Validations.notNull(verifyCode, messages, "verifyCode")) {
+			return resp.post(403);
+		}
+		// 验证码
+		boolean vSucc = mobileVerifyService.verify(mobile, verifyCode);
+		if(!vSucc) {
+			return resp.post(402, "sms.verifyCodeError");
+		}
+		// 修改密码
+		User user = userShiroService.findByMobile(mobile);
+		if (user == null) {
+			return resp.post(501, "forgotPassword.usernameNotExist", new String[] {mobile});
+		}
+		userService.passwordChange(user, password);
 		return resp.post();
 	}
 
@@ -244,10 +381,36 @@ public class RegisterController {
 			return "false";
 		}
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/check_mobile.jspx")
+	public String checkMobile(String mobile,
+			HttpServletRequest request, HttpServletResponse response) {
+		Servlets.setNoCacheHeader(response);
+		if (StringUtils.isBlank(mobile)) {
+			return "true";
+		}
+		// 检查数据库是否重名
+		User user = userShiroService.findByMobile(mobile);
+		return user == null ? "true" : "false";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/check_email.jspx")
+	public String checkEmail(String email,
+			HttpServletRequest request, HttpServletResponse response) {
+		Servlets.setNoCacheHeader(response);
+		if (StringUtils.isBlank(email)) {
+			return "true";
+		}
+		// 检查数据库是否重名
+		User user = userShiroService.findByEmail(email);
+		return user == null ? "true" : "false";
+	}
 
 	private String validateRegisterSubmit(HttpServletRequest request,
-			Response resp, GlobalRegister reg, String captcha, String username,
-			String password, String email, String gender) {
+			Response resp, GlobalRegister reg, String regType, String captcha, String username,
+			String password, String email, String gender, String mobile, String verifyCode) {
 		List<String> messages = resp.getMessages();
 		// 不使用验证码
 		// if (!Captchas.isValid(captchaService, request, captcha)) {
@@ -272,6 +435,11 @@ public class RegisterController {
 				reg.getMaxLength(), messages, "username")) {
 			return resp.post(402);
 		}
+		// 防止同一昵称重复注册
+		User user = userShiroService.findByUsername(username);
+		if(user != null) {
+			return resp.post(408, "该昵称已注册用户，不允许重复注册");
+		}
 		if (!Validations.pattern(username, reg.getValidCharacter(), messages,
 				"username")) {
 			return resp.post(403);
@@ -279,12 +447,35 @@ public class RegisterController {
 		if (!Validations.notEmpty(password, messages, "password")) {
 			return resp.post(404);
 		}
-		if (reg.getVerifyMode() == GlobalRegister.VERIFY_MODE_EMAIL
-				&& !Validations.notEmpty(email, messages, "email")) {
-			return resp.post(405);
-		}
-		if (!Validations.email(email, messages, "email")) {
-			return resp.post(406);
+		
+		if("byMobile".equals(regType)) {
+			// 手机注册，手机号和验证码不能为空，且验证码必须正确
+			if (!Validations.notEmpty(mobile, messages, "mobile") 
+					|| !Validations.notEmpty(verifyCode, messages, "verifyCode")) {
+				return resp.post(408, "手机号和验证码不允许为空");
+			}
+			if(!mobileVerifyService.verify(mobile, verifyCode)) {
+				return resp.post(409, "验证码错误");
+			}
+			// 防止同一手机号重复注册
+			User mobileUser = userShiroService.findByMobile(mobile);
+			if(mobileUser != null) {
+				return resp.post(408, "该手机号已注册用户，不允许重复注册");
+			}
+		} else {
+			// 邮箱注册，邮箱不能为空
+			if (reg.getVerifyMode() == GlobalRegister.VERIFY_MODE_EMAIL
+					&& !Validations.notEmpty(email, messages, "email")) {
+				return resp.post(405, "邮箱不能为空");
+			}
+			if (!Validations.email(email, messages, "email")) {
+				return resp.post(406, "邮箱格式错误");
+			}
+			// 防止同一邮箱重复注册
+			User mailUser = userShiroService.findByEmail(email);
+			if(mailUser != null) {
+				return resp.post(408, "该邮箱已注册用户，不允许重复注册");
+			}
 		}
 		if (!Validations.pattern(gender, "[F,M]", messages, "gender")) {
 			return resp.post(407);
@@ -350,4 +541,8 @@ public class RegisterController {
 	private OrgService orgService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserShiroService userShiroService;
+	@Autowired
+	private MobileVerifyService mobileVerifyService;
 }

@@ -10,6 +10,27 @@
 	<meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="_files/a_css/common.css">
     <link rel="stylesheet" href="_files/a_css/ucenter.css">
+    <script src="_files/a_js/jquery-1.9.1.min.js"></script>
+	<script src="_files/a_js/common.js"></script>
+	<script type="text/javascript">
+		function login() {
+			var username = $("#username").val();
+			if(username.length==0) {
+				$("#warn_mobile").css('display', 'block');
+				$("#warn_mobile").html('！请输入手机号或邮箱');
+				return false;
+			}
+			$("#warn_mobile").css('display', 'none');
+			var password = $("#password").val();
+			if(password.length==0) {
+				$("#warn_password").html("！请输入密码");
+				$("#warn_password").css("display", "block");
+				return false;
+			}
+			$("#warn_password").css("display", "none");
+			$("#validForm").submit();
+		}
+	</script>    
 </head>
 <body>
     
@@ -24,36 +45,36 @@
                 <a href="register.jspx" class="link">注册</a>
             </div>
             <div class="form_group">
-            <div class="fs14" style="height:20px;line-height:20px;padding-left:10px;color:red;">
-			[#if shiroLoginFailure??]
-				<div style="background:url(_files/img/error.png) 0 center no-repeat;padding-left:20px;">
-				[#if shiroLoginFailure=='com.jspxcms.common.security.IncorrectCaptchaException']
-				验证码不正确！
-				[#--[@s.message code='incorrectCaptchaError'/]--]
-				[#elseif shiroLoginFailure=='org.apache.shiro.authc.UnknownAccountException']
-				[#--用户名不存在--]
-				用户名不存在！
-				[#elseif shiroLoginFailure=='org.apache.shiro.authc.LockedAccountException']
-				此用户被锁定！
-				[#elseif shiroLoginFailure=='com.jspxcms.common.security.UnactivatedAccountException']
-				此用户未激活！
-				[#elseif shiroLoginFailure=='org.apache.shiro.authc.IncorrectCredentialsException']
-				用户名或密码错误！
-				[#else]
-				${shiroLoginFailure}
-				[/#if]
-				</div>
-			[/#if]
-			</div>
             <form id="validForm" action="${ctx}/login.jspx" method="post">
 			<input type="hidden" name="fallbackUrl" value="${fallbackUrl!Param.fallbackUrl}"/>
                 <div class="line with_icon">
                     <span class="icon icon-user"></span>
                     <input type="text" id="username" name="username" value="${username!}" placeholder="手机号码/邮箱账号/昵称">
+                    <p id="warn_mobile" class="warn" style="display:none">! 该手机号已被注册</p>
+                    <p id="login_result" class="warn">
+                    [#if shiroLoginFailure??]
+						[#if shiroLoginFailure=='com.jspxcms.common.security.IncorrectCaptchaException']
+							！验证码不正确
+							[#--[@s.message code='incorrectCaptchaError'/]--]
+							[#elseif shiroLoginFailure=='org.apache.shiro.authc.UnknownAccountException']
+							[#--用户名不存在--]
+							！用户名不存在
+							[#elseif shiroLoginFailure=='org.apache.shiro.authc.LockedAccountException']
+							！此用户被锁定
+							[#elseif shiroLoginFailure=='com.jspxcms.common.security.UnactivatedAccountException']
+							！此用户未激活
+							[#elseif shiroLoginFailure=='org.apache.shiro.authc.IncorrectCredentialsException']
+							！用户名或密码错误
+							[#else]
+							${shiroLoginFailure}
+							[/#if]
+					[/#if]
+                    </p>
                 </div>
                 <div class="line with_icon">
                     <span class="icon icon-psw"></span>
                     <input type="password" id="password" name="password" placeholder="密码">
+                    <p id="warn_password" class="warn" style="display:none"></p>
                 </div>
                 [#if Session.shiroCaptchaRequired?? || global.captchaErrors<=0]
 				<div class="line">
@@ -68,17 +89,28 @@
                     <label><input type="checkbox" id="rememberMe" name="rememberMe" style="vertical-align:middle;"/> 记住登录</label>
                     <a href="forgot_password.jspx" class="forget">忘记密码</a>
                 </div>
-                <a href="#" class="long_btn" onclick="javascript:$('#validForm').submit();">登录</a>
+                <a href="#" class="long_btn" onclick="return login()">登录</a>
             </form>
             </div>
 
+	[#if global.customs['oauth']! == '1']
+    	[#assign oauthQqUrl]${ctx}/support_genuine.jsp[/#assign]
+    	[#assign oauthWeiboUrl]${ctx}/support_genuine.jsp[/#assign]
+	[#elseif global.customs['oauth']! == '2']
+    	[#assign oauthQqUrl]javascript:alert('请先设置好第三方平台APP_ID和APP_KEY，再开启第三方登录');[/#assign]
+    	[#assign oauthWeiboUrl]javascript:alert('请先设置好第三方平台CLIENT_ID和CLIENT_SERCRET，再开启第三方登录');[/#assign]
+	[#elseif global.customs['oauth']! == '3']
+    	[#assign oauthQqUrl]${ctx}/oauth/qq_login.jspx?fallbackUrl=${Param.fallbackUrl?url}[/#assign]
+    	[#assign oauthWeiboUrl]${ctx}/oauth/weibo_login.jspx?fallbackUrl=${Param.fallbackUrl?url}[/#assign]
+	[/#if]
+    [#if oauthQqUrl?? && oauthWeiboUrl??]
             <div class="quick_link">
                 <b>快捷登录：</b>
                 <a href="#" class="icon-wx"></a>
-                <a href="#" class="icon-weibo"></a>
-                <a href="#" class="icon-qq"></a>
+                <a href="${oauthWeiboUrl}" class="icon-weibo"></a>
+                <a href="${oauthQqUrl}" class="icon-qq"></a>
             </div>
-
+	[/#if]
         </div>
     </div>
 
@@ -90,7 +122,5 @@
     [#include 'a_side.html'/]
     <!--侧边滑动通用end-->
 </body>
-<script src="_files/a_js/jquery-1.9.1.min.js"></script>
-<script src="_files/a_js/common.js"></script>
 </html>
 [/#escape]
