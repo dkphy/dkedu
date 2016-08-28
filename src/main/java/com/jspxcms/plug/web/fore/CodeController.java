@@ -70,7 +70,6 @@ public class CodeController {
 	@ResponseBody
 	@RequestMapping(value = "/getCode.jspx")
 	public String findCode(Integer page,Integer userId,String name,String idCard,Model modMap,HttpServletRequest request){
-		log.info("entrer findCodeController");
 		Site site = Context.getCurrentSite(request);
 		log.info("idCard="+idCard);
 		UserCode u = fc.find(name, idCard);

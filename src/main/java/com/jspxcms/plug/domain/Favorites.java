@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="cms_favorites")
@@ -45,13 +47,16 @@ public class Favorites {
 	public void setObjectId(Integer objectId) {
 		this.objectId = objectId;
 	}
+	@Temporal(TemporalType.DATE)
 	@Column(name = "GMT_CREATE")
 	public Date getGmtCreate() {
 		return gmtCreate;
 	}
+	
 	public void setGmtCreate(Date gmtCreate) {
 		this.gmtCreate = gmtCreate;
 	}
+	@Temporal(TemporalType.DATE)
 	@Column(name = "GMT_MODIFY")
 	public Date getGmtModify() {
 		return gmtModify;

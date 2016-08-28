@@ -2,6 +2,7 @@ package com.jspxcms.plug.service;
 
 import java.util.List;
 
+import com.jspxcms.common.orm.Limitable;
 import com.jspxcms.plug.domain.Favorites;
 
 public interface FavoritesService {
@@ -12,7 +13,7 @@ public interface FavoritesService {
 	 * @param objectId
 	 * @param type
 	 */
-	public void addCollectionItem(Integer userId,Integer objectId,String type);
+	public Favorites addCollectionItem(Integer userId,Integer objectId,String type);
 
 	/**
 	 * 按照类型和用户查找收藏
@@ -21,6 +22,6 @@ public interface FavoritesService {
 	 * @param limitCount
 	 * @return
 	 */
-	public List<Favorites> findByUserIdAndType(Integer userId,String type,Integer limitCount);
+	public List<Favorites> findByUserIdAndType(Integer userId,String type,Limitable limitCount);
 	
 }

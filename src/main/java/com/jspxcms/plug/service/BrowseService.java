@@ -2,6 +2,7 @@ package com.jspxcms.plug.service;
 
 import java.util.List;
 
+import com.jspxcms.common.orm.Limitable;
 import com.jspxcms.plug.domain.Browse;
 
 public interface BrowseService {
@@ -10,7 +11,7 @@ public interface BrowseService {
 	 * @param userId
 	 * @param courseId
 	 */
-	public void addBrowse (Integer userId,Integer courseId);
+	public Browse addBrowse (Integer userId,Integer courseId);
 	
 	/**
 	 * 按照用户ID查询
@@ -18,5 +19,5 @@ public interface BrowseService {
 	 * @param limitCount
 	 * @return
 	 */
-	public List<Browse> findByUserId(Integer userId,Integer limitCount); 
+	public List<Browse> findByUserId(Integer userId,Limitable limitCount); 
 }

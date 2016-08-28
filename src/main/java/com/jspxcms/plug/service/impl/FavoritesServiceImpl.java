@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jspxcms.common.orm.Limitable;
 import com.jspxcms.plug.domain.Favorites;
 import com.jspxcms.plug.repository.FavoritesDao;
 import com.jspxcms.plug.service.FavoritesService;
@@ -20,9 +21,8 @@ public class FavoritesServiceImpl implements FavoritesService{
 	@Autowired
 	private FavoritesDao faDao;
 	
-	@Override
 	@Transactional
-	public void addCollectionItem(Integer userId, Integer objectId, String type) {
+	public Favorites addCollectionItem(Integer userId, Integer objectId, String type) {
 		if(userId == null){
 			throw new RuntimeException("添加收藏：用户ID不能不为空");
 		}
@@ -32,21 +32,38 @@ public class FavoritesServiceImpl implements FavoritesService{
 		if(StringUtils.isBlank(type)){
 			throw new RuntimeException("添加收藏：类型不能不为空");
 		}
-		Favorites fa = new Favorites();
-		fa.setUserId(userId);
-		fa.setObjectId(objectId);
-		fa.setType(type);
-		Date date = new Date();
-		fa.setGmtCreate(date);
-		fa.setGmtModify(date);
-		fa.setVersion(1);
-		
-		faDao.save(fa);
+		System.out.println("添加收藏：验证完毕");
+		//查询
+		List<Favorites> list = faDao.findByUserIdTypeAndCourseId(userId, objectId, type);
+		if(list.size()>1){
+			throw new RuntimeException("添加收藏:添加异常");
+		}
+		Favorites fa  = null;
+		if(list.size()==1){
+		    fa = new Favorites();
+			fa.setUserId(userId);
+			fa.setObjectId(objectId);
+			fa.setType(type);
+			Date date = new Date();
+			fa.setGmtCreate(date);
+			fa.setGmtModify(date);
+			fa.setVersion(1);
+			
+			faDao.save(fa);
+		}
+		if(list.size()==1){
+			fa = list.get(0);
+			Date date = new Date();
+			fa.setGmtModify(date);
+			fa.setVersion(fa.getVersion()+1);
+			faDao.update(fa);
+		}
+		return fa;
 	}
 
 	@Override
 	public List<Favorites> findByUserIdAndType(Integer userId, String type,
-			Integer limitCount) {
+			Limitable limitCount) {
 		if(userId == null){
 			throw new RuntimeException("查询收藏：用户ID不能不为空");
 		}
@@ -60,6 +77,5 @@ public class FavoritesServiceImpl implements FavoritesService{
 			
 		return list;
 	}
-
 
 }
