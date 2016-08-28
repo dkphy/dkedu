@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.jspxcms.core.domain.Special;
 import com.jspxcms.core.service.SpecialService;
 import com.jspxcms.core.support.ForeContext;
+import com.jspxcms.plug.domain.Browse;
+import com.jspxcms.plug.service.BrowseService;
 
 /**
  * SpecialController
@@ -23,7 +25,7 @@ import com.jspxcms.core.support.ForeContext;
 public class SpecialController {
 
 	@RequestMapping(value = "/special/{id:[0-9]+}.jspx")
-	public String special(@PathVariable Integer id, Integer page,
+	public String special(@PathVariable Integer id, Integer userId,Integer page,
 			HttpServletRequest request, org.springframework.ui.Model modelMap) {
 		// Site site = Context.getCurrentSite(request);
 		Special special = service.get(id);
@@ -31,9 +33,15 @@ public class SpecialController {
 		Map<String, Object> data = modelMap.asMap();
 		ForeContext.setData(data, request);
 		ForeContext.setPage(data, page);
+		//浏览记录
+		Browse b = bs.addBrowse(1, id);
+		
 		return special.getTemplate();
 	}
 
 	@Autowired
 	private SpecialService service;
+	
+	@Autowired
+	private BrowseService bs;
 }

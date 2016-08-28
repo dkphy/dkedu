@@ -33,7 +33,7 @@ public class Browse {
 		this.id = id;
 	}
 	@NotBlank
-	@Column(name = "userId") 
+	@Column(name = "user_id") 
 	public Integer getUserId() {
 		return userId;
 	}
@@ -41,7 +41,7 @@ public class Browse {
 		this.userId = userId;
 	}
 	@NotBlank
-	@Column(name = "courseId")
+	@Column(name = "course_id")
 	public Integer getCourseId() {
 		return courseId;
 	}

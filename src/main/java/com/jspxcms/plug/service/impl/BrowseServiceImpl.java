@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.jspxcms.common.orm.Limitable;
@@ -47,26 +48,23 @@ public class BrowseServiceImpl implements BrowseService {
 		//修改时间
 		if(list.size()==1){
 			b = list.get(0);
-			Date date = new Date();
-			b.setGmtModify(date);
 			b.setVersion(b.getVersion()+1);
 			
-			boDao.update(b);
-			
+			boDao.modifyBrowse(b.getId());
 		}
 		return b;
 	}
 
 	@Override
-	public List<Browse> findByUserId(Integer userId, Limitable limitCount) {
+	public List<Browse> findByUserId(Integer userId, Pageable pageable) {
 		if(userId == null){
 			throw new RuntimeException("查询浏览记录：用户Id不能为空");
 		}
-		if(limitCount == null){
+		if(pageable == null){
 			throw new RuntimeException("查询浏览记录：课程Id不能为空");
 		}
 		
-		List<Browse> list = boDao.findByUserId(userId, limitCount);
+		List<Browse> list = boDao.findByUserId(userId, pageable);
 		
 		return list;
 	}

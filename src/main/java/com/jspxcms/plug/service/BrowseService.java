@@ -2,6 +2,8 @@ package com.jspxcms.plug.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.jspxcms.common.orm.Limitable;
 import com.jspxcms.plug.domain.Browse;
 
@@ -19,5 +21,5 @@ public interface BrowseService {
 	 * @param limitCount
 	 * @return
 	 */
-	public List<Browse> findByUserId(Integer userId,Limitable limitCount); 
+	public List<Browse> findByUserId(Integer userId,Pageable pageable); 
 }

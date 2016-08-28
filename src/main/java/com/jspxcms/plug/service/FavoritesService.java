@@ -1,8 +1,9 @@
 package com.jspxcms.plug.service;
 
+
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
-import com.jspxcms.common.orm.Limitable;
 import com.jspxcms.plug.domain.Favorites;
 
 public interface FavoritesService {
@@ -22,6 +23,6 @@ public interface FavoritesService {
 	 * @param limitCount
 	 * @return
 	 */
-	public List<Favorites> findByUserIdAndType(Integer userId,String type,Limitable limitCount);
+	public List<Favorites> findByUserIdAndType(Integer userId,String type,Pageable pageable);
 	
 }

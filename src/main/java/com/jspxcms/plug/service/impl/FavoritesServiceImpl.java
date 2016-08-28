@@ -1,15 +1,15 @@
 package com.jspxcms.plug.service.impl;
 
+
+import org.springframework.data.domain.Pageable;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jspxcms.common.orm.Limitable;
 import com.jspxcms.plug.domain.Favorites;
 import com.jspxcms.plug.repository.FavoritesDao;
 import com.jspxcms.plug.service.FavoritesService;
@@ -19,7 +19,7 @@ import com.sun.star.uno.RuntimeException;
 public class FavoritesServiceImpl implements FavoritesService{
 	
 	@Autowired
-	private FavoritesDao faDao;
+	private FavoritesDao favoritesDao;
 	
 	@Transactional
 	public Favorites addCollectionItem(Integer userId, Integer objectId, String type) {
@@ -34,12 +34,12 @@ public class FavoritesServiceImpl implements FavoritesService{
 		}
 		System.out.println("添加收藏：验证完毕");
 		//查询
-		List<Favorites> list = faDao.findByUserIdTypeAndCourseId(userId, objectId, type);
+		List<Favorites> list = favoritesDao.findByUserIdTypeAndCourseId(userId, objectId, type);
 		if(list.size()>1){
 			throw new RuntimeException("添加收藏:添加异常");
 		}
 		Favorites fa  = null;
-		if(list.size()==1){
+		if(list.size()==0){
 		    fa = new Favorites();
 			fa.setUserId(userId);
 			fa.setObjectId(objectId);
@@ -49,32 +49,29 @@ public class FavoritesServiceImpl implements FavoritesService{
 			fa.setGmtModify(date);
 			fa.setVersion(1);
 			
-			faDao.save(fa);
+			favoritesDao.save(fa);
 		}
 		if(list.size()==1){
 			fa = list.get(0);
-			Date date = new Date();
-			fa.setGmtModify(date);
 			fa.setVersion(fa.getVersion()+1);
-			faDao.update(fa);
+			favoritesDao.modifyFavorites(fa.getId());
 		}
 		return fa;
 	}
 
 	@Override
 	public List<Favorites> findByUserIdAndType(Integer userId, String type,
-			Limitable limitCount) {
+			Pageable pageable) {
 		if(userId == null){
 			throw new RuntimeException("查询收藏：用户ID不能不为空");
 		}
 		if(StringUtils.isBlank(type)){
 			throw new RuntimeException("查询收藏：类型不能不为空");
 		}
-		if(limitCount == null){
+		if(pageable == null){
 			throw new RuntimeException("查询收藏：每页量不能不为空");
 		}
-		List<Favorites> list = faDao.findByUserIdAndType(userId, type, limitCount);
-			
+		List<Favorites> list = favoritesDao.findByUserIdAndType(userId, type, pageable);
 		return list;
 	}
 

@@ -20,12 +20,18 @@
     <!--通用顶部 end-->
     <div class="wrap page_video_detail">
         <div class="post_head">
-            <h1>课时${info.customs['courserId']}:${info.title} <a href="#">返回课程主页</a></h1>
+            <h1>课时${info.customs['courserId']}:${info.title} 
+            [@Node number = 'onlineCourse'; node]
+                	<a href="${node.url}">返回课程主页</a>
+             [/@Node]
+     </h1>
             <div class="info">
-            
-               <!-- [@Info id = course.customs['teacherID'];info]
-                        讲师：${info.title}
-               [/@Info] -->
+            [@Special id=Param.specialId; course]
+            [@Info id = course.customs['teacherID'];teacher]
+            	讲师：${teacher.title}
+            [/@Info]
+            [/@Special]
+                        
             </div>
         </div>
         <div class="ct clearfix">
@@ -46,12 +52,12 @@
                    </div>
                    <ul class="clss_list">
                        <li class="current"><a href="#">课时1:精品课程—婚姻家庭咨询师课程婚姻家庭咨询师课程婚姻家庭咨询师课程</a></li>
-                      <!--  [@InfoPage specialId=special.id pageSize='10';pagedList]
+                       [@InfoPage specialId=Param.specialId pageSize='10';pagedList]
                        [#list pagedList.content as info]
                        <li><a href="${info.url}">课时${info.customs['courserId']}：  ◇${info.title}</a></li>
                        [/#list]
                        [/@InfoPage]
-                  -->  </ul>
+                    </ul>
                </div>
                 <a href="#" class="buy_btn">立即购买该课程</a>
             </div>
@@ -63,7 +69,7 @@
                 <h2>相关课程</h2>
             </div>
             <div class="class_list clearfix">
-                <!--  [@SpecialPage specialId=special.id pageSize='4';pagedList]
+                [@SpecialPage specialId=Param.specialId pageSize='4';pagedList]
 					[#list pagedList.content as course] 
                     <div class="box_wrap">
                         <div class="box">
@@ -75,7 +81,7 @@
                     </div>
 					[/#list]
 					[/@SpecialPage]
- -->
+ 
             </div>
 
         </div>
