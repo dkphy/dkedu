@@ -1,0 +1,31 @@
+[#escape x as (x)!?html]
+   <div class="top_bar">
+        <div class="dark_bar">
+            <div class="wrap clearfix">
+                <div class="opr">
+                    <div class="search_box">
+                        <form action="${ctx}/search.jspx">
+                            <button type="submit" class="icon-search"></button>
+                            <span class="ipt"><input type="text" name="q" placeholder="输入搜索内容"></span>
+                        </form>
+                    </div>
+                    <a href="javascript:;" class="down_app">
+                        <span class="icon-app"></span>
+                        手机学习
+
+                        <span class="qrcode">
+                            <img src="_files/a_upload/side_qrcode4.png" alt="">
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        [@Node number = 'shcoolPoster';node]
+        [@InfoList nodeId=node.id limit='1';list]
+		[#list list as info]
+        <div style="width:100%;height:502px;background:url(${info.customs['schoolPosterPhoto']}) no-repeat center center;"></div>
+   		[/#list]
+   		[/@InfoList]
+   		[/@Node]	
+    </div>   
+[/#escape]

@@ -48,7 +48,11 @@
                     <ul class="info clearfix">
                         <li>课时：${special.customs['courseCount']}</li>
                         <li>浏览次数：11058</li>
-                        <li><a href="#">讲师：${special.customs['teacherName']}</a></li>
+                        <li>
+                        	[@Info id = special.customs['teacherID'];info]
+                        	<a href="${info.url}">讲师：${info.title}</a>
+                        	[/@Info]
+                        </li>
                     </ul>
                     <div class="btns">
                         <a href="#" class="btn btn_buy"><b>${special.customs['price']}</b><span>购买该课程</span></a>
@@ -73,7 +77,7 @@
             <div class="main">
                 <div class="nav clearfix">
                     <a href="#" class="current" onclick="showDiv('c_post_main')">课程介绍</a>
-                    <a href="#" onclick="showDiv('c_schedule')">课时列表 (12)</a>
+                    <a href="#" onclick="showDiv('c_schedule')">课时列表 (${special.customs['courseCount']})</a>
                     <a href="#" onclick="showDiv('c_comment')">课程评价</a>
                 </div>
                 <div class="content">
@@ -89,7 +93,7 @@
                             	[@InfoPage specialId=special.id pageSize='10';pagedList]
                             	[#list pagedList.content as info]
                                 <tr>
-                                    <td class="c_name">课时1：  ◇${info.title}</td>
+                                    <td class="c_name">课时${info_index+1}：  ◇${info.title}</td>
                                     <td class="c_time">${info.customs['courseTime']}</td>
                                     <td class="c_btn"><a href="#">立即试看</a></td>
                                 </tr>
@@ -100,6 +104,7 @@
                     </div>
                     
                     <!-- 课程评价 -->
+                    
                     <div id="c_comment" class="comment" style="display:none">
                         <div class="in">
                         	<form id="commentForm" action="${ctx}/comment_submit.jspx" method="post">

@@ -5,18 +5,11 @@
             <div class="links">
                 <b>友情链接：</b>
                 <div class="link_list">
-                    <a href="">雅芳中国</a>
-                    <a href="">百雀羚</a>
-                    <a href="">自然堂</a>
-                    <a href="">巴黎欧莱雅</a>
-                    <a href="">谷歌</a>
-                    <a href="">百度</a>
-                    <a href="">FACEBOOK</a>
-                    <a href="">腾讯</a>
-                    <a href="">窃美记</a>
-                    <a href="">滴滴打车</a>
-                    <a href="">美图秀秀</a>
-                    <a href="">新浪中国</a>
+                    [@FriendlinkList;list]
+						[#list list as friendlink]
+                    <a href="${friendlink.url}">${friendlink.name}</a>
+                    [/#list]
+					[/@FriendlinkList]
                 </div>
             </div>
 
@@ -25,18 +18,18 @@
                     <img src="_files/a_css/img/logo.png" alt="" class="logo">
                     <div class="bl_main">
                         <p>
-                            <a href="#">关于大康</a>
-                            <a href="#">联系我们</a>
-                            <a href="#">帮助中心</a>
+                            <a href="${ctx}/dk_introduce.jspx">关于大康</a>
+                            <a href="${ctx}/dk_connection.jspx">联系我们</a>
+                            <a href="${ctx}/dk_help.jspx">帮助中心</a>
                         </p>
-                        <p>陕ICP备12003221号 Copyright 陕西大康心理咨询与心理治疗培训学校</p>
+                        <p>${site.customs['company']}   ${site.customs['icp']}  Copyright  陕西大康心理咨询与心理治疗培训学校</p>
                     </div>
                 </div>
                 <div class="br">
                     <div class="social">
-                        <a href="#" class="icon-weibo"></a>
-                        <a href="#" class="icon-wx"></a>
-                        <a href="#" class="icon-douban"></a>
+                        <a href="http://weibo.com/dkxlxx" class="icon-weibo"></a>
+                        <!-- <a href="#" class="icon-wx"></a> -->
+                        <a href="https://site.douban.com/192719/" class="icon-douban"></a>
                     </div>
                     <div class="connects">
                         <b><i class="icon-phone"></i>报名电话</b>

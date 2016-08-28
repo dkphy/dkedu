@@ -26,38 +26,19 @@
 
             <div class="swiper-container class_slide">
                 <div class="swiper-wrapper">
+                   [@SpecialList isRecommend=1 limit='6'; specList] 
+                 	[#list specList as info]
                     <div class="swiper-slide">
                         <div class="box">
-                            <img src="_files/img/p1-kqcc.jpg" alt="">
-                            <b>三天搞懂所有考点</b>
+                            <img src="${info.smallImage}" alt="">
+                            <b>${info.title}</b>
                             <span class="num">56人已购买</span>
-                            <a href="#"><span class="icon-cart"></span>请期待</a>
+                            <a href="${ctx}/special/${info.id}.jspx"><span class="icon-cart"></span>￥${info.customs['price']}</a>
                         </div>
                     </div>
-                    <div class="swiper-slide">
-                        <div class="box">
-                            <img src="_files/img/p2-fzxlx.jpg" alt="">
-                            <b>发展心理学:读懂孩子到青少年</b>
-                            <span class="num">29人已购买</span>
-                            <a href="#"><span class="icon-cart"></span>请期待</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="box">
-                            <img src="_files/img/p3-shxlx.jpg" alt="">
-                            <b>社会心理学</b>
-                            <span class="num">119人已购买</span>
-                            <a href="#"><span class="icon-cart"></span>请期待</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="box">
-                            <img src="_files/img/p4-yjzx.jpg" alt="">
-                            <b>领袖心理课易经的真相</b>
-                            <span class="num">93人已购买</span>
-                            <a href="#"><span class="icon-cart"></span>请期待</a>
-                        </div>
-                    </div>
+                    [/#list]
+                    [/@SpecialList]
+                    
                 </div>
 
                 <!-- Add Arrows -->

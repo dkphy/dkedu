@@ -10,6 +10,9 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="_files/a_css/common.css">
     <link rel="stylesheet" href="_files/a_css/detail.css">
+    <script src="_files/a_js/jquery-1.9.1.min.js"></script>
+	<script src="_files/a_js/pdfobject.min.js"></script>
+	<script src="_files/a_js/common.js"></script>
 </head>
 <body>
 
@@ -20,8 +23,11 @@
         <div class="ct">
             <h1><span class="icon-pdf"></span>${info.title}</h1>
             <div class="intro">
-                上传于  ${info.publishDate} ｜ 暂无评价 ｜ ${info.views}人阅读  ｜  9次下载
+                上传于  ${info.publishDate?string('yyyy-MM-dd')} ｜ 暂无评价 ｜ <span id="info_views"></span>人阅读  ｜  9次下载
             </div>
+            <script type="text/javascript">
+							$("#info_views").load("${dy}/info_views/${info.id}.jspx?d="+new Date()*1);
+			</script>
             <div class="main" id="pdf">
 
             </div>
@@ -74,9 +80,7 @@
     [#include 'a_side.html'/]
     <!--侧边滑动通用end-->
 </body>
-<script src="_files/a_js/jquery-1.9.1.min.js"></script>
-<script src="_files/a_js/pdfobject.min.js"></script>
-<script src="_files/a_js/common.js"></script>
+
 <script>
     /*PDF插件,文档地址:https://pdfobject.com/*/
     PDFObject.embed('${info.customs["files"]}', "#pdf");

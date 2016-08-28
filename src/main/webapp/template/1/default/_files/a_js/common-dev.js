@@ -7,6 +7,7 @@ function loadMore(ctx, targetId, type) {
 	var url = null;
 	switch (type) {
 	case 'info':
+		alert('switch');
 		url = ctx + "/ajaxInfo/" + targetId + ".jspx";
 		break;
 	case 'tag':
@@ -23,6 +24,7 @@ function loadMore(ctx, targetId, type) {
 		offset : Number(offset) + 1,
 		count : loadCount
 	}, function(data, status) {
+		alert('function（data）');
 		var json = eval(data);
 		$.each(json, function(index, item) {
 			var oldMsg = $("#show_more_list")[0].innerHTML;
@@ -31,13 +33,14 @@ function loadMore(ctx, targetId, type) {
 			$("#offset")[0].innerHTML = ++offset;
 		});
 		if (json.length <= 0) {
-			$(".get_more")[0].innerHTML = "--- 到底了 ---";
+			$(".more")[0].innerHTML = "--- 到底了 ---";
 		}
 	});
 }
 
 // 生成标签
 function genTagHtml(infoObj) {
+	alert('生成标签');
 	if (infoObj.tagIds == null || infoObj.tagIds == undefined
 			|| infoObj.tagIds.length == 0) {
 		return '';

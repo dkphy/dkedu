@@ -1,0 +1,77 @@
+[#escape x as (x)!?html]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>大康</title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta content="webkit" name="renderer" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="_files/a_css/common.css">
+    <link rel="stylesheet" href="_files/a_css/ucenter.css">
+    <script src="_files/a_js/jquery-1.9.1.min.js"></script>
+	<script src="_files/a_js/common.js"></script>
+	<script>
+	    $(".pay_type .pays span").click(function(){
+	        var t=$(this);
+	        t.addClass("current").siblings().removeClass("current");
+	        $("#type_val").val(t.index());
+	    });
+	
+	    function show_score(){
+	        /*ajax获取得分*/
+			var name = $("#name").val();
+			var idCard = $("idCard").val();
+	        $(".score_pop").addClass("show");
+	    }
+	
+	    function close_pop(obj){
+	        $(obj).parents(".score_pop").removeClass("show");
+	    }
+	</script>
+</head>
+<body>
+
+    <!--通用顶部 start-->
+	[#include 'a_head.html'/]
+    <!--通用顶部 end-->
+    <div class="wrap">
+        <div class="col_box padd_col">
+            <div class="com_tit long">
+                <h2>成绩查询</h2>
+            </div>
+            <div class="form_group">
+                <div class="line">
+                    <input type="text" placeholder="姓名" name="name" id="name">
+                </div>
+                <div class="line">
+                    <input type="text" placeholder="身份证号" name="idCard" id="idCard">
+                </div>
+                <a href="${ctx}/getCode.jspx" class="long_btn" onclick="show_score()">立即查询</a>
+            </div>
+
+        </div>
+    </div>
+
+    <!--通用底部start-->
+    [#include 'a_end.html'/]
+    <!--通用底部end-->
+
+
+    <!--侧边滑动通用start-->
+    [#include 'a_side.html'/]
+    <!--侧边滑动通用end-->
+
+
+    <div class="score_pop">
+        <div class="pop">
+            <p>您的成绩是</p>
+            <b>${codeList.score}</b>
+            <a href="javascript:;" class="btn" onclick="close_pop(this)">关闭</a>
+        </div>
+    </div>
+
+</body>
+</html>
+[/#escape]

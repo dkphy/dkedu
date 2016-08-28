@@ -76,36 +76,24 @@
 
 			<div class="sidebar">
 				<div class="side_tit">
-					<b>精品课程</b> <a href="#">查看更多课程</a>
+				 [@Node number = 'onlineCourse'; node]
+					<b>精品课程</b> <a href="${node.url}">查看更多课程</a>
+				[/@Node]	
 				</div>
 				<div class="hot_lessons">
+					[@SpecialList isRecommend=1 limit='6'; specList] 
+                	 [#list specList as info]
 					<div class="box">
-						<img src="upload/lessons_test.jpg" alt="">
+						<img src="${info.smallImage}" alt="">
 						<!--尺寸330x200-->
-						<b>怎么确定自己真的恋爱了</b>
+						<b>${info.title}</b>
 						<div class="price_bar">
-							<strong>¥ 399</strong> <span>已有<i>23</i>人购买该课程</span>
+							<strong>¥ ${info.customs['price']}</strong> <span>已有<i>23</i>人购买该课程</span>
 						</div>
-						<a href="#" class="buy_btn">购买该课程</a>
+						<a href="${ctx}/special/${info.id}.jspx" class="buy_btn">购买该课程</a>
 					</div>
-					<div class="box">
-						<img src="upload/lessons_test.jpg" alt="">
-						<!--尺寸330x200-->
-						<b>怎么确定自己真的恋爱了</b>
-						<div class="price_bar">
-							<strong>¥ 399</strong> <span>已有<i>23</i>人购买该课程</span>
-						</div>
-						<a href="#" class="buy_btn">购买该课程</a>
-					</div>
-					<div class="box">
-						<img src="upload/lessons_test.jpg" alt="">
-						<!--尺寸330x200-->
-						<b>怎么确定自己真的恋爱了</b>
-						<div class="price_bar">
-							<strong>¥ 399</strong> <span>已有<i>23</i>人购买该课程</span>
-						</div>
-						<a href="#" class="buy_btn">购买该课程</a>
-					</div>
+					 [/#list]
+                [/@SpecialPage]
 				</div>
 
 

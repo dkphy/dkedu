@@ -10,6 +10,9 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="_files/a_css/common.css">
     <link rel="stylesheet" href="_files/a_css/detail.css">
+    <script src="_files/a_js/jquery-1.9.1.min.js"></script>
+	<script src="_files/a_js/common.js"></script>
+
 </head>
 <body>
     <!--通用顶部 start-->
@@ -23,8 +26,9 @@
                     <div class="info">
                         <span>
                             <i class="icon-tag2"></i>
-                            <a href="#">标签1</a>
-                            <a href="#">标签2</a>
+                             [#list info.tags as tag]
+                            <a href="${ctx}/tag/${tag.id?url}.jspx"> ${tag.name}</a>
+                             [/#list]
                         </span>
                         <span>
                             <i class="icon-view"></i>
@@ -63,38 +67,18 @@
                     <h2>相关课程</h2>
                 </div>
                 <div class="class_list clearfix">
+                    [@SpecialList  limit='4';list]
+					[#list list as course] 
                     <div class="box_wrap">
                         <div class="box">
-                            <a href="#"><img src="upload/class.jpg" alt=""></a><!--270x155-->
-                            <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
+                            <a href="${ctx}/special/${course.id}.jspx"><img src="${course.smallImage}" alt=""></a><!--270x155-->
+                            <b><a href="${ctx}/special/${course.id}.jspx">${course.title}</a></b>
                             <span>230人已购买</span>
-                            <a href="#" class="btn">￥199</a>
+                            <a href="${ctx}/special/${course.id}.jspx" class="btn">￥${course.customs['price']}</a>
                         </div>
                     </div>
-                    <div class="box_wrap">
-                        <div class="box">
-                            <a href="#"><img src="upload/class.jpg" alt=""></a><!--270x155-->
-                            <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
-                            <span>230人已购买</span>
-                            <a href="#" class="btn">￥199</a>
-                        </div>
-                    </div>
-                    <div class="box_wrap">
-                        <div class="box">
-                            <a href="#"><img src="upload/class.jpg" alt=""></a><!--270x155-->
-                            <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
-                            <span>230人已购买</span>
-                            <a href="#" class="btn">￥199</a>
-                        </div>
-                    </div>
-                    <div class="box_wrap">
-                        <div class="box">
-                            <a href="#"><img src="upload/class.jpg" alt=""></a><!--270x155-->
-                            <b><a href="#">视频剪辑及延时摄影快速入门</a></b>
-                            <span>230人已购买</span>
-                            <a href="#" class="btn">￥199</a>
-                        </div>
-                    </div>
+                    [/#list]
+                    [/@SpecialList]
                 </div>
 
             </div>
@@ -111,9 +95,7 @@
     [#include 'a_side.html'/]
     <!--侧边滑动通用end-->
 </body>
-<script src="_files/a_js/jquery-1.9.1.min.js"></script>
 
-<script src="_files/a_js/common.js"></script>
 <script>
 
 </script>

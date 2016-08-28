@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jspxcms.core.domain.Site;
 import com.jspxcms.core.support.Context;
@@ -56,7 +57,17 @@ public class CodeController {
 		return site.getTemplate("myCodeSuccess.html");
 	}
 	
-	//查询成绩
+	/**
+	 *查询数据库中的成绩 
+	 * @param page
+	 * @param userId
+	 * @param name
+	 * @param idCard
+	 * @param modMap
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
 	@RequestMapping(value = "/getCode.jspx")
 	public String findCode(Integer page,Integer userId,String name,String idCard,Model modMap,HttpServletRequest request){
 		log.info("entrer findCodeController");
@@ -67,7 +78,8 @@ public class CodeController {
 		Map<String, Object> data = modMap.asMap();
 		ForeContext.setData(data, request);
 		ForeContext.setPage(data, page);
-		return site.getTemplate("myCode.html");
+		//return site.getTemplate("myCode.html");
+		return site.getTemplate("a_code_search.html");
 	}
 	
 	//修改成绩
