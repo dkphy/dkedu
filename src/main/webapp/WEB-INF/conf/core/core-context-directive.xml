@@ -26,6 +26,7 @@
 	<bean id="CmsNodeList" class="com.jspxcms.core.web.directive.NodeListDirective" />
 	<bean id="CmsNodePage" class="com.jspxcms.core.web.directive.NodePageDirective" />
 	<bean id="CmsInfo" class="com.jspxcms.core.web.directive.InfoDirective" />
+	<bean id="CmsSpecial" class="com.jspxcms.core.web.directive.SpecialDirective" />
 	<bean id="CmsInfoNext" class="com.jspxcms.core.web.directive.InfoNextDirective" />
 	<bean id="CmsInfoPrev" class="com.jspxcms.core.web.directive.InfoPrevDirective" />
 	<bean id="CmsInfoList" class="com.jspxcms.core.web.directive.InfoListDirective" />
@@ -57,7 +58,7 @@
 				<prop key="localized_lookup">false</prop>
 				<prop key="locale">zh_CN</prop>
 				<prop key="boolean_format">true,false</prop>
-				<prop key="datetime_format">yyyy-MM-dd'T'HH:mm:ss</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
 				<prop key="date_format">yyyy-MM-dd</prop>
 				<prop key="time_format">HH:mm:ss</prop>
 				<prop key="number_format">0.###</prop>

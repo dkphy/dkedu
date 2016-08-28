@@ -4,8 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.jspxcms.common.orm.Limitable;
 import com.jspxcms.plug.domain.Browse;
 import com.jspxcms.plug.repository.BrowseDao;
 import com.jspxcms.plug.service.BrowseService;
@@ -18,36 +20,53 @@ public class BrowseServiceImpl implements BrowseService {
 	private BrowseDao boDao;
 	
 	@Override
-	public void addBrowse(Integer userId, Integer courseId) {
+	public Browse addBrowse(Integer userId, Integer courseId) {
 		if(userId == null){
 			throw new RuntimeException("添加浏览记录：用户Id不能为空");
 		}
 		if(courseId == null){
 			throw new RuntimeException("添加浏览记录：课程Id不能为空");
 		}
-		Browse b = new Browse();
-		b.setCourseId(courseId);
-		b.setUserId(userId);
-		Date date = new Date();
-		b.setGmtCreate(date);
-		b.setGmtModify(date);
-		b.setVersion(1);
-		
-		boDao.save(b);
+		//先查询
+		List<Browse> list = boDao.findByUserIdAndCourseId(userId, courseId);
+		if(list.size()>1){
+			throw new RuntimeException("添加浏览记录：当前添加对象异常");
+		}
+		//新增
+		Browse b = null;
+		if(list.size()==0){
+			b = new Browse();
+			b.setCourseId(courseId);
+			b.setUserId(userId);
+			Date date = new Date();
+			b.setGmtCreate(date);
+			b.setGmtModify(date);
+			b.setVersion(1);
+			
+			boDao.save(b);
+		}
+		//修改时间
+		if(list.size()==1){
+			b = list.get(0);
+			b.setVersion(b.getVersion()+1);
+			
+			boDao.modifyBrowse(b.getId());
+		}
+		return b;
 	}
 
 	@Override
-	public List<Browse> findByUserId(Integer userId, Integer limitCount) {
+	public List<Browse> findByUserId(Integer userId, Pageable pageable) {
 		if(userId == null){
 			throw new RuntimeException("查询浏览记录：用户Id不能为空");
 		}
-		if(limitCount == null){
+		if(pageable == null){
 			throw new RuntimeException("查询浏览记录：课程Id不能为空");
 		}
 		
-		List<Browse> list = boDao.findByUserId(userId, limitCount);
+		List<Browse> list = boDao.findByUserId(userId, pageable);
 		
 		return list;
 	}
-
+	
 }

@@ -35,6 +35,18 @@
 			$('#c_' + div).css("display","block");
 			$('#tit_' + div).addClass('current');
 		}
+
+		function favorite(){
+			var action = "${ctx}/addFavorite.jspx";
+			$.post(action, {"userId" : "3" , "objectId" : "4", "type" : "onlineCourse"}, function(data) {
+				var d = $.parseJSON(data);
+				if (d !== true) {
+					alert('收藏失败');
+				} else {
+					alert('收藏成功');
+				} 
+			});
+		}
 	</script>
 </head>
 <body>
@@ -67,9 +79,10 @@
                         </li>
                     </ul>
                     <div class="btns">
+
                         <a href="${ctx}/miniPay/pay_index.jspx?courseId=${special.id}" class="btn btn_buy"><b>${special.customs['price']}</b><span>购买该课程</span></a>
-                        <a href="#" class="btn">收藏</a>
-                        <a href="#" class="btn">立即试听</a>
+                        <a href="#" class="btn" onclick = "return favorite()">收藏</a>
+                        <a href="${info.url}?specialId=${special.id}" class="btn">立即试听</a>
                     </div>
 
                     <div class="share_box">
@@ -105,9 +118,9 @@
                             	[@InfoPage specialId=special.id pageSize='10';pagedList]
                             	[#list pagedList.content as info]
                                 <tr>
-                                    <td class="c_name">课时${info_index+1}：  ◇${info.title}</td>
+                                    <td class="c_name">课时${info.customs['courserId']}：  ◇${info.title}</td>
                                     <td class="c_time">${info.customs['courseTime']}</td>
-                                    <td class="c_btn"><a href="#">立即试看</a></td>
+                                    <td class="c_btn"><a href="${info.url}?specialId=${special.id}">立即试看</a></td>
                                 </tr>
                                 [/#list]
                                 [/@InfoPage]
