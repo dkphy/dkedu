@@ -22,7 +22,19 @@
 			$("#commentForm").submit();
 		}
 		
-		
+		function showDiv(div) {
+			// hidden all
+			$('#c_intro').css("display","none");
+			$('#c_comment').css("display","none");
+			$('#c_schedule').css("display","none");
+			
+			$('#tit_intro').removeClass("current");
+			$('#tit_comment').removeClass("current");
+			$('#tit_schedule').removeClass("current");
+			// show div
+			$('#c_' + div).css("display","block");
+			$('#tit_' + div).addClass('current');
+		}
 	</script>
 </head>
 <body>
@@ -76,13 +88,13 @@
         <div class="wrap ct clearfix">
             <div class="main">
                 <div class="nav clearfix">
-                    <a href="#" class="current" onclick="showDiv('c_post_main')">课程介绍</a>
-                    <a href="#" onclick="showDiv('c_schedule')">课时列表 (${special.customs['courseCount']})</a>
-                    <a href="#" onclick="showDiv('c_comment')">课程评价</a>
+                    <a href="#" id="tit_intro" class="current" onclick="showDiv('intro')">课程介绍</a>
+                    <a href="#" id="tit_schedule" onclick="showDiv('schedule')">课时列表 (${special.customs['courseCount']})</a>
+                    <a href="#" id="tit_comment" onclick="showDiv('comment')">课程评价</a>
                 </div>
                 <div class="content">
                     <!-- 课程介绍 -->
-                    <div id="c_post_main" class="post_main">
+                    <div id="c_intro" class="post_main">
                     [#noescape] ${special.customs['courseDesc']}[/#noescape]
                     </div>
                     
@@ -104,7 +116,6 @@
                     </div>
                     
                     <!-- 课程评价 -->
-                    
                     <div id="c_comment" class="comment" style="display:none">
                         <div class="in">
                         	<form id="commentForm" action="${ctx}/comment_submit.jspx" method="post">
@@ -218,20 +229,6 @@
         }]
     }
     with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
-
-	function showDiv(div) {
-		// hidden all
-		$('#c_post_main').css("display","none");
-		$('#c_comment').css("display","none");
-		$('#c_schedule').css("display","none");
-		
-		$('#c_post_main').removeClass("current");
-		$('#c_comment').removeClass("current");
-		$('#c_schedule').removeClass('current');
-		// show div
-		$('#' + div).css("display","block");
-		$('#' + div).addClass('current');
-	}
 </script>
 </html>
 [/#escape]
