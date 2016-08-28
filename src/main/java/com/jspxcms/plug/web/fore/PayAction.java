@@ -53,7 +53,8 @@ public class PayAction {
 	 * @return
 	 */
 	@RequestMapping(value="pay_index.jspx")
-	public String index(Integer courseId, HttpServletRequest request, HttpServletResponse response, org.springframework.ui.Model modelMap){
+	public String index(Integer courseId, HttpServletRequest request, 
+			HttpServletResponse response, org.springframework.ui.Model modelMap){
 		Special course = specialService.get(courseId);
 		Map<String, Object> data = modelMap.asMap();
 		data.put("course", course);
