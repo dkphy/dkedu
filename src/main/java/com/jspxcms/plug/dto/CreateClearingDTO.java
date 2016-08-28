@@ -8,6 +8,7 @@ package com.jspxcms.plug.dto;
  * 
  */
 public class CreateClearingDTO {
+	private boolean isSuccess;
 	private Integer orderId;
 	private String outTradeId;
 	private String outBuyerAccount;
@@ -15,6 +16,14 @@ public class CreateClearingDTO {
 	private Double tradeMoney;
 	private String origMsg;
 	private String status;
+
+	public boolean isSuccess() {
+		return isSuccess;
+	}
+
+	public void setSuccess(boolean isSuccess) {
+		this.isSuccess = isSuccess;
+	}
 
 	public Integer getOrderId() {
 		return orderId;

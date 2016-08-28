@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jspxcms.plug.bo.MiniPayBo;
 import com.jspxcms.plug.dto.AddItemDTO;
@@ -28,7 +29,7 @@ import com.jspxcms.plug.status.OrderStatus;
 public class PayServiceImpl implements PayService {
 
 	@Autowired
-	 MiniPayBo miniPayBo;
+	MiniPayBo miniPayBo;
 
 	public Order createOrder(CreateOrderDTO coDTO) {
 		return miniPayBo.createOrder(coDTO);
@@ -71,6 +72,7 @@ public class PayServiceImpl implements PayService {
 		return miniPayBo.findDetailsByOrderId(orderId);
 	}
 
+	@Transactional
 	public void tradeSuccess(CreateClearingDTO ccDTO) {
 		// 生成业务流水
 		miniPayBo.createClearing(ccDTO);
@@ -79,6 +81,7 @@ public class PayServiceImpl implements PayService {
 				ccDTO.getChannel());
 	}
 
+	@Transactional
 	public void tradeFail(CreateClearingDTO ccDTO) {
 		// 生成业务流水
 		miniPayBo.createClearing(ccDTO);

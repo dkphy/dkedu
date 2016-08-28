@@ -9,42 +9,26 @@ package com.jspxcms.plug.dto;
  */
 public class CreateOrderDTO {
 	private Integer buyerId; //
-	private Integer sellerId;
+	private Integer orderItemCount;
+	private Double totalMoney;
+	private String subject;
 
+	private Integer sellerId;
 	private String receiverName;
 	private String receiverPhone;
 	private Integer receiverCityId;
 	private String receiverDetailAddr;
-	private Integer orderItemCount;
 	private String buyerMess;
 
-	public CreateOrderDTO(Integer buyerId, Integer sellerId,
-			String receiverName, String receiverPhone, Integer receiverCityId,
-			String receiverDetailAddr, Integer orderItemCount, String buyerMess) {
-		super();
-		this.buyerId = buyerId;
-		this.sellerId = sellerId;
-		this.receiverName = receiverName;
-		this.receiverPhone = receiverPhone;
-		this.receiverCityId = receiverCityId;
-		this.receiverDetailAddr = receiverDetailAddr;
-		this.orderItemCount = orderItemCount;
-		this.buyerMess = buyerMess;
-	}
-
-	@Override
-	public String toString() {
-		return "CreateOrderDTO [buyerId=" + buyerId + ", sellerId=" + sellerId
-				+ ", receiverName=" + receiverName + ", receiverPhone="
-				+ receiverPhone + ", receiverCityId=" + receiverCityId
-				+ ", receiverDetailAddr=" + receiverDetailAddr
-				+ ", orderItemCount=" + orderItemCount + ", buyerMessage="
-				+ buyerMess + "]";
-	}
-
 	public CreateOrderDTO() {
-		super();
-		// TODO Auto-generated constructor stub
+	}
+	
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 
 	public Integer getBuyerId() {
@@ -109,5 +93,13 @@ public class CreateOrderDTO {
 
 	public void setBuyerMess(String buyerMess) {
 		this.buyerMess = buyerMess;
+	}
+
+	public Double getTotalMoney() {
+		return totalMoney;
+	}
+
+	public void setTotalMoney(Double totalMoney) {
+		this.totalMoney = totalMoney;
 	}
 }
