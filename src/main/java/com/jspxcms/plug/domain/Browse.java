@@ -32,7 +32,7 @@ public class Browse {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	@NotBlank
+
 	@Column(name = "user_id") 
 	public Integer getUserId() {
 		return userId;
@@ -40,7 +40,7 @@ public class Browse {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	@NotBlank
+
 	@Column(name = "course_id")
 	public Integer getCourseId() {
 		return courseId;
@@ -48,7 +48,7 @@ public class Browse {
 	public void setCourseId(Integer courseId) {
 		this.courseId = courseId;
 	}
-	@NotBlank
+
 	@Column(name = "GMT_CREATE")
 	public Date getGmtCreate() {
 		return gmtCreate;
@@ -56,7 +56,7 @@ public class Browse {
 	public void setGmtCreate(Date gmtCreate) {
 		this.gmtCreate = gmtCreate;
 	}
-	@NotBlank
+
 	@Column(name = "GMT_MODIFY")
 	public Date getGmtModify() {
 		return gmtModify;
@@ -64,7 +64,7 @@ public class Browse {
 	public void setGmtModify(Date gmtModify) {
 		this.gmtModify = gmtModify;
 	}
-	@NotBlank
+
 	@Column(name = "VERSION")
 	public Integer getVersion() {
 		return version;
@@ -72,7 +72,6 @@ public class Browse {
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
-	
 	
 
 }

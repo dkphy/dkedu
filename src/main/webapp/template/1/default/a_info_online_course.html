@@ -38,7 +38,7 @@
 
 		function favorite(){
 			var action = "${ctx}/addFavorite.jspx";
-			$.post(action, {"userId" : "3" , "objectId" : "4", "type" : "onlineCourse"}, function(data) {
+			$.post(action, {"objectId" : "${special.id}", "type" : "onlineCourse"}, function(data) {
 				var d = $.parseJSON(data);
 				if (d !== true) {
 					alert('收藏失败');

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jspxcms.core.domain.Site;
+import com.jspxcms.core.domain.User;
 import com.jspxcms.core.support.Context;
 import com.jspxcms.core.support.ForeContext;
 import com.jspxcms.plug.domain.Favorites;
@@ -30,13 +31,19 @@ public class FavoritesController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/addFavorite.jspx",method = RequestMethod.POST)
-	public String addConnection(Integer page,Integer userId,Integer objectId,String type,Model modMap,HttpServletRequest request){
+	public String addConnection(Integer page, Integer objectId, String type,
+			Model modMap, HttpServletRequest request){
+		User user = Context.getCurrentUser(request);
+		if(user == null) {
+			//TODO 
+			return "false";
+		}
 		log.info("aa");
 		Site site = Context.getCurrentSite(request);
 		Map<String, Object> data = modMap.asMap();
 		ForeContext.setData(data, request);
 		ForeContext.setPage(data, page);
-		Favorites f = fas.addCollectionItem(userId, objectId, type);
+		Favorites f = fas.addCollectionItem(user.getId(), objectId, type);
 		if(f == null){
 			return "false"; 
 		}else{

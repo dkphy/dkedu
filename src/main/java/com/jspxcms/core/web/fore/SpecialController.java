@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jspxcms.core.domain.Special;
+import com.jspxcms.core.domain.User;
 import com.jspxcms.core.service.SpecialService;
+import com.jspxcms.core.support.Context;
 import com.jspxcms.core.support.ForeContext;
 import com.jspxcms.plug.domain.Browse;
 import com.jspxcms.plug.service.BrowseService;
@@ -25,16 +27,18 @@ import com.jspxcms.plug.service.BrowseService;
 public class SpecialController {
 
 	@RequestMapping(value = "/special/{id:[0-9]+}.jspx")
-	public String special(@PathVariable Integer id, Integer userId,Integer page,
+	public String special(@PathVariable Integer id, Integer page,
 			HttpServletRequest request, org.springframework.ui.Model modelMap) {
-		// Site site = Context.getCurrentSite(request);
 		Special special = service.get(id);
 		modelMap.addAttribute("special", special);
 		Map<String, Object> data = modelMap.asMap();
 		ForeContext.setData(data, request);
 		ForeContext.setPage(data, page);
+		User user = Context.getCurrentUser(request);
 		//浏览记录
-		Browse b = bs.addBrowse(1, id);
+		if(user != null) {
+			bs.addBrowse(user.getId(), id);
+		}
 		
 		return special.getTemplate();
 	}

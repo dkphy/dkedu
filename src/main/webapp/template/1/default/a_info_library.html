@@ -16,7 +16,7 @@
 	<script type="text/javascript">
 	function favorite(){
 			var action = "${ctx}/addFavorite.jspx";
-			$.post(action, {"userId" : "2" , "objectId" : "4", "type" : "library"}, function(data) {
+			$.post(action, {"objectId" : "${info.id}", "type" : "library"}, function(data) {
 				var d = $.parseJSON(data);
 				if (d !== true) {
 					alert('收藏失败');
