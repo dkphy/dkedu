@@ -71,7 +71,7 @@
                     </div>
                     <ul class="info clearfix">
                         <li>课时：${special.customs['courseCount']}</li>
-                        <li>浏览次数：11058</li>
+                        <li>浏览次数：11</li>
                         <li>
                         	[@Info id = special.customs['teacherID'];info]
                         	<a href="${info.url}">讲师：${info.title}</a>
@@ -82,7 +82,11 @@
 
                         <a href="${ctx}/miniPay/pay_index.jspx?courseId=${special.id}" class="btn btn_buy"><b>${special.customs['price']}</b><span>购买该课程</span></a>
                         <a href="#" class="btn" onclick = "return favorite()">收藏</a>
+                       [@InfoPage specialId=special.id pageSize='1';pagedList]
+                         [#list pagedList.content as info]
                         <a href="${info.url}?specialId=${special.id}" class="btn">立即试听</a>
+                         [/#list]
+                        [/@InfoPage]
                     </div>
 
                     <div class="share_box">
@@ -184,14 +188,15 @@
                     <h2>课程教师</h2>
                 </div>
                 <div class="teacher_summary">
+                    [@Info id = special.customs['teacherID'];info]
                     <div class="hd">
-                        <a href="#">
-                        <img src="http://tva1.sinaimg.cn/crop.0.0.512.512.50/d0c2c2a7jw8f5ici98oi5j20e80e8jro.jpg" alt="">
-                        <b>北京雅趣摄影</b>
+                        <a href="${info.url}">
+                        <img src="${info.customs['teacherPhoto']}" alt="">
+                        <b>${info.title}</b>
                         </a>
                     </div>
-                    <p>未来的车联网我们可以畅想，我今天想跟大家分享未来的出行体验，未来我管它叫私人管家式的体验，它是可关怀的。所以包括我们引入整个私人管家的设计。</p>
-                    <p>包括会基于凯迪拉克、别克和雪佛兰不同的车以及车辆的诊断的安全报告的输入。</p>
+                    <p>[#noescape]${info.customs['informationSummary']}[/#noescape]</p>
+                    [/@Info]
                 </div>
             </div>
 
