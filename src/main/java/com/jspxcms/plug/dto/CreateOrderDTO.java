@@ -12,6 +12,7 @@ public class CreateOrderDTO {
 	private Integer orderItemCount;
 	private Double totalMoney;
 	private String subject;
+	private Integer subjectId;
 
 	private Integer sellerId;
 	private String receiverName;
@@ -29,6 +30,14 @@ public class CreateOrderDTO {
 
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+
+	public Integer getSubjectId() {
+		return subjectId;
+	}
+
+	public void setSubjectId(Integer subjectId) {
+		this.subjectId = subjectId;
 	}
 
 	public Integer getBuyerId() {

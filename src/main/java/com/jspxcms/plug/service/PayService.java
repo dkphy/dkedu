@@ -96,20 +96,18 @@ public interface PayService {
 	 * @return
 	 */
 	public List<OrderDetail> findDetailsByOrderId(Integer orderId);
-
+	
 	/**
-	 * 交易成功
-	 * 
+	 * 生成流水
+	 * @param dto
+	 */
+	public void createClearing(CreateClearingDTO dto);
+	
+	/**
+	 * 处理交易结果
 	 * @param ccDTO
 	 */
-	public void tradeSuccess(CreateClearingDTO ccDTO);
-
-	/**
-	 * 交易失败
-	 * 
-	 * @param ccDTO
-	 */
-	public void tradeFail(CreateClearingDTO ccDTO);
+	public void processTradeResult(CreateClearingDTO ccDTO);
 
 	public boolean isOrderCanBePay(Order order);
 

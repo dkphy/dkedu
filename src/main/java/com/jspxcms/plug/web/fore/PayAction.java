@@ -6,7 +6,6 @@ package com.jspxcms.plug.web.fore;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.jspxcms.core.domain.Site;
@@ -29,13 +27,12 @@ import com.jspxcms.core.service.SpecialService;
 import com.jspxcms.core.support.Context;
 import com.jspxcms.core.support.ForeContext;
 import com.jspxcms.plug.domain.Order;
-import com.jspxcms.plug.domain.OrderDetail;
 import com.jspxcms.plug.dto.AddItemDTO;
 import com.jspxcms.plug.dto.CreateClearingDTO;
 import com.jspxcms.plug.dto.CreateOrderDTO;
 import com.jspxcms.plug.pay.AlipayNotify;
 import com.jspxcms.plug.service.PayService;
-import com.jspxcms.plug.status.ClearingStatus;
+import com.jspxcms.plug.status.OrderStatus;
 
 /**
  * @author YRee
@@ -74,8 +71,12 @@ public class PayAction {
 	 * @return
 	 */
 	@RequestMapping(value = "confirmOrder.jspx")
-	public RedirectView confirmOrder(@RequestParam("buyerId") int buyerId, @RequestParam("productionId")int productionId,@RequestParam("skuPrice") double skuPrice){
-		// TODO 检查登录
+	public RedirectView confirmOrder(@RequestParam("productionId")int productionId,@RequestParam("skuPrice") double skuPrice, HttpServletRequest request){
+		User user = Context.getCurrentUser(request);
+		if(user == null) {
+			// TODO 登录检查
+		}
+		
 		Special course = specialService.get(productionId);
 		if(course == null) {
 			// 无次课程
@@ -90,10 +91,11 @@ public class PayAction {
 		
 		// 先创建订单，目前关键字段只有buyerId
 		CreateOrderDTO coDTO = new CreateOrderDTO();
-		coDTO.setBuyerId(buyerId);
+		coDTO.setBuyerId(user.getId());
 		coDTO.setOrderItemCount(1);
 		coDTO.setTotalMoney(price);
 		coDTO.setSubject(course.getTitle());
+		coDTO.setSubjectId(productionId);
 		Order order = payService.createOrder(coDTO);
 		
 		// 添加商品
@@ -211,20 +213,28 @@ public class PayAction {
 	@RequestMapping(value="alipay/callback.jspx")
 	public RedirectView callback(HttpServletRequest request, HttpServletResponse response,
 			org.springframework.ui.Model modelMap) {
-		CreateClearingDTO result = parseAlipayResult(request);
-		if(result.isSuccess()) {
-			// 设置交易成功（生成交易流水，修改订单状态）
-			result.setStatus(ClearingStatus.SUCCESS);
-			payService.tradeSuccess(result);
-			return new RedirectView("/miniPay/paySuccess.jspx",true,false,false);
-		} else {
-			// 设置交易失败（生成交易流水，修改订单状态）
-			result.setStatus(ClearingStatus.FAIL);
-			payService.tradeFail(result);
-			return new RedirectView("/miniPay/payFail.jspx",true,false,false);
+		CreateClearingDTO result;
+		try {
+			result = parseAlipayResult(request);
+			if(result != null) {
+				// 保存支付宝通知结果（不论成功失败，都会保存）
+				payService.createClearing(result);
+				// 处理支付结果(不论成功失败，都会更新DB)
+				payService.processTradeResult(result);
+				// 只有成功的结果返回success
+				if(OrderStatus.PAID.equals(result.getStatus())) {
+					return new RedirectView("/miniPay/paySuccess.jspx",true,false,false);
+				}
+				// 注意：此位置之后不能有任何成功相关的逻辑
+			}
+		} catch (Exception e) {
+			logger.error("process alipay result failed", e);
 		}
+		// 无论何种情况，只要前面没有返回成功，都跳转到失败页面
+		return new RedirectView("/miniPay/payFail.jspx",true,false,false);
 	}
 	
+	@SuppressWarnings("rawtypes")
 	private CreateClearingDTO parseAlipayResult(HttpServletRequest request) {
 		try {
 			// 获取支付宝GET过来反馈信息
@@ -242,42 +252,36 @@ public class PayAction {
 				valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
 				params.put(name, valueStr);
 			}
-
+			
+			// 验证签名，确保传输过程中没有被篡改
+			boolean verify_result = AlipayNotify.verify(params);
+			if(!verify_result) {
+				logger.error("alipay verify failed!");
+//			FIXME	return null;
+			}
+			
 			// 获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
 			String out_trade_no = getFieldValue(request, "out_trade_no");// 商户订单号
 			String trade_no = getFieldValue(request, "trade_no"); // 支付宝交易号
 			String trade_status = getFieldValue(request, "trade_status");// 交易状态
 			String buyer_email = getFieldValue(request, "buyer_email");
 			String total_feeStr = getFieldValue(request, "total_fee");
-			String origMsg = getFieldValue(request, "origMsg");
-			String channel = getFieldValue(request, "chanel");
 			// 获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
 			Double total_fee = Double.parseDouble(total_feeStr);
 			Integer orderId = Integer.parseInt(out_trade_no);
-			
-			// 计算得出通知验证结果
-			boolean verify_result = AlipayNotify.verify(params);
-			// FIXME
-//			verify_result = true;
+			String status = isTradeSuccess(trade_status) ? OrderStatus.PAID : OrderStatus.FAIL;
 
 			CreateClearingDTO ccDTO = new CreateClearingDTO();
-			ccDTO.setSuccess(true);
-			ccDTO.setChannel(channel);
+			ccDTO.setChannel("alipay");
 			ccDTO.setOrderId(orderId);
 			ccDTO.setOutTradeId(trade_no);
-			ccDTO.setOrigMsg(origMsg);
 			ccDTO.setOutBuyerAccount(buyer_email);
 			ccDTO.setTradeMoney(total_fee);
-			if (!isTradeSuccess(trade_status) || !verify_result) {
-				ccDTO.setSuccess(false);
-			} else {
-				ccDTO.setSuccess(true);
-			}
+			ccDTO.setStatus(status);
 			return ccDTO;
 		} catch (UnsupportedEncodingException e) {
-			CreateClearingDTO result = new CreateClearingDTO();
-			result.setSuccess(false);
-			return result;
+			logger.error("process alipay result failed", e);
+			return null;
 		}
 	}
 	
@@ -312,90 +316,16 @@ public class PayAction {
 		return site.getTemplate("pay_fail.html");
 	}
 
-	@RequestMapping(value = "tradeSuccess")
-	/**
-	 * 支付成功跳转
-	 * @param request
-	 * @return
-	 */
-	public ModelAndView tradeSuccess(HttpServletRequest request) {
-		String buyer_email = (String) request.getAttribute("buyer_email");
-		String total_feeStr = (String) request.getAttribute("total_fee");
-		Double total_fee = Double.parseDouble(total_feeStr);
-		String origMsg = (String) request.getAttribute("origMsg");
-		// 内部交易号
-		String out_trade_no = (String) request.getAttribute("out_trade_no");
-		Integer orderId = Integer.parseInt(out_trade_no);
-		// 支付宝交易流水号
-		String trade_no = (String) request.getAttribute("trade_no");
-		String trade_status = (String) request.getAttribute("trade_status");
-		String channel = (String) request.getAttribute("chanel");
-
-		CreateClearingDTO ccDTO = new CreateClearingDTO();
-		ccDTO.setChannel(channel);
-		ccDTO.setOrderId(orderId);
-		ccDTO.setOrigMsg(origMsg);
-		// TODO checker
-		ccDTO.setOutBuyerAccount(buyer_email);
-		ccDTO.setOutTradeId(trade_no);
-		ccDTO.setStatus(ClearingStatus.SUCCESS);
-		ccDTO.setTradeMoney(total_fee);
-		// 设置交易成功（生成交易流水，修改订单状态）
-		payService.tradeSuccess(ccDTO);
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("finish");
-		mv.addObject("status", ClearingStatus.SUCCESS);
-		return mv;
-	}
-
-	@RequestMapping(value = "tradeFail")
-	/**
-	 * 支付失败跳转
-	 * @param request
-	 * @return
-	 */
-	public ModelAndView tradeFail(HttpServletRequest request) {
-		String buyer_email = (String) request.getAttribute("buyer_email");
-		String total_feeStr = (String) request.getAttribute("total_fee");
-		Double total_fee = Double.parseDouble(total_feeStr);
-		String origMsg = (String) request.getAttribute("origMsg");
-		// 内部交易号
-		String out_trade_no = (String) request.getAttribute("out_trade_no");
-		Integer orderId = Integer.parseInt(out_trade_no);
-		// 支付宝交易流水号
-		String trade_no = (String) request.getAttribute("trade_no");
-		String trade_status = (String) request.getAttribute("trade_status");
-		String channel = (String) request.getAttribute("chanel");
-
-		CreateClearingDTO ccDTO = new CreateClearingDTO();
-		ccDTO.setChannel(channel);
-		ccDTO.setOrderId(orderId);
-		ccDTO.setOrigMsg(origMsg);
-		// TODO checker
-		ccDTO.setOutBuyerAccount(buyer_email);
-		ccDTO.setOutTradeId(trade_no);
-		ccDTO.setStatus(ClearingStatus.FAIL);
-		ccDTO.setTradeMoney(total_fee);
-		// 设置交易失败（生成交易流水，修改订单状态）
-		payService.tradeFail(ccDTO);
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("finish");
-		mv.addObject("status", ClearingStatus.FAIL);
-		return mv;
-	}
-
-	@RequestMapping(value = "showDetails")
-	public ModelAndView showDetails(Integer orderId) {
-		List<OrderDetail> details = payService.findDetailsByOrderId(orderId);
-		Order order = payService.findOrderByOrderId(orderId);
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("list");
-		mv.addObject("details", details);
-		mv.addObject("order", order);
-		return mv;
-	}
+//	@RequestMapping(value = "showDetails")
+//	public ModelAndView showDetails(Integer orderId) {
+//		List<OrderDetail> details = payService.findDetailsByOrderId(orderId);
+//		Order order = payService.findOrderByOrderId(orderId);
+//
+//		ModelAndView mv = new ModelAndView();
+//		mv.setViewName("list");
+//		mv.addObject("details", details);
+//		mv.addObject("order", order);
+//		return mv;
+//	}
 
 }

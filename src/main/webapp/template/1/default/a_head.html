@@ -44,10 +44,7 @@
                     <span class="ipt"><input type="text" name="q" placeholder="输入搜索内容"></span>
                 </form>
             </div>
-            <div class="login_box">
-                <a href="${ctx}/login.jspx">登录</a>
-                <a href="${ctx}/register.jspx">注册</a>
-            </div>
+            <script type="text/javascript" src="${ctx}/login_include.jspx?fallbackUrl=${url?url}&d=${.now?time}"></script>
         </div>
     </div>
 [/#escape]

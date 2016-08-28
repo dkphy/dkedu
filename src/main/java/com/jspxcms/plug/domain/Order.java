@@ -24,6 +24,7 @@ public class Order implements java.io.Serializable {
 
 	private Double totalMoney;
 	private String subject;
+	private Integer subjectId;
 	private String channel;
 	private String status;
 	private String receiverName;
@@ -81,6 +82,16 @@ public class Order implements java.io.Serializable {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
+	
+	@Column(name = "subject_id")
+	public Integer getSubjectId() {
+		return subjectId;
+	}
+	
+	public void setSubjectId(Integer subjectId) {
+		this.subjectId = subjectId;
+	}
+	
 	@Column(name = "channel")
 	public String getChannel() {
 		return channel;
