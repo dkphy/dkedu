@@ -96,7 +96,7 @@
 
 <script>
     /*PDF插件,文档地址:https://pdfobject.com/*/
-    PDFObject.embed("https://pdfobject.com/pdf/sample-3pp.pdf", "#pdf");
+    PDFObject.embed('${info.customs["files"]}', "#pdf");
     /*分享*/
     var share_tit=$("h1").eq(0).text(),
             share_desc='',

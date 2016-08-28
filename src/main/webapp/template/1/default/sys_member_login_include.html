@@ -11,16 +11,39 @@
 [#assign script]
 [#escape x as (x)!?html]
 	[#if user??]
-	<span class="c666">${user.username}</span>,您好 
-	<a class="topa ml5" href="${ctx}/space/${user.id}.jspx">我的空间</a>
-	| <a class="topa" href="${ctx}/my.jspx">设置</a>
-	| <a class="topa" href="${ctx}/logout.jspx">退出</a>
-	[#else]
-    [#if oauthQqUrl?? && oauthWeiboUrl??]
-    <a href="${oauthQqUrl}"><img src="_files/img/oauth_qq_7.png"/ style="padding:0 0 3px 0;"></a>
-    <a href="${oauthWeiboUrl}" class="ml10"><img src="_files/img/oauth_weibo_240.png" style="padding:0 0 3px 0;"/></a>
-    [/#if]
-	当前访客身份：游客 [ <a class="topa" href="${ctx}/login.jspx?fallbackUrl=${Param.fallbackUrl?url}">登录</a> | <a class="topa"  href="${ctx}/register.jspx">注册</a> ]
+	<div class="logined_box">
+		<span class="u_head"><img
+			src="http://tva1.sinaimg.cn/crop.0.0.512.512.50/d0c2c2a7jw8f5ici98oi5j20e80e8jro.jpg"
+			alt="">
+		</span>
+		<div class="notice">
+			<span class="icon-notice active"></span>
+			<!--如果需要小红点 class中加入active-->
+			<ul>
+				<li><a href="${ctx}/myCourse.jspx">我的课程</a>
+				</li>
+				<li><a href="${ctx}/myProfile.jspx">基本信息</a>
+				</li>
+				<li><a href="${ctx}/mySecure.jspx">账户安全</a>
+				</li>
+				<li><a href="${ctx}/myLibrary.jspx">我的资料</a>
+				</li>
+				<li><a href="${ctx}/myScore.jspx">成绩查询</a>
+				</li>
+				<li><a href="${ctx}/myOrder.jspx">我的订单</a>
+				</li>
+				<li><a href="${ctx}/logout.jspx">退出登录</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+[#else]
+    <!--登陆前start-->
+    <div class="login_box">
+    	<a href="${ctx}/login.jspx">登录</a>
+        <a href="${ctx}/register.jspx">注册</a>
+    </div>
+    <!--登陆后start-->    
 [/#if]
 [/#escape]
 [/#assign]

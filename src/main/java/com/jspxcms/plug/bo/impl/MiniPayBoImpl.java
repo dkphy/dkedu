@@ -4,29 +4,26 @@
 package com.jspxcms.plug.bo.impl;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.jspxcms.plug.bo.MiniPayBo;
-import com.jspxcms.plug.repository.ClearingDao;
-import com.jspxcms.plug.repository.OrderDao;
-import com.jspxcms.plug.repository.OrderDetailDao;
-import com.jspxcms.plug.dto.AddItemDTO;
-import com.jspxcms.plug.dto.CreateClearingDTO;
-import com.jspxcms.plug.dto.CreateOrderDTO;
 import com.jspxcms.plug.domain.Clearing;
 import com.jspxcms.plug.domain.Order;
 import com.jspxcms.plug.domain.OrderDetail;
+import com.jspxcms.plug.dto.AddItemDTO;
+import com.jspxcms.plug.dto.CreateClearingDTO;
+import com.jspxcms.plug.dto.CreateOrderDTO;
+import com.jspxcms.plug.repository.ClearingDao;
+import com.jspxcms.plug.repository.OrderDao;
+import com.jspxcms.plug.repository.OrderDetailDao;
 import com.jspxcms.plug.status.OrderDetailStatus;
 import com.jspxcms.plug.status.OrderStatus;
 
@@ -52,7 +49,6 @@ public class MiniPayBoImpl implements MiniPayBo {
 		// 复制属性
 		BeanUtils.copyProperties(coDTO, order);
 
-		order.setTotalMoney(0.0);
 		// 设置订单状态位初始化
 		order.setStatus(OrderStatus.INIT);
 
@@ -72,6 +68,9 @@ public class MiniPayBoImpl implements MiniPayBo {
 	private void validateCoDTO(CreateOrderDTO coDTO) {
 		if (coDTO.getBuyerId() == null) {
 			throw new RuntimeException("买家id不能为空");
+		}
+		if (coDTO.getTotalMoney() == null || coDTO.getTotalMoney() < 0) {
+			throw new RuntimeException("金额错误:" + coDTO.getTotalMoney());
 		}
 	}
 

@@ -5,13 +5,11 @@ package com.jspxcms.plug.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.jspxcms.plug.domain.Order;
+import com.jspxcms.plug.domain.OrderDetail;
 import com.jspxcms.plug.dto.AddItemDTO;
 import com.jspxcms.plug.dto.CreateClearingDTO;
 import com.jspxcms.plug.dto.CreateOrderDTO;
-import com.jspxcms.plug.domain.Order;
-import com.jspxcms.plug.domain.OrderDetail;
 
 /**
  * @author YRee
@@ -98,20 +96,18 @@ public interface PayService {
 	 * @return
 	 */
 	public List<OrderDetail> findDetailsByOrderId(Integer orderId);
-
+	
 	/**
-	 * 交易成功
-	 * 
+	 * 生成流水
+	 * @param dto
+	 */
+	public void createClearing(CreateClearingDTO dto);
+	
+	/**
+	 * 处理交易结果
 	 * @param ccDTO
 	 */
-	public void tradeSuccess(CreateClearingDTO ccDTO);
-
-	/**
-	 * 交易失败
-	 * 
-	 * @param ccDTO
-	 */
-	public void tradeFail(CreateClearingDTO ccDTO);
+	public void processTradeResult(CreateClearingDTO ccDTO);
 
 	public boolean isOrderCanBePay(Order order);
 
