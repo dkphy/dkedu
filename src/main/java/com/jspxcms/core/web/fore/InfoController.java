@@ -39,17 +39,21 @@ import com.jspxcms.core.domain.PublishPoint;
 import com.jspxcms.core.domain.ScoreBoard;
 import com.jspxcms.core.domain.ScoreItem;
 import com.jspxcms.core.domain.Site;
+import com.jspxcms.core.domain.Special;
 import com.jspxcms.core.domain.User;
 import com.jspxcms.core.service.InfoBufferService;
 import com.jspxcms.core.service.InfoQueryService;
 import com.jspxcms.core.service.ScoreBoardService;
 import com.jspxcms.core.service.ScoreItemService;
 import com.jspxcms.core.service.SiteService;
+import com.jspxcms.core.service.SpecialService;
 import com.jspxcms.core.service.VoteMarkService;
 import com.jspxcms.core.support.Context;
 import com.jspxcms.core.support.ForeContext;
 import com.jspxcms.core.support.Response;
 import com.jspxcms.core.support.TitleText;
+import com.jspxcms.plug.domain.Order;
+import com.jspxcms.plug.service.PayService;
 
 /**
  * InfoController
@@ -142,6 +146,17 @@ public class InfoController {
 		modelMap.addAttribute("node", node);
 		modelMap.addAttribute("title", title);
 		modelMap.addAttribute("text", text);
+		
+		if("lesson".equals(info.getModel().getNumber())) {
+			String courseIdStr = request.getParameter("specialId");
+			Integer courseId = Integer.valueOf(courseIdStr);
+			User user = Context.getCurrentUser(request);
+			Boolean canPlay = null;
+			if(user != null && isCanPlay(courseId, user.getId())) {
+				canPlay = Boolean.TRUE;
+			}
+			modelMap.addAttribute("canPlay", canPlay);
+		}
 
 		Page<String> pagedList = new PageImpl<String>(Arrays.asList(text),
 				new PageRequest(page - 1, 1), textList.size());
@@ -155,6 +170,25 @@ public class InfoController {
 		} else {
 			return info.getTemplate();
 		}
+	}
+
+	/**
+	 * 判断视频是否可以免费播放
+	 * @param courseId
+	 * @param userId
+	 * @return
+	 */
+	private boolean isCanPlay(Integer courseId, Integer userId) {
+		// 查询课程
+		Special course = specialService.get(courseId);
+		// 免费课可直接观看
+		String priceStr = course.getCustoms().get("price");
+		if(StringUtils.isBlank(priceStr) || Double.valueOf(priceStr) <= 0) {
+			return true;
+		}
+		// 判断该学员是否购买过课程
+		List<Order> list = payService.findOrderByUserIdAndSubjectId(userId, course.getId());
+		return !list.isEmpty();
 	}
 
 	@RequestMapping(value = "/info_download.jspx")
@@ -388,4 +422,8 @@ public class InfoController {
 	private InfoBufferService infoBufferService;
 	@Autowired
 	private PathResolver pathResolver;
+	@Autowired
+	private SpecialService specialService;
+	@Autowired
+	private PayService payService;
 }

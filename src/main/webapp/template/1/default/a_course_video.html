@@ -8,11 +8,30 @@
     <meta content="webkit" name="renderer" />
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
-
-    <link rel="stylesheet" href="_files/a_dist/plyr.css">
-
     <link rel="stylesheet" href="_files/a_css/common.css">
     <link rel="stylesheet" href="_files/a_css/detail.css">
+    <script src="_files/a_js/jquery-1.9.1.min.js"></script>
+	<script src="_files/a_js/common.js"></script>
+    <script type="text/javascript" src="_files/ckplayer/ckplayer.js"></script>
+    [#if canPlay??]
+    	<!-- 免费或已购买 -->
+    	<script type="text/javascript">
+    	alert('free');
+    	</script>
+	[#else]
+		<script type="text/javascript">
+		function loadedHandler(){
+	        CKobject.getObjectById('ckplayer_video').addListener('time','seekHandler');
+	    }
+	    function seekHandler(t) {
+	    	CKobject._K_('nowTime').innerHTML='当前播放的时间点是(此值精确到小数点后三位，即毫秒)：'+t;
+	    	if(t > 60) {
+	    		CKobject.getObjectById('ckplayer_video').videoPause();
+	    		alert('请付费');
+	    	}
+	    }
+	</script>
+	[/#if]
 </head>
 <body>
     <!--通用顶部 start-->
@@ -36,14 +55,8 @@
         </div>
         <div class="ct clearfix">
             <div class="js-plyr">
-                <video poster="http://www.casstar.com.cn/usr/themes/zhongke/movie/cover.jpg" controls>
-                    <!-- Video files -->
-                    <source src="http://www.casstar.com.cn/usr/themes/zhongke/movie/movie.mp4" type="video/mp4">
-                    <!-- <source src="http://www.casstar.com.cn/usr/themes/zhongke/movie/movie.webm" type="video/webm"> -->
-
-
-                    <a href="/path/to/movie.mp4">Download</a>
-                </video>
+                <div id="video"></div>
+				<div id="nowTime"></div>
             </div>
             <div class="sidebar">
                <div class="clss">
@@ -51,10 +64,10 @@
                        <h2>课时列表</h2>
                    </div>
                    <ul class="clss_list">
-                       <li class="current"><a href="#">课时1:精品课程—婚姻家庭咨询师课程婚姻家庭咨询师课程婚姻家庭咨询师课程</a></li>
+<!--                        <li class="current"><a href="#"></a></li> -->
                        [@InfoPage specialId=Param.specialId pageSize='10';pagedList]
                        [#list pagedList.content as info]
-                       <li><a href="${info.url}">课时${info.customs['courserId']}：  ◇${info.title}</a></li>
+                       <li><a href="${info.url}?specialId=${Param.specialId}">课时${info.customs['courserId']}：  ◇${info.title}</a></li>
                        [/#list]
                        [/@InfoPage]
                     </ul>
@@ -83,11 +96,8 @@
 					[/@SpecialPage]
  
             </div>
-
         </div>
     </div>
-
-
 
     <!--通用底部start-->
     [#include 'a_end.html'/]
@@ -97,47 +107,15 @@
     <!--侧边滑动通用start-->
     [#include 'a_side.html'/]
     <!--侧边滑动通用end-->
+    <script type="text/javascript">
+    	var flashvars={
+			f:"http://www.casstar.com.cn/usr/themes/zhongke/movie/movie.mp4",
+			c:0,
+			p:0,
+			loaded:'loadedHandler'
+		};
+		var player = CKobject.embedSWF("_files/ckplayer/ckplayer.swf","video","ckplayer_video","880","580",flashvars);
+    </script>
 </body>
-<script src="_files/a_js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="_files/a_dist/plyr.js"></script>
-<script src="_files/a_js/common.js"></script>
-<script>
-    (function() {
-        [
-            'dist/sprite.svg'
-        ]
-                .forEach(function(u) {
-                    var x = new XMLHttpRequest(),
-                            b = document.body;
-
-                    // Check for CORS support
-                    // If you're loading from same domain, you can remove the whole if/else statement
-                    // XHR for Chrome/Firefox/Opera/Safari/IE10+
-                    if ('withCredentials' in x) {
-                        x.open('GET', u, true);
-                    }
-                    // XDomainRequest for IE8 & IE9
-                    else if (typeof XDomainRequest == 'function') {
-                        x = new XDomainRequest();
-                        x.open('GET', u);
-                    }
-                    else { return; }
-
-                    // Inject hidden div with sprite on load
-                    x.onload = function() {
-                        var c = document.createElement('div');
-                        c.setAttribute('hidden', '');
-                        c.innerHTML = x.responseText;
-                        b.insertBefore(c, b.childNodes[0]);
-                    }
-
-                    // Timeout for IE9
-                    setTimeout(function () {
-                        x.send();
-                    }, 0);
-                });
-    })();
-    var player = plyr.setup('.js-plyr')[0];
-</script>
 </html>
 [/#escape]

@@ -3,6 +3,7 @@
  */
 package com.jspxcms.plug.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.jspxcms.plug.domain.OrderDetail;
 import com.jspxcms.plug.dto.AddItemDTO;
 import com.jspxcms.plug.dto.CreateClearingDTO;
 import com.jspxcms.plug.dto.CreateOrderDTO;
+import com.jspxcms.plug.repository.OrderDao;
 import com.jspxcms.plug.service.PayService;
 import com.jspxcms.plug.status.OrderStatus;
 import com.sun.star.uno.RuntimeException;
@@ -28,6 +30,8 @@ public class PayServiceImpl implements PayService {
 
 	@Autowired
 	MiniPayBo miniPayBo;
+	@Autowired
+	OrderDao orderDao;
 
 	public Order createOrder(CreateOrderDTO coDTO) {
 		return miniPayBo.createOrder(coDTO);
@@ -125,6 +129,15 @@ public class PayServiceImpl implements PayService {
 	public boolean isOrderCanBeCancel(Integer orderId) {
 		return miniPayBo.isOrderCanBeCancel(orderId);
 	}
-	
+
+	@Override
+	public List<Order> findOrderByUserIdAndSubjectId(Integer userId, Integer subjectId) {
+		List<Order> list =  orderDao.findByUserIdAndSubjectId(userId, subjectId);
+		if(list == null || list.isEmpty()) {
+			return Collections.emptyList();
+		} else {
+			return list;
+		}
+	}
 
 }

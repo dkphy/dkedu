@@ -120,7 +120,7 @@ public interface PayService {
 	public boolean isOrderCanBePay(Integer orderId);
 
 	/**
-	 * 盘点是否能被取消
+	 * 是否能被取消
 	 * 
 	 * @param order
 	 * @return
@@ -128,12 +128,18 @@ public interface PayService {
 	public boolean isOrderCanBeCancel(Order order);
 
 	/**
-	 * 盘点是否能被取消
+	 * 是否能被取消
 	 * 
 	 * @param orderId
 	 * @return
 	 */
 	public boolean isOrderCanBeCancel(Integer orderId);
 
-
+	/**
+	 * 根据用户ID和商品ID查找订单
+	 * @param userId
+	 * @param subjectId
+	 * @return
+	 */
+	public List<Order> findOrderByUserIdAndSubjectId(Integer userId, Integer subjectId);
 }

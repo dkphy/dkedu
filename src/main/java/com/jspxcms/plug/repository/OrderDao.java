@@ -22,14 +22,17 @@ import com.jspxcms.plug.domain.Resume;
 public interface OrderDao extends Repository<Order, Integer>,OrderDaoPlus{
 
 
-	public  Order findById(Integer id);
+	public Order findById(Integer id);
 
 	@Transactional
-	public  void save(Order transientInstance);
+	public void save(Order transientInstance);
 
 	//public abstract List findByExample(Order instance);
 
-	public  List findByBuyerId(Object buyerId);
+	public List findByBuyerId(Object buyerId);
+	
+	@Query(value="from Order o where o.buyerId=?1 and subjectId=?2")
+	public List<Order> findByUserIdAndSubjectId(Integer userId, Integer subjectId);
 
 //	public abstract List findByBuyerName(Object buyerName);
 
