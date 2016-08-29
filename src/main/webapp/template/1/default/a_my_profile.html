@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="_files/a_css/ucenter.css">
     <script src="_files/a_js/jquery-1.9.1.min.js"></script>
 	<script src="_files/a_js/common.js"></script>
+	
 </head>
 <body>
     <!--通用顶部 start-->
@@ -28,7 +29,7 @@
             <div class="form_group form_group_tit">
                 <div class="line">
                     <b class="tit">昵称</b>
-                    <input type="text" placeholder="">
+                    <input type="text" placeholder="${u.username}">
                     <p class="warn">! 示例提醒</p>
                 </div>
                 <div class="line no_border">
@@ -41,7 +42,6 @@
                         <input type="radio" name="sex" class="radio_box" id="sex_nv">
                         女
                     </label>
-
                 </div>
                 <div class="line">
                     <b class="tit">地区</b>
@@ -56,8 +56,6 @@
                 </div>
                 <a href="#" class="long_btn">保存</a>
             </div>
-
-
 
         </div>
     </div>

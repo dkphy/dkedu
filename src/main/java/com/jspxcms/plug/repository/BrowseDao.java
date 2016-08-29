@@ -39,4 +39,7 @@ public interface BrowseDao extends Repository<Browse, Integer>{
 	@Modifying
 	@Query("update Browse f set f.gmtModify = now() where f.id = ?1")
 	public void modifyBrowse (Integer id);
+	
+	@Query("from Browse b where b.id=?1")
+	public Browse findById(Integer id);
 }

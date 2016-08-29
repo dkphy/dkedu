@@ -24,156 +24,27 @@
             <div class="com_tit long">
                 <h2>我的资料</h2>
                 <div class="nav">
-                    <a href="#" class="current">收藏的文库</a>
-                    <a href="#">收藏的题库</a>
+                    <a href="${ctx}/myLibrary.jspx?type=file" class="current">收藏的文库</a>
+                    <a href="${ctx}/myLibrary.jspx?type=train">收藏的题库</a>
                 </div>
             </div>
             <div class="database_list">
                 <ul class="clearfix">
+					 [@FavoritesList userId=userId type=type limit='10';courseList]
+              			[#list courseList as favorite]
+              			[@Info id=favorite.objectId;info]
                     <li>
-                        <a href="#">
-                            <img src="css/img/doc_img.png" alt="">
+                        <a href="${info.url}">
+                            <img src="${info.smallImage}" alt="">
                             <div class="ft">
-                                <b>一只萌萌哒的小豹仔</b>
+                                <b>${info.title}</b>
                                 <span><i class="icon-view"></i><strong>666</strong>人查阅</span>
                             </div>
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
-                            <img src="css/img/doc_img.png" alt="">
-                            <div class="ft">
-                                <b>一只萌萌哒的小豹仔</b>
-                                <span><i class="icon-view"></i><strong>666</strong>人查阅</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="css/img/doc_img.png" alt="">
-                            <div class="ft">
-                                <b>一只萌萌哒的小豹仔</b>
-                                <span><i class="icon-view"></i><strong>666</strong>人查阅</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="css/img/doc_img.png" alt="">
-                            <div class="ft">
-                                <b>一只萌萌哒的小豹仔</b>
-                                <span><i class="icon-view"></i><strong>666</strong>人查阅</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="css/img/doc_img.png" alt="">
-                            <div class="ft">
-                                <b>一只萌萌哒的小豹仔</b>
-                                <span><i class="icon-view"></i><strong>666</strong>人查阅</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="css/img/doc_img.png" alt="">
-                            <div class="ft">
-                                <b>一只萌萌哒的小豹仔</b>
-                                <span><i class="icon-view"></i><strong>666</strong>人查阅</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="css/img/doc_img.png" alt="">
-                            <div class="ft">
-                                <b>一只萌萌哒的小豹仔</b>
-                                <span><i class="icon-view"></i><strong>666</strong>人查阅</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="css/img/doc_img.png" alt="">
-                            <div class="ft">
-                                <b>一只萌萌哒的小豹仔</b>
-                                <span><i class="icon-view"></i><strong>666</strong>人查阅</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="css/img/doc_img.png" alt="">
-                            <div class="ft">
-                                <b>一只萌萌哒的小豹仔</b>
-                                <span><i class="icon-view"></i><strong>666</strong>人查阅</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="css/img/doc_img.png" alt="">
-                            <div class="ft">
-                                <b>一只萌萌哒的小豹仔</b>
-                                <span><i class="icon-view"></i><strong>666</strong>人查阅</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="css/img/doc_img.png" alt="">
-                            <div class="ft">
-                                <b>一只萌萌哒的小豹仔</b>
-                                <span><i class="icon-view"></i><strong>666</strong>人查阅</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="css/img/doc_img.png" alt="">
-                            <div class="ft">
-                                <b>一只萌萌哒的小豹仔</b>
-                                <span><i class="icon-view"></i><strong>666</strong>人查阅</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="css/img/doc_img.png" alt="">
-                            <div class="ft">
-                                <b>一只萌萌哒的小豹仔</b>
-                                <span><i class="icon-view"></i><strong>666</strong>人查阅</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="css/img/doc_img.png" alt="">
-                            <div class="ft">
-                                <b>一只萌萌哒的小豹仔</b>
-                                <span><i class="icon-view"></i><strong>666</strong>人查阅</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="css/img/doc_img.png" alt="">
-                            <div class="ft">
-                                <b>一只萌萌哒的小豹仔</b>
-                                <span><i class="icon-view"></i><strong>666</strong>人查阅</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="css/img/doc_img.png" alt="">
-                            <div class="ft">
-                                <b>一只萌萌哒的小豹仔</b>
-                                <span><i class="icon-view"></i><strong>666</strong>人查阅</span>
-                            </div>
-                        </a>
-                    </li>
+                   [/@Info]
+               [/#list]
+               [/@FavoritesList]
                 </ul>
             </div>
         </div>
