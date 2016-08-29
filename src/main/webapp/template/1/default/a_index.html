@@ -30,7 +30,7 @@
                     <div class="box">
                         <a href="${ctx}/special/${info.id}.jspx"><img src="${info.smallImage}" alt=""></a><!--270x155-->
                         <b><a href="${ctx}/special/${info.id}.jspx">${info.title}</a></b>
-                        <span>230人已购买</span>
+                        <span>${info.soldCount!0}人已购买</span>
                         <a href="${ctx}/special/${info.id}.jspx" class="btn">￥${info.customs['price']}</a>
                     </div>
                     [/#list]
@@ -78,7 +78,7 @@
                 <div class="box">
                     <a href="${ctx}/special/${info.id}.jspx"><img src="${info.smallImage}" alt=""></a><!--270x155-->
                     <b><a href="${ctx}/special/${info.id}.jspx">${info.title}</a></b>
-                    <span>230人已购买</span>
+                    <span>${info.soldCount!0}人已购买</span>
                     <a href="${ctx}/special/${info.id}.jspx" class="btn">￥${info.customs['price']}</a>
                 </div>
             </div>
@@ -88,7 +88,7 @@
                     <div class="box">
                         <a href="${ctx}/special/${info.id}.jspx"><img src="${info.smallImage}" alt=""></a><!--270x155-->
                         <b><a href="${ctx}/special/${info.id}.jspx">${info.title}</a></b>
-                        <span>230人已购买</span>
+                        <span>${info.soldCount!0}人已购买</span>
                         <a href="${ctx}/special/${info.id}.jspx" class="btn">￥${info.customs['price']}</a>
                     </div>
                     
