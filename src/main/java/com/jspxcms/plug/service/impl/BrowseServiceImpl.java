@@ -60,10 +60,14 @@ public class BrowseServiceImpl implements BrowseService {
 		if (pageable == null) {
 			throw new RuntimeException("查询浏览记录：课程Id不能为空");
 		}
-
-		List<Browse> list = boDao.findByUserId(userId, pageable);
-
-		return list;
+		return boDao.findByUserId(userId, pageable);
+	}
+	
+	public Browse get(Integer id){
+		if(id==null){
+			throw new RuntimeException("id不能为空");
+		}
+		return boDao.findById(id);
 	}
 
 }

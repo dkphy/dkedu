@@ -50,6 +50,7 @@ import com.jspxcms.core.service.UserRoleService;
 import com.jspxcms.core.service.UserService;
 import com.jspxcms.core.support.Constants;
 import com.jspxcms.core.support.DeleteException;
+import com.sun.star.uno.RuntimeException;
 
 /**
  * UserServiceImpl
@@ -149,6 +150,13 @@ public class UserServiceImpl implements UserService, OrgDeleteListener,
 		dao.save(user);
 	}
 
+	@Transactional
+	public void updatePhone(Integer userId, String phone) {
+		User user = get(userId);
+		user.setMobile(phone);
+		dao.save(user);
+	}
+	
 	@Transactional
 	public void sendVerifyEmail(Site site, User user, GlobalMail mail,
 			String subject, String text) {

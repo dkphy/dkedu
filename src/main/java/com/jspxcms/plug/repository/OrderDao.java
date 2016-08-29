@@ -29,12 +29,20 @@ public interface OrderDao extends Repository<Order, Integer>,OrderDaoPlus{
 
 	//public abstract List findByExample(Order instance);
 
-	public List findByBuyerId(Object buyerId);
+	public List<Order> findByBuyerId(Integer buyerId);
+	
+	@Query(value="from Order o where o.buyerId=?1 and o.status=?2")
+	public List<Order> findByBuyerIdAndStatus(Integer buyerId,String status);
+	
+	@Query(value="from Order o where o.buyerId=?1 and o.status!='cancel'")
+	public List<Order> findByUserId(Integer buyerId);
+	
 	
 	@Query(value="from Order o where o.buyerId=?1 and subjectId=?2")
 	public List<Order> findByUserIdAndSubjectId(Integer userId, Integer subjectId);
 
-//	public abstract List findByBuyerName(Object buyerName);
+
+	//	public abstract List findByBuyerName(Object buyerName);
 
 	//public abstract List findByRecevierName(Object recevierName);
 

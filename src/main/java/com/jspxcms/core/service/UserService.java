@@ -44,8 +44,10 @@ public interface UserService {
 	public User get(Integer id);
 
 	public void updatePassword(Integer userId, String rawPassword);
-
+	
 	public void updateEmail(Integer userId, String email);
+	
+	public void updatePhone(Integer userId, String phone);
 
 	public void sendVerifyEmail(Site site, User user, GlobalMail mail,
 			String subject, String text);

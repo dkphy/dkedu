@@ -18,6 +18,11 @@ public class Favorites {
 	private Integer id;
 	private Integer userId;
 	private Integer objectId;
+	private String objectSmallImage;
+	private String objectName;
+	private Integer objectViewCount;
+	private Integer objectTag;
+	private Double objectPrice;
 	private String type;
 	private Date gmtCreate;
 	private Date gmtModify;
@@ -77,6 +82,42 @@ public class Favorites {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	
+	@Column(name = "object_smallImage")
+	public String getObjectSmallImage() {
+		return objectSmallImage;
+	}
+	public void setObjectSmallImage(String objectSmallImage) {
+		this.objectSmallImage = objectSmallImage;
+	}
+	@Column(name = "object_name")
+	public String getObjectName() {
+		return objectName;
+	}
+	public void setObjectName(String objectName) {
+		this.objectName = objectName;
+	}
+	@Column(name = "object_view_count")
+	public Integer getObjectViewCount() {
+		return objectViewCount;
+	}
+	public void setObjectViewCount(Integer objectViewCount) {
+		this.objectViewCount = objectViewCount;
+	}
+	@Column(name = "object_tag")
+	public Integer getObjectTag() {
+		return objectTag;
+	}
+	public void setObjectTag(Integer objectTag) {
+		this.objectTag = objectTag;
+	}
+	@Column(name = "object_price")
+	public Double getObjectPrice() {
+		return objectPrice;
+	}
+	public void setObjectPrice(Double objectPrice) {
+		this.objectPrice = objectPrice;
 	} 
 
 }

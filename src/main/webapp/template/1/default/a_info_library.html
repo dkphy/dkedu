@@ -14,9 +14,9 @@
 	<script src="_files/a_js/pdfobject.min.js"></script>
 	<script src="_files/a_js/common.js"></script>
 	<script type="text/javascript">
-	function favorite(){
-			var action = "${ctx}/addFavorite.jspx";
-			$.post(action, {"objectId" : "${info.id}", "type" : "library"}, function(data) {
+	function favorite(type){
+		var action = "${ctx}/addFavorite.jspx";
+			$.post(action, {"objectId" : "${info.id}", "type" : type}, function(data) {
 				var d = $.parseJSON(data);
 				if (d !== true) {
 					alert('收藏失败');
@@ -24,7 +24,7 @@
 					alert('收藏成功');
 				} 
 			});
-		}
+	}	
 	</script>
 </head>
 <body>
@@ -34,7 +34,8 @@
     <!--通用顶部 end-->
     <div class="wrap page_database_detail">
         <div class="ct">
-            <h1><span class="icon-pdf"></span>${info.title}</h1>
+            <h1><span class="icon-pdf"></span>${info.title}
+            </h1>
             <div class="intro">
                 上传于  ${info.publishDate?string('yyyy-MM-dd')} ｜ 暂无评价 ｜ <span id="info_views"></span>次阅读  ｜  9次下载
             </div>
@@ -57,7 +58,7 @@
                 </div>
             </div>
 
-            <a href="javascript:;" class="btn save" onclick = "return favorite()">收藏</a>
+            <a href="javascript:;" class="btn save" onclick = "return favorite('${nodeNumber}')">收藏</a>
             <a href="#" class="btn download">下载</a>
 
             <div class="database_hot_list">

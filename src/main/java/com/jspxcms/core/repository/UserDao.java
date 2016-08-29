@@ -26,7 +26,7 @@ public interface UserDao extends Repository<User, Integer>, UserDaoPlus {
 	public User findOne(Integer id);
 
 	public User save(User bean);
-
+	
 	public void delete(User bean);
 
 	// ------------------------------------

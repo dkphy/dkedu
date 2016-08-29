@@ -17,6 +17,10 @@ public class Browse {
 	private Integer id;
 	private Integer userId;
 	private Integer courseId;
+	private String courseName;
+	private String courseSmallImage;
+	private String courseTag;
+	private Integer courseBuyerCount;
 	private Date gmtCreate;
 	private Date gmtModify;
 	private Integer version;
@@ -71,6 +75,34 @@ public class Browse {
 	}
 	public void setVersion(Integer version) {
 		this.version = version;
+	}
+	@Column(name = "course_name")
+	public String getCourseName() {
+		return courseName;
+	}
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+	@Column(name = "course_smallImage")
+	public String getCourseSmallImage() {
+		return courseSmallImage;
+	}
+	public void setCourseSmallImage(String courseSmallImage) {
+		this.courseSmallImage = courseSmallImage;
+	}
+	@Column(name = "course_tag")
+	public String getCourseTag() {
+		return courseTag;
+	}
+	public void setCourseTag(String courseTag) {
+		this.courseTag = courseTag;
+	}
+	@Column(name = "course_buyer_count")
+	public Integer getCourseBuyerCount() {
+		return courseBuyerCount;
+	}
+	public void setCourseBuyerCount(Integer courseBuyerCount) {
+		this.courseBuyerCount = courseBuyerCount;
 	}
 	
 

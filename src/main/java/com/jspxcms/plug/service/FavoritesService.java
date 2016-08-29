@@ -25,4 +25,6 @@ public interface FavoritesService {
 	 */
 	public List<Favorites> findByUserIdAndType(Integer userId,String type,Pageable pageable);
 	
+	
+	
 }

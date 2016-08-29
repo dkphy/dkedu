@@ -22,4 +22,6 @@ public interface BrowseService {
 	 * @return
 	 */
 	public List<Browse> findByUserId(Integer userId,Pageable pageable); 
+	
+	public Browse get(Integer id);
 }

@@ -27,6 +27,9 @@
 	<bean id="CmsNodePage" class="com.jspxcms.core.web.directive.NodePageDirective" />
 	<bean id="CmsInfo" class="com.jspxcms.core.web.directive.InfoDirective" />
 	<bean id="CmsSpecial" class="com.jspxcms.core.web.directive.SpecialDirective" />
+	<bean id="CmsFavoritesList" class="com.jspxcms.core.web.directive.FavoritesListDirective" />
+	<bean id="CmsBrowse" class="com.jspxcms.core.web.directive.BrowseDirective" />
+	<bean id="CmsBrowseList" class="com.jspxcms.core.web.directive.BrowseListDirective" />
 	<bean id="CmsInfoNext" class="com.jspxcms.core.web.directive.InfoNextDirective" />
 	<bean id="CmsInfoPrev" class="com.jspxcms.core.web.directive.InfoPrevDirective" />
 	<bean id="CmsInfoList" class="com.jspxcms.core.web.directive.InfoListDirective" />

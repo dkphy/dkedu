@@ -142,4 +142,18 @@ public interface PayService {
 	 * @return
 	 */
 	public List<Order> findOrderByUserIdAndSubjectId(Integer userId, Integer subjectId);
+	
+	/**
+	 * 根据用户ID和状态
+	 * @param userId
+	 * @param status
+	 * @return
+	 */
+	public List<Order> findOrderByUserIdAndStatus(Integer userId,String status);
+	/**
+	 * 根据用户ID差
+	 * @param userId
+	 * @return
+	 */
+	public List<Order> findOrderByUserId(Integer userId);
 }
