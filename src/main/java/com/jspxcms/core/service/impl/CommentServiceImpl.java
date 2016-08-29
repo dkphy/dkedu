@@ -111,12 +111,12 @@ public class CommentServiceImpl implements CommentService, SiteDeleteListener,
 		bean.applyDefaultValue();
 		bean = dao.save(bean);
 		dao.flushAndRefresh(bean);
-//		if (bean.getStatus() == Comment.AUDITED) {
-//			Object anchor = bean.getAnchor();
-//			if (anchor instanceof Commentable) {
-//				((Commentable) anchor).addComments(1);
-//			}
-//		}
+		if (bean.getStatus() == Comment.AUDITED) {
+			Object anchor = bean.getAnchor();
+			if (anchor instanceof Commentable) {
+				((Commentable) anchor).addComments(1);
+			}
+		}
 		return bean;
 	}
 

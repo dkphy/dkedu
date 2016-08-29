@@ -26,10 +26,10 @@
             </div>
             <div class="form_group">
                 <div class="line">
-                    <input type="text" placeholder="姓名">
+                    <input type="text" id="name" placeholder="姓名">
                 </div>
                 <div class="line">
-                    <input type="text" placeholder="身份证号">
+                    <input type="text" id="idCard" placeholder="身份证号">
                 </div>
                 <a href="#" class="long_btn" onclick="show_score()">立即查询</a>
             </div>
@@ -37,6 +37,13 @@
         </div>
     </div>
     
+    <div class="score_pop">
+        <div class="pop">
+            <p>您的成绩是</p>
+            <b><span id="scoreResult"></span></b>
+            <a href="javascript:;" class="btn" onclick="close_pop(this)">关闭</a>
+        </div>
+    </div>
 
     <!--通用底部start-->
     [#include 'a_end.html'/]
@@ -46,6 +53,35 @@
     <!--侧边滑动通用start-->
     [#include 'a_side.html'/]
     <!--侧边滑动通用end-->
+    
+<script>
+    $(".pay_type .pays span").click(function(){
+        var t=$(this);
+        t.addClass("current").siblings().removeClass("current");
+        $("#type_val").val(t.index());
+    });
+
+    function show_score(){
+        /*ajax获取得分*/
+		$.get("getCode.jspx",
+	    {
+	      name:$("#name").val(),
+	      idCard:$("#idCard").val()
+	    },
+	    function(data,status){
+	    	if(data === "not found") {
+	    		$("#scoreResult").html("暂无记录");
+	    	} else {
+		    	$("#scoreResult").html(data);
+	    	}
+	        	$(".score_pop").addClass("show");
+	    });
+    }
+
+    function close_pop(obj){
+        $(obj).parents(".score_pop").removeClass("show");
+    }
+</script>
 </body>
 </html>
 [/#escape]

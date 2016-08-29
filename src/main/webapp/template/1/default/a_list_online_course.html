@@ -49,8 +49,12 @@
                             <span class="count">230人已购买</span>
                             <span class="cat">${course.metaKeywords}</span>
                         </div>
+                        [#if (course.customs['price']?number > 0)]
                         <span class="price">${course.customs['price']}</span>
                         <span class="try">试听</span>
+                        [#else]
+                        <span class="price">免费</span>
+                        [/#if]
                     </a>
                 </div>
                 [/#list]

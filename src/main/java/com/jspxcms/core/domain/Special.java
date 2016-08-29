@@ -67,6 +67,14 @@ public class Special implements java.io.Serializable, Anchor, Siteable, Commenta
 	 * 附件类型
 	 */
 	public static final String ATTACH_TYPE = "node";
+	/**
+	 * 评论类型
+	 */
+	public static final String COMMENT_TYPE = "Special";
+	/**
+	 * 评分标记
+	 */
+	public static final String SCORE_MARK = "SpecialScore";
 
 	public static String getTemplate(Map<String, String> customs) {
 		return customs != null ? customs.get(MODEL_TEMPLATE) : null;
@@ -220,6 +228,7 @@ public class Special implements java.io.Serializable, Anchor, Siteable, Commenta
 	private Integer views;
 	private Boolean withImage;
 	private Integer recommend;
+	private Integer comments;
 
 	public Special() {
 	}
@@ -466,10 +475,22 @@ public class Special implements java.io.Serializable, Anchor, Siteable, Commenta
 		this.recommend = recommend;
 	}
 	
+	@Column(name = "f_comments", nullable = false)
+	public Integer getComments() {
+		return this.comments;
+	}
+
+	public void setComments(Integer comments) {
+		this.comments = comments;
+	}
+	
 	@Override
+	@Transient
 	public void addComments(int comments) {
-		// TODO 
-		throw new RuntimeException("hahaha");
+		if(this.comments == null) {
+			this.comments = 0;
+		}
+		this.comments += comments;
 	}
 
 	@Override

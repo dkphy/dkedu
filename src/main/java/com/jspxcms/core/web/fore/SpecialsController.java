@@ -50,7 +50,7 @@ public class SpecialsController {
 		Map<String, Object> data = modelMap.asMap();
 		ForeContext.setData(data, request);
 		ForeContext.setPage(data, page);
-		return site.getTemplate(TEMPLATE_LIST);
+		return site.getTemplate(TEMPLATE);
 	}
 
 	@Autowired

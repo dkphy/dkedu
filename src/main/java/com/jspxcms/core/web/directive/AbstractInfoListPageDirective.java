@@ -223,8 +223,9 @@ public abstract class AbstractInfoListPageDirective {
 		Integer[] p4 = Freemarkers.getIntegers(params, P4);
 		Integer[] p5 = Freemarkers.getIntegers(params, P5);
 		Integer[] p6 = Freemarkers.getIntegers(params, P6);
-
-		Sort defSort = new Sort(Direction.DESC, "priority", "publishDate", "id");
+		Sort defSort = new Sort(new Sort.Order(Direction.ASC, "priority"), 
+				new Sort.Order(Direction.DESC, "publishDate"), new Sort.Order(Direction.DESC, "id"));
+//		Sort defSort = new Sort(Direction.DESC, "priority", "publishDate", "id");
 		if (isPage) {
 			Pageable pageable = Freemarkers.getPageable(params, env, defSort);
 			Page<Info> pagedList = query.findPage(modelId, nodeId, attrId,
