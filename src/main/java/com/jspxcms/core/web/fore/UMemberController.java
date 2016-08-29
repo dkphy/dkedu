@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jspxcms.core.domain.Site;
 import com.jspxcms.core.domain.User;
+import com.jspxcms.core.domain.UserDetail;
 import com.jspxcms.core.repository.UserDao;
 import com.jspxcms.core.service.UserService;
 import com.jspxcms.core.support.Context;
@@ -39,11 +40,12 @@ public class UMemberController {
 	@RequestMapping(value = "myCourse.jspx")
 	public String myCourse(HttpServletRequest request, HttpServletResponse response, Model model) {
 		User user = Context.getCurrentUser(request);
-		if(user == null) {
+		if(userService == null) {
 			//TODO
 		}
 		Map<String, Object> dataMap = model.asMap();
 		dataMap.put("userId", user.getId());
+		dataMap.put("user", user);
 		ForeContext.setData(dataMap, request);
 		Site site = Context.getCurrentSite(request);
 		return site.getTemplate(MY_COURSE);
@@ -52,7 +54,7 @@ public class UMemberController {
 	@RequestMapping(value = "myProfile.jspx")
 	public String myProfile(HttpServletRequest request, HttpServletResponse response, Model model) {
 		User user = Context.getCurrentUser(request);
-		if(user == null) {
+		if(userService == null) {
 			//TODO
 		}
 		Map<String, Object> dataMap = model.asMap();
@@ -62,22 +64,35 @@ public class UMemberController {
 		Site site = Context.getCurrentSite(request);
 		return site.getTemplate(MY_PROFILE);
 	}
+	@RequestMapping(value = "updateProfile.jspx", method = RequestMethod.POST)
+	public String profileSubmit(String username,String gender,String comeFrom,
+			HttpServletRequest request, HttpServletResponse response,
+			org.springframework.ui.Model modelMap) {
+		Response resp = new Response(request, response, modelMap);
+		User user = Context.getCurrentUser(request);
+		user.setGender(gender);
+		UserDetail detail = user.getDetail();
+		detail.setComeFrom(comeFrom);
+		userService.update(user, detail);
+		return resp.post();
+	}
+	
 	
 	@RequestMapping(value = "mySecure.jspx")
 	public String mySecure(HttpServletRequest request, HttpServletResponse response, Model model) {
-		User user = Context.getCurrentUser(request);
-		if(user == null) {
+		User userService = Context.getCurrentUser(request);
+		if(userService == null) {
 			//TODO
 		}
 		Map<String, Object> dataMap = model.asMap();
-		dataMap.put("userId", user.getId());
+		dataMap.put("userServiceId", userService.getId());
 		ForeContext.setData(dataMap, request);
 		Site site = Context.getCurrentSite(request);
 		return site.getTemplate(MY_SECURE);
 	}
 	
 	@RequestMapping(value = "updatePass.jspx")
-	public String mySecurePass(HttpServletRequest request, HttpServletResponse response, Model model,Integer userId) {
+	public String mySecurePass(HttpServletRequest request, HttpServletResponse response, Model model,Integer userServiceId) {
 		Map<String, Object> dataMap = model.asMap();
 		ForeContext.setData(dataMap, request);
 		Site site = Context.getCurrentSite(request);
@@ -89,7 +104,7 @@ public class UMemberController {
 		User u = Context.getCurrentUser(request);
 		//验证 TODO
 		System.out.println("密码=="+rawPassword);
-		user.updatePassword(u.getId(), rawPassword);
+		userService.updatePassword(u.getId(), rawPassword);
 		Map<String, Object> dataMap = model.asMap();
 		ForeContext.setData(dataMap, request);
 		Site site = Context.getCurrentSite(request);
@@ -97,10 +112,10 @@ public class UMemberController {
 		return resp.post();
 	}
 	@RequestMapping(value = "updatePhone.jspx")
-	public String mySecurePhone(HttpServletRequest request, HttpServletResponse response, Model model,Integer userId) {
-		User u = user.get(userId);
+	public String mySecurePhone(HttpServletRequest request, HttpServletResponse response, Model model,Integer userServiceId) {
+		User u = userService.get(userServiceId);
 		Map<String, Object> dataMap = model.asMap();
-		dataMap.put("userId", userId);
+		dataMap.put("userServiceId", userServiceId);
 		dataMap.put("mobile", u.getMobile());
 		ForeContext.setData(dataMap, request);
 		Site site = Context.getCurrentSite(request);
@@ -108,11 +123,11 @@ public class UMemberController {
 	}
 	
 	@RequestMapping(value = "updatePhoneSuccess.jspx",method=RequestMethod.POST)
-	public String mySecurePhoneSuccess(HttpServletRequest request, HttpServletResponse response, Model model,Integer userId,String phone) {
-		User u = user.get(userId);
-		user.updatePhone(userId, phone);
+	public String mySecurePhoneSuccess(HttpServletRequest request, HttpServletResponse response, Model model,Integer userServiceId,String phone) {
+		User u = userService.get(userServiceId);
+		userService.updatePhone(userServiceId, phone);
 		Map<String, Object> dataMap = model.asMap();
-		dataMap.put("userId", userId);
+		dataMap.put("userServiceId", userServiceId);
 		dataMap.put("mobile", u.getMobile());
 		ForeContext.setData(dataMap, request);
 		Site site = Context.getCurrentSite(request);
@@ -121,10 +136,10 @@ public class UMemberController {
 	
 	
 	@RequestMapping(value = "updateEmail.jspx")
-	public String mySecureEmail(HttpServletRequest request, HttpServletResponse response, Model model,Integer userId) {
-		User u = user.get(userId);
+	public String mySecureEmail(HttpServletRequest request, HttpServletResponse response, Model model,Integer userServiceId) {
+		User u = userService.get(userServiceId);
 		Map<String, Object> dataMap = model.asMap();
-		dataMap.put("userId", userId);
+		dataMap.put("userServiceId", userServiceId);
 		dataMap.put("email", u.getEmail());
 		ForeContext.setData(dataMap, request);
 		Site site = Context.getCurrentSite(request);
@@ -132,8 +147,8 @@ public class UMemberController {
 	}
 	
 	@RequestMapping(value = "updateEmailSuccess.jspx",method = RequestMethod.POST)
-	public String mySecureEmailSuccess(HttpServletRequest request, HttpServletResponse response, Model model,Integer userId,String email) {
-		user.updateEmail(userId, email);
+	public String mySecureEmailSuccess(HttpServletRequest request, HttpServletResponse response, Model model,Integer userServiceId,String email) {
+		userService.updateEmail(userServiceId, email);
 		Map<String, Object> dataMap = model.asMap();
 		ForeContext.setData(dataMap, request);
 		Site site = Context.getCurrentSite(request);
@@ -142,12 +157,12 @@ public class UMemberController {
 	
 	@RequestMapping(value = "myLibrary.jspx")
 	public String myLibrary(HttpServletRequest request, HttpServletResponse response,String type, Model model) {
-		User user = Context.getCurrentUser(request);
-		if(user == null) {
+		User userService = Context.getCurrentUser(request);
+		if(userService == null) {
 			//TODO
 		}
 		Map<String, Object> dataMap = model.asMap();
-		dataMap.put("userId", user.getId());
+		dataMap.put("userServiceId", userService.getId());
 		dataMap.put("type", type);
 		ForeContext.setData(dataMap, request);
 		Site site = Context.getCurrentSite(request);
@@ -163,19 +178,19 @@ public class UMemberController {
 	
 	@RequestMapping(value = "myOrder.jspx")
 	public String myOrder(HttpServletRequest request, HttpServletResponse response, Model model,String status) {
-		User user = Context.getCurrentUser(request);
-		if(user == null) {
+		User userService = Context.getCurrentUser(request);
+		if(userService == null) {
 			//TODO
 		}
-		Integer userId = user.getId();
+		Integer userServiceId = userService.getId();
 		List<Order> orderList =null;
 		if(status==null){
-			orderList = pay.findOrderByUserId(userId);
+			orderList = pay.findOrderByUserId(userServiceId);
 		}else{
-			orderList = pay.findOrderByUserIdAndStatus(userId, status);
+			orderList = pay.findOrderByUserIdAndStatus(userServiceId, status);
 		}
 		Map<String, Object> dataMap = model.asMap();
-		dataMap.put("userId", userId);
+		dataMap.put("userServiceId", userServiceId);
 		dataMap.put("orderList", orderList);
 		ForeContext.setData(dataMap, request);
 		Site site = Context.getCurrentSite(request);
@@ -185,8 +200,8 @@ public class UMemberController {
 	@ResponseBody
 	@RequestMapping(value = "myOrderDelete.jspx" ,method = RequestMethod.POST)
 	public String myOrderDelete(HttpServletRequest request, HttpServletResponse response, Model model,Integer orderId) {
-		User user = Context.getCurrentUser(request);
-		if(user == null) {
+		User userService = Context.getCurrentUser(request);
+		if(userService == null) {
 			return "false";
 		}
 		pay.cancelOrder(orderId);
@@ -202,6 +217,6 @@ public class UMemberController {
 	@Autowired
 	private PayService pay;
 	@Autowired
-	private UserService user;
+	private UserService userService;
 	
 }

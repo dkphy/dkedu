@@ -29,23 +29,23 @@
             <div class="form_group form_group_tit">
                 <div class="line">
                     <b class="tit">昵称</b>
-                    <input type="text" placeholder="${u.username}">
+                    <input type="text" placeholder="" value="${user.username}">
                     <p class="warn">! 示例提醒</p>
                 </div>
                 <div class="line no_border">
                     <b class="tit">性别</b>
                     <label for="sex_nan" class="f_l">
-                        <input type="radio" name="sex" class="radio_box" id="sex_nan" checked>
+                        <input type="radio" name="gender" class="radio_box" id="sex_nan" [#if user.gender?? && user.gender=='M'] checked="checked" [/#if]/>
                         男
                     </label>
                     <label for="sex_nv" class="f_l">
-                        <input type="radio" name="sex" class="radio_box" id="sex_nv">
+                        <input type="radio" name="gender" class="radio_box" id="sex_nv"[#if user.gender?? && user.gender=='F']  checked="checked" [/#if]/>
                         女
                     </label>
                 </div>
                 <div class="line">
                     <b class="tit">地区</b>
-                    <input type="text" placeholder="">
+                    <input type="text" placeholder="" value="${user.comeFrom!}">
                 </div>
                 <div class="line no_border avatar">
                     <b class="tit">头像</b>
