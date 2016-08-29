@@ -107,6 +107,11 @@ public class InfoController {
 		return infoByPagePathSite(siteNumber, infoId, page, request, response,
 				modelMap);
 	}
+	
+	private final String MODEL_TYPE_FILE_AND_TRAIN = "fileAndTrain"; // 文库题库模型
+	private final String MODEL_TYPE_LESSON = "lesson"; // 课时模型
+	private final String NODE_NUMBER_FILE = "file"; // 栏目-文库
+	private final String NODE_NUMBER_TRAIN = "train"; // 栏目-题库
 
 	private String doInfo(Integer infoId, Integer page, Site site,
 			Response resp, List<String> messages, HttpServletRequest request,
@@ -147,15 +152,23 @@ public class InfoController {
 		modelMap.addAttribute("title", title);
 		modelMap.addAttribute("text", text);
 		
-		if("lesson".equals(info.getModel().getNumber())) {
+		if(MODEL_TYPE_FILE_AND_TRAIN.equals(info.getModel().getNumber())) {
+			String nodeNumber = info.getNode().getNumber();
+			modelMap.addAttribute("nodeNumber", nodeNumber);// 页面上通过${nodeNumber}获取
+		}
+		// 课时类型
+		else if(MODEL_TYPE_LESSON.equals(info.getModel().getNumber())) {
 			String courseIdStr = request.getParameter("specialId");
 			Integer courseId = Integer.valueOf(courseIdStr);
+			// 查询课程
+			Special course = specialService.get(courseId);
 			User user = Context.getCurrentUser(request);
 			Boolean canPlay = null;
-			if(user != null && isCanPlay(courseId, user.getId())) {
+			if(user != null && isCanPlay(course, user.getId())) {
 				canPlay = Boolean.TRUE;
 			}
 			modelMap.addAttribute("canPlay", canPlay);
+			modelMap.addAttribute("course", course);
 		}
 
 		Page<String> pagedList = new PageImpl<String>(Arrays.asList(text),
@@ -178,9 +191,7 @@ public class InfoController {
 	 * @param userId
 	 * @return
 	 */
-	private boolean isCanPlay(Integer courseId, Integer userId) {
-		// 查询课程
-		Special course = specialService.get(courseId);
+	private boolean isCanPlay(Special course, Integer userId) {
 		// 免费课可直接观看
 		String priceStr = course.getCustoms().get("price");
 		if(StringUtils.isBlank(priceStr) || Double.valueOf(priceStr) <= 0) {
