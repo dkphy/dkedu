@@ -56,6 +56,7 @@ public class SpecialController {
 		ForeContext.setPage(data, page);
 		User user = Context.getCurrentUser(request);
 		//浏览记录
+		service.addView(id, 1);
 		if(user != null) {
 			bs.addBrowse(user.getId(), id);
 		}

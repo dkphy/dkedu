@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 
@@ -44,4 +45,12 @@ public interface SpecialDao extends Repository<Special, Integer>,
 
 	@Query("select count(*) from Special bean where bean.category.id in (?1)")
 	public long countByCategoryId(Collection<Integer> categoryIds);
+	
+	@Modifying
+	@Query("update Special s set s.views=s.views+?2 where s.id=?1")
+	public void addViews(Integer id, int count);
+	
+	@Modifying
+	@Query("update Special s set s.soldCount=s.soldCount+?2 where s.id=?1")
+	public void addSoldCount(Integer id, int count);
 }
