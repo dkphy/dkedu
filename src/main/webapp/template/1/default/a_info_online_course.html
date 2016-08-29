@@ -60,31 +60,36 @@
                 <img src="${special.smallImage}" alt=""><!--524x288-->
                 <div class="main">
                     <h1>${special.title}</h1>
-                    <div class="score">
+                    <div id="starGroup" class="score">
                         <span class="icon-star active"></span>
                         <span class="icon-star active"></span>
                         <span class="icon-star active"></span>
                         <span class="icon-star"></span>
                         <span class="icon-star"></span>
-                        <span class="star_num">3</span>
-                        <span class="comment_num">(9人已评价)</span>
+                        <span id="score" class="star_num"></span>
+                        <span class="comment_num">(${special.comments!0}人评论)</span>
                     </div>
                     <ul class="info clearfix">
-                        <li>课时：${special.customs['courseCount']}</li>
-                        <li>浏览次数：11</li>
+                        <li>课时：${special.refers}</li>
+                        <li style="color:red">浏览次数：${special.views}</li>
                         <li>
                         	[@Info id = special.customs['teacherID'];info]
-                        	<a href="${info.url}">讲师：${info.title}</a>
+                        	讲师：<a href="${info.url}">${info.title}</a>
                         	[/@Info]
                         </li>
                     </ul>
                     <div class="btns">
-
-                        <a href="${ctx}/miniPay/pay_index.jspx?courseId=${special.id}" class="btn btn_buy"><b>${special.customs['price']}</b><span>购买该课程</span></a>
+						[#if (special.customs['price']?number > 0)]
+						[#assign tips = '立即试听']
+                        <a href="${ctx}/miniPay/pay_index.jspx?courseId=${special.id}" class="btn btn_buy"><b>￥${special.customs['price']}</b><span>购买该课程</span></a>
+                        [#else]
+						[#assign tips = '免费观看']
+                        [/#if]
+                        
                         <a href="#" class="btn" onclick = "return favorite()">收藏</a>
                        [@InfoPage specialId=special.id pageSize='1';pagedList]
                          [#list pagedList.content as info]
-                        <a href="${info.url}?specialId=${special.id}" class="btn">立即试听</a>
+                        <a href="${info.url}?specialId=${special.id}" class="btn">${tips}</a>
                          [/#list]
                         [/@InfoPage]
                     </div>
@@ -106,7 +111,7 @@
             <div class="main">
                 <div class="nav clearfix">
                     <a href="#" id="tit_intro" class="current" onclick="showDiv('intro')">课程介绍</a>
-                    <a href="#" id="tit_schedule" onclick="showDiv('schedule')">课时列表 (${special.customs['courseCount']})</a>
+                    <a href="#" id="tit_schedule" onclick="showDiv('schedule')">课时列表 (${special.refers})</a>
                     <a href="#" id="tit_comment" onclick="showDiv('comment')">课程评价</a>
                 </div>
                 <div class="content">
@@ -122,7 +127,7 @@
                             	[@InfoPage specialId=special.id pageSize='10';pagedList]
                             	[#list pagedList.content as info]
                                 <tr>
-                                    <td class="c_name">课时${info.customs['courserId']}：  ◇${info.title}</td>
+                                    <td class="c_name">课时${info.priority}：  ◇${info.title}</td>
                                     <td class="c_time">${info.customs['courseTime']}</td>
                                     <td class="c_btn"><a href="${info.url}?specialId=${special.id}">立即试看</a></td>
                                 </tr>
@@ -135,7 +140,11 @@
                     <!-- 课程评价 -->
                     <div id="c_comment" class="comment" style="display:none">
                         <div class="in">
-                        	<form id="commentForm" action="${ctx}/comment_submit.jspx" method="post">
+                        	<form id="commentForm" action="${ctx}/special_scoring.jspx" method="post">
+                        		<input type="hidden" name="courseId" value="${special.id}"/>
+                        		<!-- 默认5星 -->
+                        		<input type="hidden" id="itemId" name="itemId" value="13"/>
+                        		<input type="hidden" name="redirectUrl" value="${url}"/>
                             <div class="in_box">
                                 <textarea name="text" id="commentText"></textarea>
                             </div>
@@ -143,40 +152,51 @@
                                 <div class="set_score">
                                     <b>评分:</b>
                                     <div class="stars">
-                                        <span class="icon-star active"></span>
-                                        <span class="icon-star active"></span>
-                                        <span class="icon-star active"></span>
-                                        <span class="icon-star active"></span>
-                                        <span class="icon-star"></span>
+                                    [@ScoreGroup number='star';group]
+                                        [#list group.items as item]
+                                        <span class="icon-star" onclick="changeScoreItemId(${item.id})"></span>
+                                        <input type="hidden" value="${item.score!}" id="item-score-${item.id}"/>
+                                        [/#list]
+                                    [/@ScoreGroup]
                                     </div>
+                                    <input type="hidden" value="4" id="grade_val">
                                 </div>
                                 <a href="#" class="sub_comment" onclick="return submitComment()">发表评论</a>
                             </div>
-                            <input type="hidden" value="4" id="grade_val">
-                            <input type="hidden" name="ftype" value="Special"/>
-							<input type="hidden" name="fid" value="${special.id}"/>
-							<input type="hidden" name="status_0" value="评论成功！"/>
-							<input type="hidden" name="status_1" value="评论成功，请等待管理员审核！"/>
-							<input type="hidden" name="nextUrl" value="${url}"/>
 							</form>
                         </div>
                         <div class="list">
-                            
+                        [@CommentList fid=special.id sort='score desc,creationDate desc' limit=5;list]
+						[#if list?size > 0]
+							[#list list as comment]
                             <div class="item">
-                                <img src="http://tva1.sinaimg.cn/crop.0.0.512.512.50/d0c2c2a7jw8f5ici98oi5j20e80e8jro.jpg" alt="">
-                                <b>用户名</b>
+<!--                                 <img src="http://tva1.sinaimg.cn/crop.0.0.512.512.50/d0c2c2a7jw8f5ici98oi5j20e80e8jro.jpg" alt=""> -->
+                                <img src="${comment.creator.avatarSmall}" alt="">
+                                <b>[#if comment.creator.id==0]匿名学员[#else]${comment.creator.username}[/#if]</b>
                                 <div class="stars">
-                                    <span class="icon-star active"></span>
-                                    <span class="icon-star active"></span>
-                                    <span class="icon-star active"></span>
-                                    <span class="icon-star active"></span>
-                                    <span class="icon-star"></span>
+                                    <span id="user_star_${comment.creator.id}_1" class="icon-star"></span>
+                                    <span id="user_star_${comment.creator.id}_2" class="icon-star"></span>
+                                    <span id="user_star_${comment.creator.id}_3" class="icon-star"></span>
+                                    <span id="user_star_${comment.creator.id}_4" class="icon-star"></span>
+                                    <span id="user_star_${comment.creator.id}_5" class="icon-star"></span>
                                 </div>
+                                <script type="text/javascript">
+                                	function showStar(uid) {
+                                		var max = ${comment.score};
+                                		for(var i=1; i<= ${comment.score}; i++) {
+                                			var itemCode = ${comment.creator.id} + '_' + i;
+                                			$("#user_star_" + itemCode).addClass("active");
+                                		}
+                                	}
+                                	showStar(${comment.creator.id});
+                                </script>
                                 <div class="con">
-                                    <p>很棒，很不错，对机器很镜头多了一份了解。</p>
+                                    <p>${bbcode(comment.text)}</p>
                                 </div>
                             </div>
-                            
+                        	[/#list]
+						[/#if]
+						[/@CommentList]
                         </div>
                     </div>
                     
@@ -231,6 +251,39 @@
     [#include 'a_side.html'/]
     <!--侧边滑动通用end-->
 </body>
+<script type="text/javascript">
+	function changeScoreItemId(itemId) {
+		$("#itemId").val(itemId);
+	}
+			function getScore() {
+				$.get("${dy}/special_score/${special.id}.jspx?d="+new Date()*1,function(data) {
+					var tickets=0,score=0,totalScore=0;	
+					for(var id in data) {
+						if($("#item-score-"+id).length>0){
+							tickets+=data[id];
+							totalScore += parseInt($("#item-score-"+id).val())*data[id];
+						}
+					}
+					if(tickets!=0){
+						score=Math.round(totalScore/tickets*10)/10;
+					}
+					var $starGroup=$("#starGroup > span");
+					for(var i=0;i<5;i++) {
+						if(score>i){
+							$starGroup.eq(i).addClass("active");
+						} else {
+							$starGroup.eq(i).removeClass("active");							
+						}
+					}
+					if(score!=0) {
+						$("#score").text(score.toFixed(1))
+					}
+				},"json");				
+			}
+			$(function(){
+				getScore();
+			});
+</script>
 <script>
     /*分享*/
     var share_tit=$("h1").eq(0).text(),

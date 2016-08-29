@@ -39,11 +39,6 @@ private static final Logger log = LoggerFactory
 		if(StringUtils.isEmpty(idCard)){
 			throw new RuntimeException("查询成绩：身份证号不得为空");
 		}
-		if(dao.find(idCard, name)==null){
-			throw new RuntimeException("查询成绩：姓名与身份证不符");
-		}
-		log.info("查询成绩：验证通过");
-		
 		return dao.find(idCard, name);
 	}
 

@@ -236,8 +236,7 @@ a:hover{text-decoration:none;}
 
 
 .side_fixed{position:fixed;right:10px;bottom:90px;z-index:999;}
-.side_fixed .online_service{display:block;    padding-bottom: 10px;width:165px;height:126px;background: url(img/side_online_service.png) no-repeat;}
-.side_fixed .box{width:50px;float:right;background:#fff;border:1px solid #dfdfdf;border-bottom:0 none;}
+.side_fixed .online_service{display:block;    padding-bottom: 10px;width:165px;height:126px;background: url(img/side_online_service.png) no-repeat;position: absolute;right: 0;top: -136px;}.side_fixed .box{width:50px;float:right;background:#fff;border:1px solid #dfdfdf;border-bottom:0 none;}
 .side_fixed .box a{position:relative;width:50px;height:50px;display:block;border-bottom:1px solid #dfdfdf;color:#adb2b2;text-align: center;line-height:50px;font-size:14px;}
 .side_fixed .box a span{font-size:30px;}
 .side_fixed .box a:hover{background:#e2534b;color:#fff;}

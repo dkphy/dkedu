@@ -13,6 +13,7 @@ import com.jspxcms.plug.domain.ScoreStatus;
 import com.jspxcms.plug.domain.UserCode;
 import com.jspxcms.plug.repository.UserCodeDao;
 import com.jspxcms.plug.repository.UserCodeDaoPlus;
+import com.sun.star.uno.RuntimeException;
 
 @Component
 public class UserCodeDaoImpl implements UserCodeDaoPlus{
@@ -20,11 +21,18 @@ public class UserCodeDaoImpl implements UserCodeDaoPlus{
 	 
 	public UserCode find(String id, String name) {
 		JpqlBuilder jpql = new JpqlBuilder();
-		jpql.append("from UserCode ub where ub.name in (:name) " +
-				"and ub.idCard in (:id)");
+		jpql.append("from UserCode ub where ub.name = :name " +
+				"and ub.idCard = :id");
 		jpql.setParameter("name", name);
 		jpql.setParameter("id", id);
-		return (UserCode)jpql.list(em).get(0);
+		List list = jpql.list(em);
+		if(list == null || list.isEmpty()) {
+			return null;
+		} else if(list.size() == 1) {
+			return (UserCode) list.get(0);
+		} else {
+			throw new RuntimeException("more than one record found, name=" + name + ", id=" + id);
+		}
 	}
 	
 	public List<UserCode> findAll(){

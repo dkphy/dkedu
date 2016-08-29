@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jspxcms.common.captcha.Captchas;
-import com.jspxcms.common.freemarker.Freemarkers;
 import com.jspxcms.common.orm.LimitRequest;
 import com.jspxcms.common.orm.Limitable;
 import com.jspxcms.common.web.Anchor;
@@ -28,9 +28,12 @@ import com.jspxcms.core.domain.Info;
 import com.jspxcms.core.domain.MemberGroup;
 import com.jspxcms.core.domain.Site;
 import com.jspxcms.core.domain.SiteComment;
+import com.jspxcms.core.domain.Special;
+import com.jspxcms.core.domain.SpecialComment;
 import com.jspxcms.core.domain.User;
 import com.jspxcms.core.service.CommentService;
 import com.jspxcms.core.service.SensitiveWordService;
+import com.jspxcms.core.service.SpecialService;
 import com.jspxcms.core.service.UserService;
 import com.jspxcms.core.service.VoteMarkService;
 import com.jspxcms.core.support.Commentable;
@@ -110,7 +113,55 @@ public class CommentController {
 		String result = Integer.toString(comment.getScore());
 		Servlets.writeHtml(response, result);
 	}
+	
+	/**
+	 * 课程评价
+	 * @param courseId
+	 * @param text
+	 * @param score
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/course_commit_submit")
+	public String submitCourseComment(Integer courseId, String text,
+			Integer score, HttpServletRequest request, HttpServletResponse response, Model model) {
+		User user = Context.getCurrentUser(request);
+		if (user == null) {
+			// TODO
+		}
+		Special course = specialService.get(courseId);
+		if (course == null) {
+			// TODO
+		}
+		
+		if(score == null || score <= 0 || score > 5) {
+			score = 5; // 默认5分
+		}
+		// 不允许重复评论
+		Limitable limitable = new LimitRequest(0, 1);
+		List<Comment> existComments = service.findList(
+				Special.COMMENT_TYPE, courseId, user.getId(), null,
+				null, limitable);
+		if (existComments != null && !existComments.isEmpty()) {
+			// TODO return resp.post(502, "您已经评论过了！");
+		}
 
+		text = sensitiveWordService.replace(text);
+		Comment comment = new SpecialComment();
+		comment.setFid(courseId);
+		comment.setText(text);
+		comment.setScore(score);
+		comment.setIp(Servlets.getRemoteAddr(request));
+		comment.setStatus(Comment.AUDITED);
+		// 保存评论并更新课程的评论数量
+		service.save(comment, user.getId(), 0, null);
+		
+		Response resp = new Response(request, response, model);
+		return resp.post();
+	}
+	
 	@RequestMapping(value = "/comment_submit.jspx")
 	public String submit(String fname, String ftype, Integer fid,
 			Integer parentId, String text, String captcha,
@@ -159,13 +210,7 @@ public class CommentController {
 				return resp.post(100, "error.captcha");
 			}
 		}
-		// 不允许重复评论
-		Limitable limitable = new LimitRequest(0, 1);
-		List<Comment> existComments = service.findList(ftype, fid, user.getId(), null, null, limitable);
-		if(existComments != null && !existComments.isEmpty()) {
-			// return resp.post(502, "您已经评论过了！");
-		}
-
+		
 		text = sensitiveWordService.replace(text);
 		Comment comment = (Comment) Class.forName(fname).newInstance();
 		comment.setFid(fid);
@@ -222,5 +267,6 @@ public class CommentController {
 	private UserService userService;
 	@Autowired
 	private CommentService service;
-
+	@Autowired
+	private SpecialService specialService;
 }

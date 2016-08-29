@@ -151,7 +151,7 @@ public class InfoController {
 		modelMap.addAttribute("node", node);
 		modelMap.addAttribute("title", title);
 		modelMap.addAttribute("text", text);
-		
+		// 文库类型
 		if(MODEL_TYPE_FILE_AND_TRAIN.equals(info.getModel().getNumber())) {
 			String nodeNumber = info.getNode().getNumber();
 			modelMap.addAttribute("nodeNumber", nodeNumber);// 页面上通过${nodeNumber}获取
@@ -162,6 +162,9 @@ public class InfoController {
 			Integer courseId = Integer.valueOf(courseIdStr);
 			// 查询课程
 			Special course = specialService.get(courseId);
+			if(course == null) {
+				return resp.badRequest("course not found: " + courseId);
+			}
 			User user = Context.getCurrentUser(request);
 			Boolean canPlay = null;
 			if(user != null && isCanPlay(course, user.getId())) {

@@ -69,16 +69,14 @@ public class CodeController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getCode.jspx")
-	public String findCode(Integer page,Integer userId,String name,String idCard,Model modMap,HttpServletRequest request){
-		Site site = Context.getCurrentSite(request);
+	public String findCode(String name,String idCard){
 		log.info("idCard="+idCard);
 		UserCode u = fc.find(name, idCard);
-		modMap.addAttribute("codeList", u);
-		Map<String, Object> data = modMap.asMap();
-		ForeContext.setData(data, request);
-		ForeContext.setPage(data, page);
-		//return site.getTemplate("myCode.html");
-		return site.getTemplate("a_code_search.html");
+		if(u != null) {
+			return u.getScore() + "";
+		} else {
+			return "not found";
+		}
 	}
 	
 	//修改成绩
