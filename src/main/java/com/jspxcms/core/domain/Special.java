@@ -225,6 +225,7 @@ public class Special implements java.io.Serializable, Anchor, Siteable, Commenta
 	private Long videoLength;
 	private String videoTime;
 	private Integer refers;
+	private Integer soldCount;
 	private Integer views;
 	private Boolean withImage;
 	private Integer recommend;
@@ -473,6 +474,15 @@ public class Special implements java.io.Serializable, Anchor, Siteable, Commenta
 
 	public void setRecommend(Integer recommend) {
 		this.recommend = recommend;
+	}
+	
+	@Column(name = "f_sold_count", nullable = false)
+	public Integer getSoldCount() {
+		return this.soldCount;
+	}
+
+	public void setSoldCount(Integer soldCount) {
+		this.soldCount = soldCount;
 	}
 	
 	@Column(name = "f_comments", nullable = false)

@@ -43,7 +43,9 @@ public class UMemberController {
 		if(user == null) {
 			//TODO
 		}
+		List<Order> orderList = pay.findOrderByUserIdAndStatus(user.getId(), "paid");
 		Map<String, Object> dataMap = model.asMap();
+		dataMap.put("orderList", orderList);
 		dataMap.put("userId", user.getId());
 		dataMap.put("user", user);
 		ForeContext.setData(dataMap, request);

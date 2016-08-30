@@ -254,6 +254,15 @@ public class SpecialServiceImpl implements SpecialService, ModelDeleteListener,
 			}
 		}
 	}
+	
+	@Override
+	@Transactional
+	public void addView(Integer specialId, int count) {
+		if(count <= 0) {
+			count = 1;
+		}
+		this.dao.addViews(specialId, count);
+	}
 
 	private AttachmentRefService attachmentRefService;
 	private SiteService siteService;
@@ -299,5 +308,14 @@ public class SpecialServiceImpl implements SpecialService, ModelDeleteListener,
 	@Autowired
 	public void setDao(SpecialDao dao) {
 		this.dao = dao;
+	}
+
+	@Override
+	@Transactional
+	public void addSoldCount(Integer specialId, int count) {
+		if(count <= 1) {
+			count = 1;
+		}
+		this.dao.addSoldCount(specialId, count);
 	}
 }

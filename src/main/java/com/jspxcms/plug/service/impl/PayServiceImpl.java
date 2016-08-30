@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jspxcms.core.service.SpecialService;
 import com.jspxcms.plug.bo.MiniPayBo;
 import com.jspxcms.plug.domain.Order;
 import com.jspxcms.plug.domain.OrderDetail;
@@ -32,11 +33,15 @@ import freemarker.template.utility.StringUtil;
 public class PayServiceImpl implements PayService {
 
 	@Autowired
-	MiniPayBo miniPayBo;
+	private MiniPayBo miniPayBo;
 	@Autowired
-	OrderDao orderDao;
+	private OrderDao orderDao;
+	@Autowired
+	private SpecialService specialService;
 
+	@Transactional
 	public Order createOrder(CreateOrderDTO coDTO) {
+		specialService.addSoldCount(coDTO.getSubjectId(), coDTO.getOrderItemCount());
 		return miniPayBo.createOrder(coDTO);
 	}
 

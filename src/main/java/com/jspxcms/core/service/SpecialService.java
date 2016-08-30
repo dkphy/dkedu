@@ -59,4 +59,18 @@ public interface SpecialService {
 	public void derefer(Special bean);
 
 	public void derefer(Collection<Special> beans);
+	
+	/**
+	 * 增加浏览量
+	 * @param specialId
+	 * @param count
+	 */
+	public void addView(Integer specialId, int count);
+	
+	/**
+	 * 增加销售量
+	 * @param specialId
+	 * @param count
+	 */
+	public void addSoldCount(Integer specialId, int count);
 }

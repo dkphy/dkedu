@@ -70,8 +70,9 @@
                         <span class="comment_num">(${special.comments!0}人评论)</span>
                     </div>
                     <ul class="info clearfix">
+                        <li>销售量：${special.soldCount!0}</li>
                         <li>课时：${special.refers}</li>
-                        <li style="color:red">浏览次数：${special.views}</li>
+                        <li>浏览次数：${special.views}</li>
                         <li>
                         	[@Info id = special.customs['teacherID'];info]
                         	讲师：<a href="${info.url}">${info.title}</a>
@@ -166,7 +167,7 @@
 							</form>
                         </div>
                         <div class="list">
-                        [@CommentList fid=special.id sort='score desc,creationDate desc' limit=5;list]
+                        [@CommentList fid=special.id sort='score desc,creationDate desc' limit=10;list]
 						[#if list?size > 0]
 							[#list list as comment]
                             <div class="item">

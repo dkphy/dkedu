@@ -62,11 +62,15 @@
                                 <img src="${course.smallImage}" alt=""><!--270x155-->
                                 <b>${course.title}</b>
                                 <div class="info">
-                                    <span class="count">230人已购买</span>
+                                    <span class="count">${course.soldCount!0}人已购买</span>
                                     <span class="cat">${course.category}</span>
                                 </div>
-                                <span class="price">￥${course.customs['price']}</span>
-                                <span class="try">试听</span>
+                                [#if (course.customs['price']?number > 0)]
+		                        <span class="price">${course.customs['price']}</span>
+		                        <span class="try">试听</span>
+		                        [#else]
+		                        <span class="price">免费</span>
+		                        [/#if]
                             </a>
                         </div>
                          [/#list]
