@@ -60,15 +60,19 @@
                 <h2>购买的</h2>
             </div>
             <ul class="list1">
+            	[#list orderList as order]
+            	[@Special id=order.subjectId; course]
                 <li>
-                    <img src="upload/200x114.jpg" alt=""><!--200x114-->
-                    <b>SA9527-长沙地标性建筑引导页设计</b>
+                    <img src="${course.smallImage}" alt=""><!--200x114-->
+                    <b>${course.title}</b>
                     <span class="info">
                         <span class="num">${course.soldCount!0}人已购买</span>
-                        <a class="tag" href="#">情感</a>
+                        <span class="tag">${course.metaKeywords}</span>
                     </span>
-                    <a href="#" class="btn">继续学习</a>
+                    <a href="${ctx}/special/${course.id}.jspx" class="btn">继续学习</a>
                 </li>
+                [/@Special]
+                [/#list]
             </ul>
         </div>
 
@@ -88,8 +92,12 @@
                             <span class="count">${course.soldCount!0}人已购买</span>
                             <span class="cat">${course.metaKeywords}</span>
                         </div>
-                        <span class="price">￥${course.customs['price']}</span>
+                        [#if (course.customs['price']?number > 0)]
+                        <span class="price">${course.customs['price']}</span>
                         <span class="try">试听</span>
+                        [#else]
+                        <span class="price">免费</span>
+                        [/#if]
                     </a>
                 </div>
                [/@Special]
