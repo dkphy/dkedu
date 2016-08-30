@@ -104,10 +104,18 @@
     <div class="col bottom_col">
         <div class="wrap clearfix">
             <div class="pic">
-                <a href="#" target="_blank">
-                    <img src="_files/a_upload/460x362.jpg" alt=""><!--460x362-->
-                    <b>后期无忧——零基础PS一课通</b>
+            	[@Node number = 'questions'; questions]
+                <a href="${questions.url}" target="_blank">
+                [@Node number = 'shcoolPoster';node]
+       			[@InfoList nodeId=node.id limit='1';list]
+				[#list list as info]
+                    <img src="${info.customs['filesAndTrain']}" alt=""><!--460x362-->
+                    <b>${info.customs['questionsTitle']}</b>
+                [/#list]
+                [/@InfoList]
+                [/@Node]
                 </a>
+                [/@Node]
             </div>
             <div class="list">
             	[@Node number = 'file'; node]
