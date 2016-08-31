@@ -18,6 +18,7 @@ public class CmsLogoutFilter extends LogoutFilter {
 	 * 返回URL
 	 */
 	public static final String FALLBACK_URL_PARAM = "fallbackUrl";
+	private static final String DEF_REDIRECT_URL = "/dk_edu.jspx";
 	/**
 	 * 后台路径
 	 */
@@ -51,6 +52,11 @@ public class CmsLogoutFilter extends LogoutFilter {
 			}
 		}
 		return redirectUrl;
+	}
+	
+	@Override
+	public String getRedirectUrl() {
+		return DEF_REDIRECT_URL;
 	}
 
 	public String getBackRedirectUrl() {

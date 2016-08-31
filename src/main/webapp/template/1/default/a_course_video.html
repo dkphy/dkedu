@@ -16,7 +16,7 @@
     [#if canPlay??]
     	<!-- 免费或已购买 -->
     	<script type="text/javascript">
-    	alert('free');
+    	//alert('free');
     	</script>
 	[#else]
 		<script type="text/javascript">
@@ -25,7 +25,7 @@
 	    }
 	    function seekHandler(t) {
 	    	// CKobject._K_('nowTime').innerHTML='当前播放的时间点是(此值精确到小数点后三位，即毫秒)：'+t;
-	    	if(t > 60) {
+	    	if(t > 600) {
 	    		CKobject.getObjectById('ckplayer_video').videoPause();
 	    		alert('请付费');
 	    	}
@@ -87,7 +87,7 @@
                         <div class="box">
                             <a href="${ctx}/special/${course.id}.jspx"><img src="${course.smallImage}" alt=""></a><!--270x155-->
                             <b><a href="${ctx}/special/${course.id}.jspx">${course.title}</a></b>
-                            <span>230人已购买</span>
+                            <span>${course.soldCount!0}人已购买</span>
                             <a href="${ctx}/special/${course.id}.jspx" class="btn">￥${course.customs['price']}</a>
                         </div>
                     </div>
@@ -108,7 +108,7 @@
     <!--侧边滑动通用end-->
     <script type="text/javascript">
     	var flashvars={
-			f:"http://www.casstar.com.cn/usr/themes/zhongke/movie/movie.mp4",
+			f:"${info.video}",
 			c:0,
 			p:0,
 			loaded:'loadedHandler'
