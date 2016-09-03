@@ -16,7 +16,7 @@
     <!--通用顶部 start-->
    [#include 'a_head.html'/]
     <!--通用顶部 end-->
-	[#if Param.regType == 'byMobile']
+	[#if (Param.regType?? && Param.regType == 'byMobile') || (Param.isSucc?? &&Param.isSucc == 'true')]
 	<div class="wrap">
         <div class="res_col">
             <h1>注册成功</h1>

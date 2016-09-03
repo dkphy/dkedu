@@ -1,22 +1,32 @@
 package com.jspxcms.core.web.fore;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.ServletContextAware;
 
+import com.jspxcms.core.domain.Info;
 import com.jspxcms.core.domain.Site;
 import com.jspxcms.core.domain.User;
 import com.jspxcms.core.domain.UserDetail;
-import com.jspxcms.core.repository.UserDao;
+import com.jspxcms.core.service.InfoBufferService;
+import com.jspxcms.core.service.InfoQueryService;
 import com.jspxcms.core.service.UserService;
 import com.jspxcms.core.support.Context;
 import com.jspxcms.core.support.ForeContext;
@@ -25,7 +35,7 @@ import com.jspxcms.plug.domain.Order;
 import com.jspxcms.plug.service.PayService;
 
 @Controller
-public class UMemberController {
+public class UMemberController implements ServletContextAware {
 	
 	private static final String MY_COURSE = "a_my_course.html";
 	private static final String MY_PROFILE = "a_my_profile.html";
@@ -36,36 +46,43 @@ public class UMemberController {
 	private static final String MY_LIBRARY = "a_my_library.html";
 	private static final String MY_SCORE = "a_my_score.html";
 	private static final String MY_ORDER = "a_my_order.html";
+	public static final String TO_LOGIN = "sys_member_login.html";
+	
+	//Spring这里是通过实现ServletContextAware接口来注入ServletContext对象  
+    private ServletContext servletContext;  
 
 	@RequestMapping(value = "myCourse.jspx")
 	public String myCourse(HttpServletRequest request, HttpServletResponse response, Model model) {
+		Site site = Context.getCurrentSite(request);
+		Map<String, Object> dataMap = model.asMap();
+		ForeContext.setData(dataMap, request);
+		
 		User user = Context.getCurrentUser(request);
 		if(user == null) {
-			//TODO
+			return site.getTemplate(TO_LOGIN);
 		}
 		List<Order> orderList = pay.findOrderByUserIdAndStatus(user.getId(), "paid");
-		Map<String, Object> dataMap = model.asMap();
 		dataMap.put("orderList", orderList);
 		dataMap.put("userId", user.getId());
 		dataMap.put("user", user);
-		ForeContext.setData(dataMap, request);
-		Site site = Context.getCurrentSite(request);
 		return site.getTemplate(MY_COURSE);
 	}
 	
 	@RequestMapping(value = "myProfile.jspx")
 	public String myProfile(HttpServletRequest request, HttpServletResponse response, Model model) {
+		Site site = Context.getCurrentSite(request);
+		Map<String, Object> dataMap = model.asMap();
+		ForeContext.setData(dataMap, request);
+		
 		User user = Context.getCurrentUser(request);
 		if(user == null) {
-			//TODO
+			return site.getTemplate(TO_LOGIN);
 		}
-		Map<String, Object> dataMap = model.asMap();
 		dataMap.put("userId", user.getId());
 		dataMap.put("user", user);
-		ForeContext.setData(model.asMap(), request);
-		Site site = Context.getCurrentSite(request);
 		return site.getTemplate(MY_PROFILE);
 	}
+	
 	@RequestMapping(value = "updateProfile.jspx", method = RequestMethod.POST)
 	public String profileSubmit(String username,String gender,String comeFrom,
 			HttpServletRequest request, HttpServletResponse response,
@@ -82,14 +99,15 @@ public class UMemberController {
 	
 	@RequestMapping(value = "mySecure.jspx")
 	public String mySecure(HttpServletRequest request, HttpServletResponse response, Model model) {
-		User user = Context.getCurrentUser(request);
-		if(user == null) {
-			//TODO
-		}
 		Map<String, Object> dataMap = model.asMap();
-		dataMap.put("userId", user.getId());
 		ForeContext.setData(dataMap, request);
 		Site site = Context.getCurrentSite(request);
+
+		User user = Context.getCurrentUser(request);
+		if(user == null) {
+			return site.getTemplate(TO_LOGIN);
+		}
+		dataMap.put("userId", user.getId());
 		return site.getTemplate(MY_SECURE);
 	}
 	
@@ -100,6 +118,7 @@ public class UMemberController {
 		Site site = Context.getCurrentSite(request);
 		return site.getTemplate(MY_SECURE_PASS);
 	}
+	
 	@RequestMapping(value = "updatePassSuccess.jspx",method = RequestMethod.POST)
 	public String mySecurePassSuccess(HttpServletRequest request, HttpServletResponse response,
 			Model model,String pass, String rawPassword) {
@@ -159,30 +178,42 @@ public class UMemberController {
 	
 	@RequestMapping(value = "myLibrary.jspx")
 	public String myLibrary(HttpServletRequest request, HttpServletResponse response,String type, Model model) {
-		User user = Context.getCurrentUser(request);
-		if(user == null) {
-			//TODO
-		}
 		Map<String, Object> dataMap = model.asMap();
-		dataMap.put("userId", user.getId());
-		dataMap.put("type", type);
 		ForeContext.setData(dataMap, request);
 		Site site = Context.getCurrentSite(request);
+		
+		User user = Context.getCurrentUser(request);
+		if(user == null) {
+			return site.getTemplate(TO_LOGIN);
+		}
+		dataMap.put("userId", user.getId());
+		dataMap.put("type", type);
 		return site.getTemplate(MY_LIBRARY);
 	}
 	
 	@RequestMapping(value = "myScore.jspx")
 	public String myScore(HttpServletRequest request, HttpServletResponse response, Model model) {
-		ForeContext.setData(model.asMap(), request);
+		Map<String, Object> dataMap = model.asMap();
+		ForeContext.setData(dataMap, request);
 		Site site = Context.getCurrentSite(request);
+		
+		User user = Context.getCurrentUser(request);
+		if(user == null) {
+			return site.getTemplate(TO_LOGIN);
+		}
+		
 		return site.getTemplate(MY_SCORE);
 	}
 	
 	@RequestMapping(value = "myOrder.jspx")
 	public String myOrder(HttpServletRequest request, HttpServletResponse response, Model model,String status) {
+		Map<String, Object> dataMap = model.asMap();
+		ForeContext.setData(dataMap, request);
+		Site site = Context.getCurrentSite(request);
+		
 		User user = Context.getCurrentUser(request);
 		if(user == null) {
-			//TODO
+			return site.getTemplate(TO_LOGIN);
 		}
 		Integer userId = user.getId();
 		List<Order> orderList =null;
@@ -191,34 +222,97 @@ public class UMemberController {
 		}else{
 			orderList = pay.findOrderByUserIdAndStatus(userId, status);
 		}
-		Map<String, Object> dataMap = model.asMap();
 		dataMap.put("userId", userId);
 		dataMap.put("orderList", orderList);
-		ForeContext.setData(dataMap, request);
-		Site site = Context.getCurrentSite(request);
 		return site.getTemplate(MY_ORDER);
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "myOrderDelete.jspx" ,method = RequestMethod.POST)
+	@RequestMapping(value = "myOrderDelete.jspx", method = RequestMethod.POST)
 	public String myOrderDelete(HttpServletRequest request, HttpServletResponse response, Model model,Integer orderId) {
 		User user = Context.getCurrentUser(request);
 		if(user == null) {
 			return "false";
 		}
 		pay.cancelOrder(orderId);
-		Map<String, Object> dataMap = model.asMap();
-		ForeContext.setData(dataMap, request);
-		Site site = Context.getCurrentSite(request);
 		return "true";
 	}
 	
-	
-	
+	/**
+	 * 文件下载
+	 * @param infoId
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "download.jspx")
+	public String downloadFile(Integer infoId, HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		Map<String, Object> dataMap = model.asMap();
+		ForeContext.setData(dataMap, request);
+		Site site = Context.getCurrentSite(request);
+		
+		User user = Context.getCurrentUser(request);
+		if(user == null) {
+			return site.getTemplate(TO_LOGIN);
+		}
+		
+		Info info = infoQueryService.get(infoId);
+		if(!info.getModel().getNumber().equals("fileAndTrain")) {
+			Response resp = new Response(request, response, model);
+			return resp.post(502, "系统错误");
+		}
+		
+		infoBufferService.updateDownloads(infoId);
+		
+		String filepath = info.getCustoms().get("files");
+		String fileName = info.getCustoms().get("filesName");
+		try {
+			fileName = URLEncoder.encode(fileName, "utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		String basePath = servletContext.getRealPath("/");
+		File file = new File(basePath + filepath);
+		
+		response.setContentType("multipart/form-data");
+		response.setHeader("Content-Disposition", "attachment;fileName="+fileName);
+		
+		ServletOutputStream out = null;
+		FileInputStream fis = null;
+		try {
+			out = response.getOutputStream();
+			fis = new FileInputStream(file);
+			int b = 0;
+			byte[] buffer = new byte[1024];
+			while(b != -1) {
+				b = fis.read(buffer);
+				out.write(buffer);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(fis != null) {
+				IOUtils.closeQuietly(fis);
+			}
+			if(out != null) {
+				IOUtils.closeQuietly(out);
+			}
+		}
+		return null;
+	}
 	
 	@Autowired
 	private PayService pay;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private InfoQueryService infoQueryService;
+	@Autowired
+	private InfoBufferService infoBufferService;
+
+	@Override
+	public void setServletContext(ServletContext servletContext) {
+		this.servletContext = servletContext;
+	}
 	
 }

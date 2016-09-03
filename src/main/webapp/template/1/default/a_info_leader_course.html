@@ -59,29 +59,9 @@
                     <img src="_files/a_upload/sidebar_qrcode.png" alt="">
                     <b>报名电话：029-89399618</b>
                 </div>
-
             </div>
-
-            <div class="classes">
-                <div class="com_tit">
-                    <h2>相关课程</h2>
-                </div>
-                <div class="class_list clearfix">
-                    [@SpecialList  limit='4';list]
-					[#list list as course] 
-                    <div class="box_wrap">
-                        <div class="box">
-                            <a href="${ctx}/special/${course.id}.jspx"><img src="${course.smallImage}" alt=""></a><!--270x155-->
-                            <b><a href="${ctx}/special/${course.id}.jspx">${course.title}</a></b>
-                            <span>230人已购买</span>
-                            <a href="${ctx}/special/${course.id}.jspx" class="btn">￥${course.customs['price']}</a>
-                        </div>
-                    </div>
-                    [/#list]
-                    [/@SpecialList]
-                </div>
-
-            </div>
+        <!-- 相关课程 -->
+        [#include 'a_inc_relate_courses.html'/]
     </div>
 
 

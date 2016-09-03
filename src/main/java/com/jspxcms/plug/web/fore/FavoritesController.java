@@ -1,31 +1,22 @@
 package com.jspxcms.plug.web.fore;
 
-import java.util.Map;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jspxcms.core.domain.Site;
 import com.jspxcms.core.domain.User;
 import com.jspxcms.core.support.Context;
-import com.jspxcms.core.support.ForeContext;
 import com.jspxcms.plug.domain.Favorites;
 import com.jspxcms.plug.service.FavoritesService;
-import com.jspxcms.plug.web.back.ResumeController;
 
 @Controller
 public class FavoritesController {
 	
-	private static final Logger log = LoggerFactory
-			.getLogger(ResumeController.class);
 	@Resource
 	private FavoritesService fas;
 	
@@ -35,14 +26,8 @@ public class FavoritesController {
 			Model modMap, HttpServletRequest request){
 		User user = Context.getCurrentUser(request);
 		if(user == null) {
-			//TODO 
 			return "false";
 		}
-		log.info("aa");
-		Site site = Context.getCurrentSite(request);
-		Map<String, Object> data = modMap.asMap();
-		ForeContext.setData(data, request);
-		ForeContext.setPage(data, page);
 		Favorites f = fas.addCollectionItem(user.getId(), objectId, type);
 		if(f == null){
 			return "false"; 

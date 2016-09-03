@@ -4,6 +4,7 @@
 package com.jspxcms.plug.web.fore;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
@@ -72,15 +74,15 @@ public class PayAction {
 	 * @return
 	 */
 	@RequestMapping(value = "confirmOrder.jspx")
-	public RedirectView confirmOrder(@RequestParam("productionId")int productionId,@RequestParam("skuPrice") double skuPrice, HttpServletRequest request){
+	public RedirectView confirmOrder(@RequestParam("productionId")int productionId,@RequestParam("skuPrice") double skuPrice, HttpServletRequest request, Model model){
 		User user = Context.getCurrentUser(request);
 		if(user == null) {
-			// TODO 登录检查
+			return new RedirectView("/login.jspx",true,false,false);
 		}
 		
 		Special course = specialService.get(productionId);
 		if(course == null) {
-			// 无次课程
+			// 无此课程
 			return new RedirectView("/miniPay/payFail.jspx",true,false,false);
 		}
 		String priceStr = course.getCustoms().get("price");
@@ -109,9 +111,15 @@ public class PayAction {
 		aiDTO.setProductionName(course.getTitle());
 		payService.addItem(aiDTO);
 		
+		String subject = "";
+		try {
+			subject = URLEncoder.encode(order.getSubject(), "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		//在这里拼接一个参数的跳转
-		String url = "http://localhost:8080/alipay/alipayapi.jsp?WIDout_trade_no="+order.getId()
-				+"&WIDsubject="+order.getSubject()+"&WIDtotal_fee="+skuPrice+"&WIDbody=' '";
+		String url = "http://dkxl.cn/alipay/alipayapi.jsp?WIDout_trade_no="+order.getId()
+				+"&WIDsubject="+subject+"&WIDtotal_fee="+skuPrice+"&WIDbody=DK";
 		logger.info("jump to alipay, url=" + url);
 		return new RedirectView(url,true,false,false);
 	}
@@ -119,97 +127,11 @@ public class PayAction {
 	@RequestMapping(value = "toAlipay.jspx")
 	public RedirectView jumpToAlipay(Integer orderId) {
 		Order order = payService.findOrderByOrderId(orderId);
-		String url = "http://localhost:8080/alipay/alipayapi.jsp?WIDout_trade_no="+order.getId()
+		String url = "http://dkxl.cn/alipay/alipayapi.jsp?WIDout_trade_no="+order.getId()
 				+"&WIDsubject="+order.getSubject()+"&WIDtotal_fee="+order.getTotalMoney()+"&WIDbody=' '";
 		logger.info("jump to alipay, url=" + url);
 		return new RedirectView(url,true,false,false);
 	}
-	
-//	@RequestMapping(value = "createOrder")
-//	public ModelAndView createOrder(Integer buyerId, Integer productionId,
-//			Integer skuId, Double skuPrice, Integer skuAmmount,
-//			String productionName) {
-//		// 先创建订单，目前关键字段只有buyerId
-//		CreateOrderDTO coDTO = new CreateOrderDTO();
-//		coDTO.setBuyerId(buyerId);
-//		coDTO.setTotalMoney(skuPrice);
-//		Order order = payService.createOrder(coDTO);
-//
-//		// 添加商品
-//		AddItemDTO aiDTO = new AddItemDTO();
-//		aiDTO.setOrderId(order.getId());
-//		aiDTO.setProductionId(productionId);
-//		aiDTO.setSkuPrice(skuPrice);
-//		aiDTO.setSkuAmmount(skuAmmount);
-//		aiDTO.setSkuId(skuId);
-//		aiDTO.setProductionName(productionName);
-//		payService.addItem(aiDTO);
-//
-//		// 拿到order下的所有的detail
-//		List<OrderDetail> details = payService.findDetailsByOrderId(order
-//				.getId());
-//
-//		// 刷新得到order中的总价
-//		Order order2 = payService.findOrderByOrderId(order.getId());
-//
-//		ModelAndView mv = new ModelAndView();
-//		mv.addObject("order", order2);
-//		mv.addObject("details", details);
-//		mv.setViewName("list");
-//		return mv;
-//	}
-
-	/**
-	 * 跳转支付宝前检查操作
-	 * 
-	 * @return
-	 */
-//	@RequestMapping(value = "payCheck")
-//	public String payCheck(Integer orderId, Double totalMoney,
-//			HttpServletRequest request) {
-//		Order order = payService.findOrderByOrderId(orderId);
-//		// 检查是否能够支付，盘点状态是否为waitting
-//		if (!payService.isOrderCanBePay(order)) {
-//			logger.info("订单的状态错误是：{}", order.getStatus());
-//			return "checkError";
-//		}
-//		// 检查上个页面价格和数据库价格
-//		if (Math.abs(totalMoney - order.getTotalMoney()) >= 0.001) {
-//			logger.info("上个页面传来的总价是：{}，计算出的总价是：{}", totalMoney,
-//					order.getTotalMoney());
-//			return "checkError";
-//		}
-//		
-//		request.setAttribute("WIDout_trade_no", orderId + "");
-//		request.setAttribute("WIDsubject", order.getSubject());
-//		request.setAttribute("WIDtotal_fee", totalMoney + "");
-//		request.setAttribute("WIDbody", " ");
-//		return "alipayapi";
-//	}
-	
-//	@RequestMapping(value = "addItem")
-//	public ModelAndView addItem(Integer orderId, Integer productionId,
-//			Integer skuId, Double skuPrice, Integer skuAmmount,
-//			String productionName) {
-//		// 添加商品
-//		AddItemDTO aiDTO = new AddItemDTO();
-//		aiDTO.setOrderId(orderId);
-//		aiDTO.setProductionId(productionId);
-//		aiDTO.setSkuPrice(skuPrice);
-//		aiDTO.setSkuAmmount(skuAmmount);
-//		aiDTO.setSkuId(skuId);
-//		aiDTO.setProductionName(productionName);
-//		payService.addItem(aiDTO);
-//
-//		Order order = payService.findOrderByOrderId(orderId);
-//		List<OrderDetail> details = payService.findDetailsByOrderId(orderId);
-//
-//		ModelAndView mv = new ModelAndView();
-//		mv.addObject("order", order);
-//		mv.addObject("details", details);
-//		mv.setViewName("list");
-//		return mv;
-//	}
 	
 	@RequestMapping(value="alipay/callback.jspx")
 	public RedirectView callback(HttpServletRequest request, HttpServletResponse response,
@@ -258,7 +180,7 @@ public class PayAction {
 			boolean verify_result = AlipayNotify.verify(params);
 			if(!verify_result) {
 				logger.error("alipay verify failed!");
-//			FIXME	return null;
+				return null;
 			}
 			
 			// 获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
@@ -316,17 +238,5 @@ public class PayAction {
 		Site site = Context.getCurrentSite(request);
 		return site.getTemplate("pay_fail.html");
 	}
-
-//	@RequestMapping(value = "showDetails")
-//	public ModelAndView showDetails(Integer orderId) {
-//		List<OrderDetail> details = payService.findDetailsByOrderId(orderId);
-//		Order order = payService.findOrderByOrderId(orderId);
-//
-//		ModelAndView mv = new ModelAndView();
-//		mv.setViewName("list");
-//		mv.addObject("details", details);
-//		mv.addObject("order", order);
-//		return mv;
-//	}
 
 }

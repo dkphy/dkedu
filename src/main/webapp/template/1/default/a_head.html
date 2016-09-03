@@ -7,36 +7,38 @@
                 <i></i>
             </span>
             <span class="logo">
-                <a href="${ctx}">
+                <a href="${ctx}/edu.jspx">
                     <img src="_files/a_css/img/logo.png" alt="">
                 </a>
             </span>
             <ul class="menu clearfix">
-                <li class="current">
-                	<a href="${ctx}/dk_edu.jspx">首页</a></li>
                 <li>
+                	<a href="${ctx}/edu.jspx">首页</a>
+                </li>
+                <li id="offlineCourse">
                 [@Node number='offlineCourse'; node]
                 	<a href="${node.url}?">${node.title}</a>
                 [/@Node]
                 </li>
-                <li>
+                <li id="onlineCourse">
                 [@Node number = 'onlineCourse'; node]
                 	<a href="${node.url}">${node.title}</a>
                 [/@Node]
                 </li>
-                <li>
+                <li id="leaderCourse">
                 [@Node number='leaderCourse'; node]
                 	<a href="${node.url}">${node.title}</a>
                 [/@Node]
                 </li>
-                <li><a href="http://baoming.dkxl.cn/f/mB5q3V" target="_blank">在线报名</a></li>
-                
                 <li>
+                	<a href="http://baoming.dkxl.cn/f/mB5q3V" target="_blank">在线报名</a>
+                </li>
+                <li id="questions">
                 [@Node number = 'questions'; node]
                 	<a href="${node.url}">${node.title}</a>
                 [/@Node]
                 </li>
-                <li><a href="${ctx}/myCourse.jspx">学习中心</a></li>
+                <li id="ucenter"><a href="${ctx}/myCourse.jspx">学习中心</a></li>
             </ul>
              <div class="search_box">
                 <form action="${ctx}/search.jspx" method="get">
@@ -47,4 +49,38 @@
             <script type="text/javascript" src="${ctx}/login_include.jspx?fallbackUrl=${url?url}&d=${.now?time}"></script>
         </div>
     </div>
+    
+<script type="text/javascript">
+/**
+	设置导航栏当前模块的下划线
+*/
+// 获取当前页面位置
+[#if speicalsPage??]
+	var nodeNumber = 'onlineCourse'
+[#elseif myCourse??]
+	var nodeNumber = 'ucenter'
+[#elseif info??]
+	var nodeNumber = '${info.node.hierarchy[1].number}';
+	if(nodeNumber == 'onlineCourseLesson') {// 课时详情页的current标记到网络课程上
+		nodeNumber = 'onlineCourse';
+	}
+[#elseif node??]
+	var nodeNumber = '${node.hierarchy[1].number}';
+[#else]
+	var nodeNumber = 'none';
+[/#if]
+// 设置li的class属性为current，从而修改展示效果
+setCurrent(nodeNumber);
+function setCurrent(li) {
+	switch(li) {
+	case 'none':
+		return;
+	case 'recruit':
+		li = 'about';
+		break;
+	default:
+	}
+	document.getElementById(li).setAttribute("class", "current");
+}
+</script>
 [/#escape]

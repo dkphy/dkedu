@@ -94,8 +94,6 @@ public class CreateClearingDTO {
 	}
 
 	public CreateClearingDTO() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 }

@@ -14,7 +14,48 @@
 <body>
     [#include 'a_index_poster.html'/]
     <!--通用顶部 start-->
-   [#include 'a_head.html'/]
+    <div class="header">
+        <div class="wrap">
+            <span class="menu_btn" id="menu_btn">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+            <span class="logo">
+                <a href="${ctx}/">
+                    <img src="_files/a_css/img/logo.png" alt="">
+                </a>
+            </span>
+            <ul class="menu clearfix">
+                <li class="current">
+                	<a href="${ctx}/edu.jspx">首页</a></li>
+                <li>
+                [@Node number='offlineCourse'; node]
+                	<a href="${node.url}?">${node.title}</a>
+                [/@Node]
+                </li>
+                <li>
+                [@Node number = 'onlineCourse'; node]
+                	<a href="${node.url}">${node.title}</a>
+                [/@Node]
+                </li>
+                <li>
+                [@Node number='leaderCourse'; node]
+                	<a href="${node.url}">${node.title}</a>
+                [/@Node]
+                </li>
+                <li><a href="http://baoming.dkxl.cn/f/mB5q3V" target="_blank">在线报名</a></li>
+                
+                <li>
+                [@Node number = 'questions'; node]
+                	<a href="${node.url}">${node.title}</a>
+                [/@Node]
+                </li>
+                <li><a href="${ctx}/myCourse.jspx">学习中心</a></li>
+            </ul>
+            <script type="text/javascript" src="${ctx}/login_include.jspx?fallbackUrl=${url?url}&d=${.now?time}"></script>
+        </div>
+    </div>
     <!--通用顶部 end-->
 
     <div class="col">
@@ -66,51 +107,48 @@
             </div>
             <div class="filter clearfix">
             </div>
-            [@SpecialList isRecommend=2 limit='7'; specList] 
+            <!-- 首焦 -->
+            [@SpecialList isRecommend=3 limit='1'; specList] 
             [#list specList as info]
-            [#if info_index==0]
             <div class="sidebar">
                 <div class="box">
-                    <a href="${ctx}/special/${info.id}.jspx"><img src="${info.smallImage}" alt=""></a><!--270x155-->
+                    <a href="${ctx}/special/${info.id}.jspx"><img src="${info.customs['focus']}" alt=""></a><!--270x155-->
                     <b><a href="${ctx}/special/${info.id}.jspx">${info.title}</a></b>
                     <span>${info.soldCount!0}人已购买</span>
                     <a href="${ctx}/special/${info.id}.jspx" class="btn">￥${info.customs['price']}</a>
                 </div>
             </div>
-            [#else]
+            [/#list]
+            [/@SpecialList]
+            <!-- 普通 -->
             <div class="main">
                 <div class="class_list clearfix">
+	            [@SpecialList isRecommend=2 limit='6'; specList] 
+	            [#list specList as info]
                     <div class="box">
                         <a href="${ctx}/special/${info.id}.jspx"><img src="${info.smallImage}" alt=""></a><!--270x155-->
                         <b><a href="${ctx}/special/${info.id}.jspx">${info.title}</a></b>
                         <span>${info.soldCount!0}人已购买</span>
                         <a href="${ctx}/special/${info.id}.jspx" class="btn">￥${info.customs['price']}</a>
                     </div>
-                    
+				[/#list]
+	            [/@SpecialList]
                 </div>
             </div>
-			[/#if]
-			[/#list]
-            [/@SpecialList]
-
         </div>
     </div>
 
     <div class="col bottom_col">
         <div class="wrap clearfix">
             <div class="pic">
-            	[@Node number = 'questions'; questions]
-                <a href="${questions.url}" target="_blank">
-                [@Node number = 'shcoolPoster';node]
-       			[@InfoList nodeId=node.id limit='1';list]
+       			[@InfoList nodeNumber='shcoolPoster' limit='1';list]
 				[#list list as info]
+                <a href="${info.customs['filesAndTrainUrl']}" target="_blank">
                     <img src="${info.customs['filesAndTrain']}" alt=""><!--460x362-->
                     <b>${info.customs['questionsTitle']}</b>
+                </a>
                 [/#list]
                 [/@InfoList]
-                [/@Node]
-                </a>
-                [/@Node]
             </div>
             <div class="list">
             	[@Node number = 'file'; node]

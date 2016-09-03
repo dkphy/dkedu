@@ -78,7 +78,7 @@ public class StaticPageController {
 		return site.getTemplate("list_new_news.html");
 	}
 	
-	@RequestMapping(value = "/dk_edu.jspx")
+	@RequestMapping(value = "/edu.jspx")
 	public String dk_edu(Integer page,Integer userId,Model modMap,HttpServletRequest request){
 		Site site = Context.getCurrentSite(request);
 		Map<String, Object> data = modMap.asMap();

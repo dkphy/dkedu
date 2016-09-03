@@ -63,22 +63,22 @@ function append(tag) {
 			<div class="in-btn"></div>
 			</shiro:hasPermission>
 			<shiro:hasPermission name="core:info:copy">
-			<div class="in-btn"><input type="button" value="<s:message code="copy"/>" onclick="location.href='create.do?id=${bean.id}&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&${searchstring}';"<c:if test="${oprt=='create'}"> disabled="disabled"</c:if>/></div>
+<!-- 			<div class="in-btn"><input type="button" value="<s:message code="copy"/>" onclick="location.href='create.do?id=${bean.id}&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&${searchstring}';"<c:if test="${oprt=='create'}"> disabled="disabled"</c:if>/></div> -->
 			</shiro:hasPermission>
-      <div class="in-btn"><input type="button" value="<s:message code="view"/>" onclick="location.href='view.do?id=${bean.id}&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&${searchstring}';"<c:if test="${oprt=='create'}"> disabled="disabled"</c:if>/></div>
+<!--       <div class="in-btn"><input type="button" value="<s:message code="view"/>" onclick="location.href='view.do?id=${bean.id}&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&${searchstring}';"<c:if test="${oprt=='create'}"> disabled="disabled"</c:if>/></div> -->
       <div class="in-btn"><input type="button" value="<s:message code="info.foreView"/>" onclick="window.open('${bean.url}');"<c:if test="${oprt=='create'||bean.status ne 'A'}"> disabled="disabled"</c:if>/></div>
 			<shiro:hasPermission name="core:info:delete">
 			<div class="in-btn"><input type="button" value="<s:message code="delete"/>" onclick="if(confirmDelete()){location.href='delete.do?ids=${bean.id}&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&${searchstring}';}"<c:if test="${oprt=='create' || !bean.auditPerm}"> disabled="disabled"</c:if>/></div>
 			</shiro:hasPermission>
 			<div class="in-btn"></div>
 			<shiro:hasPermission name="core:info:audit_pass">
-			<div class="ls-btn"><input type="button" value="<s:message code="info.auditPass"/>" onclick="location.href='audit_pass.do?ids=${bean.id}&redirect=edit&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&position=${pagedList.number*pagedList.size+status.index}&${searchstring}';"<c:if test="${oprt=='create' || !bean.auditPerm}"> disabled="disabled"</c:if>/></div>
+<!-- 			<div class="ls-btn"><input type="button" value="<s:message code="info.auditPass"/>" onclick="location.href='audit_pass.do?ids=${bean.id}&redirect=edit&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&position=${pagedList.number*pagedList.size+status.index}&${searchstring}';"<c:if test="${oprt=='create' || !bean.auditPerm}"> disabled="disabled"</c:if>/></div> -->
 			</shiro:hasPermission>
 			<shiro:hasPermission name="core:info:audit_reject">
-			<div class="ls-btn"><input type="button" value="<s:message code="info.auditReject"/>" onclick="location.href='audit_reject.do?ids=${bean.id}&redirect=edit&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&position=${pagedList.number*pagedList.size+status.index}&${searchstring}';"<c:if test="${oprt=='create' || !bean.auditPerm}"> disabled="disabled"</c:if>/></div>
+<!-- 			<div class="ls-btn"><input type="button" value="<s:message code="info.auditReject"/>" onclick="location.href='audit_reject.do?ids=${bean.id}&redirect=edit&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&position=${pagedList.number*pagedList.size+status.index}&${searchstring}';"<c:if test="${oprt=='create' || !bean.auditPerm}"> disabled="disabled"</c:if>/></div> -->
 			</shiro:hasPermission>
 			<shiro:hasPermission name="core:info:audit_return">
-			<div class="ls-btn"><input type="button" value="<s:message code="info.auditReturn"/>" onclick="location.href='audit_return.do?ids=${bean.id}&redirect=edit&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&position=${pagedList.number*pagedList.size+status.index}&${searchstring}';"<c:if test="${oprt=='create' || !bean.auditPerm}"> disabled="disabled"</c:if>/></div>
+<!-- 			<div class="ls-btn"><input type="button" value="<s:message code="info.auditReturn"/>" onclick="location.href='audit_return.do?ids=${bean.id}&redirect=edit&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&position=${pagedList.number*pagedList.size+status.index}&${searchstring}';"<c:if test="${oprt=='create' || !bean.auditPerm}"> disabled="disabled"</c:if>/></div> -->
 			</shiro:hasPermission>
 			<div class="in-btn"></div>
 			<div class="in-btn"><input type="button" value="<s:message code="prev"/>" onclick="location.href='edit.do?id=${side.prev.id}&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&position=${position-1}&${searchstring}';"<c:if test="${empty side.prev}"> disabled="disabled"</c:if>/></div>
@@ -213,7 +213,7 @@ function append(tag) {
   </c:when>
   <c:when test="${field.name eq 'priority'}">
 		<select name="priority" style="width:50px;">
-  		<c:forEach var="i" begin="0" end="9">
+  		<c:forEach var="i" begin="0" end="20">
   		<option<c:if test="${i==bean.priority}"> selected="selected"</c:if>>${i}</option>
   		</c:forEach>
   	</select>
@@ -342,7 +342,7 @@ function append(tag) {
     </div>
     <div style="padding-top:3px;">
       <span style="padding:0 7px;"><s:message code="fileLength"/>:</span><f:text id="videoLength" name="videoLength" value="${bean.videoLength}" class="{digits:true,max:2147483647}" maxlength="10" style="width:70px;"/>
-      <span style="padding:0 7px;"><s:message code="videoTime"/>:</span><f:text id="videoTime" name="videoTime" value="${bean.videoTime}" maxlength="100" style="width:70px;"/> &nbsp;
+<!--       <span style="padding:0 7px;"><s:message code="videoTime"/>:</span><f:text id="videoTime" name="videoTime" value="${bean.videoTime}" maxlength="100" style="width:70px;"/> &nbsp; -->
       <input id="videoButton" type="button" value="<s:message code='choose'/>"/>
       <script type="text/javascript">
       $(function() {
@@ -644,15 +644,15 @@ function append(tag) {
       <div class="in-btn"><input type="submit" value="<s:message code="save"/>"<c:if test="${oprt=='edit' && !bean.auditPerm}"> disabled="disabled"</c:if>/></div>
     	<c:if test="${oprt=='create'}">
     	<input type="hidden" id="draft" name="draft" value="false"/>
-      <div class="in-btn"><input type="submit" value="<s:message code="info.saveAsDraft"/>" onclick="$('#draft').val('true');"/></div>
+<!--       <div class="in-btn"><input type="submit" value="<s:message code="info.saveAsDraft"/>" onclick="$('#draft').val('true');"/></div> -->
     	</c:if>
     	<c:if test="${oprt=='edit'}">
     	<input type="hidden" id="pass" name="pass" value="false"/>
-      <div class="in-btn"><input type="submit" value="<s:message code="info.saveAndPass"/>" onclick="$('#pass').val('true');"<c:if test="${oprt=='edit' && !bean.auditPerm}"> disabled="disabled"</c:if>/></div>
+<!--       <div class="in-btn"><input type="submit" value="<s:message code="info.saveAndPass"/>" onclick="$('#pass').val('true');"<c:if test="${oprt=='edit' && !bean.auditPerm}"> disabled="disabled"</c:if>/></div> -->
     	</c:if>
       <div class="in-btn"><input type="submit" value="<s:message code="saveAndReturn"/>" onclick="$('#redirect').val('list');"<c:if test="${oprt=='edit' && !bean.auditPerm}"> disabled="disabled"</c:if>/></div>
       <c:if test="${oprt=='create'}">
-      <div class="in-btn"><input type="submit" value="<s:message code="saveAndCreate"/>" onclick="$('#redirect').val('create');"/></div>
+<!--       <div class="in-btn"><input type="submit" value="<s:message code="saveAndCreate"/>" onclick="$('#redirect').val('create');"/></div> -->
       </c:if>
       <div style="clear:both;"></div>
     </td>

@@ -85,7 +85,7 @@ public class SpecialController {
 		}
 		Integer userId = Context.getCurrentUserId(request);
 		if(userId == null) {
-			//TODO
+			return resp.badRequest("请先登录");
 		}
 		String ip = Servlets.getRemoteAddr(request);
 		String cookie = Site.getIdentityCookie(request, response);

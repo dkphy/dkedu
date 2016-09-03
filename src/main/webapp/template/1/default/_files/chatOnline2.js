@@ -20,7 +20,7 @@ document
 				+ '/img/g.swf"/><param name="quality" value="high" /><param name="bgcolor" value="#ffffff" /><embed name="mainserverim" src="'
 				+ ib_.fu
 				+ '/img/g.swf" quality="high" bgcolor="#ffffff" width="1" height="1" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" swLiveConnect="true"/></object>');
-setTimeout("ib_s1()", 2000);
+//setTimeout("ib_s1()", 2000);
 if (typeof (ib_.code_id) == "undefined") {
 	ib_.chaturl = ib_.tu + "/chat-" + ib_.l + ".html?l=" + ib_.l
 } else {
@@ -30,10 +30,12 @@ if (typeof (ib_.code_id) == "undefined") {
 ib_.chaturl += "&page=" + escape(location.href);
 ib_.chatwin = "toolbar=0,scrollbars=0,location=0,menubar=0,resizable=1,z-look=yes,screenX=200,screenY=200,width=650,height=440";
 var ib_icon_o;
+/**
 if (ib_.img_hide == 0) {
 	ib_icon_o = new ib_icon();
 	ib_icon_o.init();
 	eval('setTimeout("ib_icon_o.autoScroll()", ' + ib_icon_o.loopmillisecond
 			+ ");")
 }
+**/
 document.close();

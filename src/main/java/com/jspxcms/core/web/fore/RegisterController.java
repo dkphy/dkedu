@@ -161,7 +161,7 @@ public class RegisterController {
 		modelMap.addAttribute("keyUser", keyUser);
 		Map<String, Object> data = modelMap.asMap();
 		ForeContext.setData(data, request);
-		return site.getTemplate(VERIFY_MEMBER_TEMPLATE);
+		return site.getTemplate(REGISTER_MESSAGE_TEMPLATE);
 	}
 
 	@RequestMapping(value = "/forgot_password.jspx")

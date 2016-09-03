@@ -18,7 +18,7 @@ public class CmsLogoutFilter extends LogoutFilter {
 	 * 返回URL
 	 */
 	public static final String FALLBACK_URL_PARAM = "fallbackUrl";
-	private static final String DEF_REDIRECT_URL = "/dk_edu.jspx";
+	private static final String DEF_REDIRECT_URL = "/edu.jspx";
 	/**
 	 * 后台路径
 	 */

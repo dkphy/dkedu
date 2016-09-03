@@ -28,7 +28,9 @@
         [@Node number = 'shcoolPoster';node]
         [@InfoList nodeId=node.id limit='1';list]
 		[#list list as info]
+		<a href="${info.link}">
         <div style="width:100%;height:502px;background:url(${info.customs['schoolPosterPhoto']}) no-repeat center center;"></div>
+   		</a>
    		[/#list]
    		[/@InfoList]
    		[/@Node]	

@@ -12,6 +12,9 @@
     <script src="_files/a_js/jquery-1.9.1.min.js"></script>
 	<script src="_files/a_js/common.js"></script>
 	<script src="_files/a_js/member.js"></script>
+	<script type="text/javascript">
+		setTimeout(function(){location.href="${ctx}/myCourse.jspx";},3000);
+	</script>
 </head>
 <body>
 
@@ -24,8 +27,8 @@
         <div class="res_col">
             <h1>课程购买成功！即可开启学习旅程吧～</h1>
             <h2>当前页面正在跳转至我的课程页，请稍后…</h2>
-            <p class="count" id="count">3s</p>
-            <a href="#" class="jump_btn">手动跳转</a>
+            <p class="count" id="count"></p>
+            <a href="${ctx}/myCourse.jspx" class="jump_btn">手动跳转</a>
         </div>
     </div>
     

@@ -127,13 +127,19 @@ public class CommentController {
 	@RequestMapping(value = "/course_commit_submit")
 	public String submitCourseComment(Integer courseId, String text,
 			Integer score, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Site site = Context.getCurrentSite(request);
+		Map<String, Object> dataMap = model.asMap();
+		ForeContext.setData(dataMap, request);
+		Response resp = new Response(request, response, model);
+		
 		User user = Context.getCurrentUser(request);
-		if (user == null) {
-			// TODO
+		if(user == null) {
+			return site.getTemplate(UMemberController.TO_LOGIN);
 		}
+		
 		Special course = specialService.get(courseId);
 		if (course == null) {
-			// TODO
+			resp.post(502, "课程不存在");
 		}
 		
 		if(score == null || score <= 0 || score > 5) {
@@ -145,7 +151,7 @@ public class CommentController {
 				Special.COMMENT_TYPE, courseId, user.getId(), null,
 				null, limitable);
 		if (existComments != null && !existComments.isEmpty()) {
-			// TODO return resp.post(502, "您已经评论过了！");
+			return resp.post(502, "您已经评论过了！");
 		}
 
 		text = sensitiveWordService.replace(text);
@@ -157,8 +163,6 @@ public class CommentController {
 		comment.setStatus(Comment.AUDITED);
 		// 保存评论并更新课程的评论数量
 		service.save(comment, user.getId(), 0, null);
-		
-		Response resp = new Response(request, response, model);
 		return resp.post();
 	}
 	
@@ -232,17 +236,18 @@ public class CommentController {
 
 	@RequestMapping(value = "/comment_list.jspx")
 	public String list(String ftype, Integer fid, Integer page,
-			HttpServletRequest request, org.springframework.ui.Model modelMap) {
+			HttpServletRequest request, HttpServletResponse response, org.springframework.ui.Model model) {
 		Site site = Context.getCurrentSite(request);
+		Response resp = new Response(request, response, model);
 		if (StringUtils.isBlank(ftype)) {
 			ftype = "Info";
 		}
 		if (fid == null) {
-			// TODO
+			resp.post(502, "系统错误");
 		}
 		Object bean = service.getEntity(ftype, fid);
 		if (bean == null) {
-			// TODO
+			resp.post(502, "系统错误");
 		}
 		Anchor anchor = (Anchor) bean;
 		// Site site = ((Siteable) bean).getSite();
@@ -250,8 +255,8 @@ public class CommentController {
 		if (StringUtils.isBlank(tpl)) {
 			tpl = "_list";
 		}
-		modelMap.addAttribute("anchor", anchor);
-		Map<String, Object> data = modelMap.asMap();
+		model.addAttribute("anchor", anchor);
+		Map<String, Object> data = model.asMap();
 		ForeContext.setData(data, request);
 		ForeContext.setPage(data, page);
 		return site.getTemplate(TPL_PREFIX + tpl + TPL_SUFFIX);

@@ -96,7 +96,7 @@ function optDelete(form) {
 	<fieldset class="c-fieldset">
     <legend><s:message code="search"/></legend>
     <label class="c-lab"><s:message code="info.title"/>: <input type="text" name="search_CONTAIN_detail.title" value="${requestScope['search_CONTAIN_detail.title'][0]}" style="width:120px;"/></label>
-    <label class="c-lab"><s:message code="info.specials"/>: <input type="text" name="search_CONTAIN_JinfoSpecials.Jspecial.title" value="${requestScope['search_CONTAIN_JinfoSpecials.Jspecial.title'][0]}" style="width:80px;"/></label>
+    <label class="c-lab">课程: <input type="text" name="search_CONTAIN_JinfoSpecials.Jspecial.title" value="${requestScope['search_CONTAIN_JinfoSpecials.Jspecial.title'][0]}" style="width:80px;"/></label>
 	  <label class="c-lab"><s:message code="info.tagKeywords"/>: <input type="text" name="search_CONTAIN_JinfoTags.Jtag.name" value="${requestScope['search_CONTAIN_JinfoTags.Jtag.name'][0]}" style="width:80px;"/></label>
 	  <label class="c-lab"><s:message code="beginTime"/>: <f:text name="search_GTE_publishDate_Date" value="${search_GTE_publishDate_Date[0]}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" style="width:65px;"/></label>
 	  <label class="c-lab"><s:message code="endTime"/>: <f:text name="search_LTE_publishDate_Date" value="${search_LTE_publishDate_Date[0]}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" style="width:65px;"/></label>
@@ -143,7 +143,7 @@ function optDelete(form) {
 	<div class="ls-btn"></div>
 	</shiro:hasPermission>
 	<shiro:hasPermission name="core:info:copy">
-	<div class="ls-btn"><input type="button" value="<s:message code="copy"/>" onclick="return optSingle('#copy_opt_');"/></div>
+<!-- 	<div class="ls-btn"><input type="button" value="<s:message code="copy"/>" onclick="return optSingle('#copy_opt_');"/></div> -->
 	</shiro:hasPermission>
   <shiro:hasPermission name="core:info:edit">
   <div class="ls-btn"><input type="button" value="<s:message code="edit"/>" onclick="return optSingle('#edit_opt_');"/></div>
@@ -162,13 +162,13 @@ function optDelete(form) {
   </shiro:hasPermission>
 	<div class="ls-btn"></div>
 	<shiro:hasPermission name="core:info:audit_pass">
-	<div class="ls-btn"><input type="button" value="<s:message code="info.auditPass"/>" onclick="return optMulti(this.form,'audit_pass.do');"/></div>
+<!-- 	<div class="ls-btn"><input type="button" value="<s:message code="info.auditPass"/>" onclick="return optMulti(this.form,'audit_pass.do');"/></div> -->
 	</shiro:hasPermission>
 	<shiro:hasPermission name="core:info:audit_reject">
-	<div class="ls-btn"><input type="button" value="<s:message code="info.auditReject"/>" onclick="return optMulti(this.form,'audit_reject.do');"/></div>
+<!-- 	<div class="ls-btn"><input type="button" value="<s:message code="info.auditReject"/>" onclick="return optMulti(this.form,'audit_reject.do');"/></div> -->
 	</shiro:hasPermission>
 	<shiro:hasPermission name="core:info:audit_return">
-	<div class="ls-btn"><input type="button" value="<s:message code="info.auditReturn"/>" onclick="return optMulti(this.form,'audit_return.do');"/></div>
+<!-- 	<div class="ls-btn"><input type="button" value="<s:message code="info.auditReturn"/>" onclick="return optMulti(this.form,'audit_return.do');"/></div> -->
 	</shiro:hasPermission>
 	<%-- 
   <shiro:hasPermission name="core:info:archive">
@@ -183,16 +183,16 @@ function optDelete(form) {
 <ul id="tabs" class="tabs margin-top5">
 <shiro:hasPermission name="core:info:status">
 	<li<c:if test="${empty queryStatus}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('');$('#searchForm').submit();"><s:message code="info.status.all"/></a></li>
-	<li<c:if test="${queryStatus eq 'pending'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('pending');$('#searchForm').submit();"><s:message code="info.status.pending"/></a></li>
-	<li<c:if test="${queryStatus eq 'notpassed'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('notpassed');$('#searchForm').submit();"><s:message code="info.status.notpassed"/></a></li>
-	<li<c:if test="${queryStatus eq '1'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('1');$('#searchForm').submit();"><s:message code="info.status.1"/></a></li>
-  <li<c:if test="${queryStatus eq 'F'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('F');$('#searchForm').submit();"><s:message code="info.status.F"/></a></li>
-  <li<c:if test="${queryStatus eq 'A'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('A');$('#searchForm').submit();"><s:message code="info.status.A"/></a></li>
-  <li<c:if test="${queryStatus eq 'G'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('G');$('#searchForm').submit();"><s:message code="info.status.G"/></a></li>
-	<li<c:if test="${queryStatus eq 'B'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('B');$('#searchForm').submit();"><s:message code="info.status.B"/></a></li>
-	<li<c:if test="${queryStatus eq 'D'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('D');$('#searchForm').submit();"><s:message code="info.status.D"/></a></li>
-	<li<c:if test="${queryStatus eq 'C'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('C');$('#searchForm').submit();"><s:message code="info.status.C"/></a></li>
-	<li<c:if test="${queryStatus eq 'E'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('E');$('#searchForm').submit();"><s:message code="info.status.E"/></a></li>
+<!-- 	<li<c:if test="${queryStatus eq 'pending'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('pending');$('#searchForm').submit();"><s:message code="info.status.pending"/></a></li> -->
+<!-- 	<li<c:if test="${queryStatus eq 'notpassed'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('notpassed');$('#searchForm').submit();"><s:message code="info.status.notpassed"/></a></li> -->
+<!-- 	<li<c:if test="${queryStatus eq '1'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('1');$('#searchForm').submit();"><s:message code="info.status.1"/></a></li> -->
+<!--     <li<c:if test="${queryStatus eq 'F'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('F');$('#searchForm').submit();"><s:message code="info.status.F"/></a></li> -->
+<!--     <li<c:if test="${queryStatus eq 'A'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('A');$('#searchForm').submit();"><s:message code="info.status.A"/></a></li> -->
+<!--     <li<c:if test="${queryStatus eq 'G'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('G');$('#searchForm').submit();"><s:message code="info.status.G"/></a></li> -->
+<!-- 	<li<c:if test="${queryStatus eq 'B'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('B');$('#searchForm').submit();"><s:message code="info.status.B"/></a></li> -->
+<!-- 	<li<c:if test="${queryStatus eq 'D'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('D');$('#searchForm').submit();"><s:message code="info.status.D"/></a></li> -->
+<!-- 	<li<c:if test="${queryStatus eq 'C'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('C');$('#searchForm').submit();"><s:message code="info.status.C"/></a></li> -->
+<!-- 	<li<c:if test="${queryStatus eq 'E'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('E');$('#searchForm').submit();"><s:message code="info.status.E"/></a></li> -->
 	<%-- 
 	<li<c:if test="${queryStatus eq 'Z'}"> class="active"</c:if>><a href="javascript:void(0);" onclick="$('#queryStatus').val('Z');$('#searchForm').submit();"><s:message code="info.status.Z"/></a></li>
 	 --%>
@@ -219,8 +219,8 @@ function optDelete(form) {
   <tr<shiro:hasPermission name="core:info:edit"> ondblclick="location.href=$('#edit_opt_${bean.id}').attr('href');"</shiro:hasPermission>>
     <td><input type="checkbox" name="ids" value="${bean.id}"/></td>
     <td align="center">
-    	<shiro:hasPermission name="core:info:copy">
-      <a id="copy_opt_${bean.id}" href="create.do?id=${bean.id}&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&${searchstring}" class="ls-opt"><s:message code="copy"/></a>
+	  <shiro:hasPermission name="core:info:copy">
+<!--       <a id="copy_opt_${bean.id}" href="create.do?id=${bean.id}&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&${searchstring}" class="ls-opt"><s:message code="copy"/></a> -->
       </shiro:hasPermission>      
     	<shiro:hasPermission name="core:info:edit">
       <a id="edit_opt_${bean.id}" href="edit.do?id=${bean.id}&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&position=${pagedList.number*pagedList.size+status.index}&${searchstring}" class="ls-opt"><s:message code="edit"/></a>
@@ -231,17 +231,17 @@ function optDelete(form) {
       <a href="logic_delete.do?ids=${bean.id}&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&${searchstring}" onclick="return confirmDelete();" class="ls-opt"><s:message code="delete"/></a>
       </c:when>
       <c:otherwise>
-      <span class="disabled"><s:message code="delete"/></span>
+		<span class="disabled"><s:message code="delete"/></span>
       </c:otherwise>
       </c:choose>
       </shiro:hasPermission>
     	<shiro:hasPermission name="core:info:delete">
     	<c:choose>
     	<c:when test="${bean.auditPerm}">
-      <a href="delete.do?ids=${bean.id}&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&${searchstring}" onclick="return confirmDelete();" class="ls-opt"><s:message code="completelyDelete"/></a>
+<!--       <a href="delete.do?ids=${bean.id}&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&${searchstring}" onclick="return confirmDelete();" class="ls-opt"><s:message code="completelyDelete"/></a> -->
       </c:when>
       <c:otherwise>
-      <span class="disabled"><s:message code="completelyDelete"/></span>
+<!--       <span class="disabled"><s:message code="completelyDelete"/></span> -->
       </c:otherwise>
       </c:choose>
       </shiro:hasPermission>

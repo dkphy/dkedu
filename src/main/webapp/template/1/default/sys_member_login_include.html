@@ -12,13 +12,10 @@
 [#escape x as (x)!?html]
 	[#if user??]
 	<div class="logined_box">
-		<span class="u_head"><img
-			src="http://tva1.sinaimg.cn/crop.0.0.512.512.50/d0c2c2a7jw8f5ici98oi5j20e80e8jro.jpg"
-			alt="">
-		</span>
-		<div class="notice">
-			<span class="icon-notice active"></span>
-			<!--如果需要小红点 class中加入active-->
+		<span class="u_head">
+			<a href="#" class="u_head_wrap">
+			<img src="http://tva1.sinaimg.cn/crop.0.0.512.512.50/d0c2c2a7jw8f5ici98oi5j20e80e8jro.jpg" alt="">
+			</a>
 			<ul>
 				<li><a href="${ctx}/myCourse.jspx">我的课程</a>
 				</li>
@@ -35,6 +32,10 @@
 				<li><a href="${ctx}/logout.jspx">退出登录</a>
 				</li>
 			</ul>
+		</span>
+		<div class="notice">
+			<span class="icon-notice active"></span>
+			<!--如果需要小红点 class中加入active-->
 		</div>
 	</div>
 [#else]

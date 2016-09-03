@@ -25,7 +25,7 @@
 	    }
 	    function seekHandler(t) {
 	    	// CKobject._K_('nowTime').innerHTML='当前播放的时间点是(此值精确到小数点后三位，即毫秒)：'+t;
-	    	if(t > 600) {
+	    	if(t > ${course.customs['tryLimit']}) {
 	    		CKobject.getObjectById('ckplayer_video').videoPause();
 	    		alert('请付费');
 	    	}
@@ -35,6 +35,7 @@
 </head>
 <body>
     <!--通用顶部 start-->
+    [#assign speicalsPage]exist[/#assign]
     [#include 'a_head.html'/]
     <!--通用顶部 end-->
     <div class="wrap page_video_detail">
@@ -74,28 +75,8 @@
                [/#if]
             </div>
         </div>
-
-
-        <div class="classes">
-            <div class="com_tit">
-                <h2>相关课程</h2>
-            </div>
-            <div class="class_list clearfix">
-                [@SpecialPage specialId=Param.specialId pageSize='4';pagedList]
-					[#list pagedList.content as course] 
-                    <div class="box_wrap">
-                        <div class="box">
-                            <a href="${ctx}/special/${course.id}.jspx"><img src="${course.smallImage}" alt=""></a><!--270x155-->
-                            <b><a href="${ctx}/special/${course.id}.jspx">${course.title}</a></b>
-                            <span>${course.soldCount!0}人已购买</span>
-                            <a href="${ctx}/special/${course.id}.jspx" class="btn">￥${course.customs['price']}</a>
-                        </div>
-                    </div>
-					[/#list]
-				[/@SpecialPage]
- 
-            </div>
-        </div>
+		<!-- 相关课程 -->
+        [#include 'a_inc_relate_courses.html'/]
     </div>
 
     <!--通用底部start-->

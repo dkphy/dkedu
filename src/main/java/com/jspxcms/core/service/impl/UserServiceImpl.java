@@ -168,7 +168,7 @@ public class UserServiceImpl implements UserService, OrgDeleteListener,
 		detail.setValidationValue(null);
 
 		String url = site.getProtocol() + ":" + site.getUrlFull()
-				+ Constants.VERIFY_MEMBER_URL + key;
+				+ Constants.VERIFY_MEMBER_URL + key + "&isSucc=true";
 		String email = user.getEmail();
 		String username = user.getUsername();
 		String sitename = site.getFullNameOrName();

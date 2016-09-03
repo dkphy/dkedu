@@ -49,7 +49,7 @@ function checkemail() {
 	return true;
 }
 function isEmail(str) {
-	var reg = /[a-z0-9-]{1,30}@[a-z0-9-]{1,65}.[a-z]{3}/;
+	var reg = /[a-z0-9-]{1,30}@[a-z0-9-]{1,65}.[a-z]{2,4}/;
 	return reg.test(str);
 }
 

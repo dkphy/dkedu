@@ -24,9 +24,9 @@
             </div>
             
             <div class="list clearfix">
-            	[@InfoList nodeId=node.id limit='11';list]
+            	[@InfoList nodeId=node.id priority=9 limit='1';list]
 				[#list list as info]
-				[#if info_index == 0]
+				[#assign focusId]${info.id}[/#assign]
                 <div class="box long">
                     <a href="${info.url}">
                         <img src="${info.smallImage}" alt="">
@@ -38,7 +38,11 @@
                         </div>
                     </a>
                 </div>
-                [#else]
+                [/#list]
+                [/@InfoList]
+                <!-- infoList -->
+                [@InfoList nodeId=node.id excludeId=focusId limit='10';list]
+				[#list list as info]
                 <div class="box">
                     <a href="${info.url}">
                         <img src="${info.smallImage}" alt="">
@@ -50,7 +54,6 @@
                         </div>
                     </a>
                 </div>
-                [/#if]
                 [/#list]
                 [/@InfoList]
             </div>

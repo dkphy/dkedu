@@ -1,0 +1,21 @@
+[#escape x as (x)!?html]
+		<div class="classes">
+            <div class="com_tit">
+                <h2>相关课程</h2>
+            </div>
+            <div class="class_list clearfix">
+                [@SpecialPage specialId=Param.specialId pageSize='4';pagedList]
+					[#list pagedList.content as course] 
+                    <div class="box_wrap">
+                        <div class="box">
+                            <a href="${ctx}/special/${course.id}.jspx"><img src="${course.smallImage}" alt=""></a><!--270x155-->
+                            <b><a href="${ctx}/special/${course.id}.jspx">${course.title}</a></b>
+                            <span>${course.soldCount!0}人已购买</span>
+                            <a href="${ctx}/special/${course.id}.jspx" class="btn">￥${course.customs['price']}</a>
+                        </div>
+                    </div>
+					[/#list]
+				[/@SpecialPage]
+            </div>
+        </div>
+[/#escape]

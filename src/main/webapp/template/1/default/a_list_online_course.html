@@ -10,10 +10,13 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="_files/a_css/common.css">
     <link rel="stylesheet" href="_files/a_css/class_list.css">
+    <script src="_files/a_js/jquery-1.9.1.min.js"></script>
+	<script src="_files/a_js/common.js"></script>
 </head>
 <body>
     <!--通用顶部 start-->
-
+    <!-- 课程页面标记：方便标记导航栏current属性 -->
+	[#assign speicalsPage]exist[/#assign]
     [#include 'a_head.html'/]
     <!--通用顶部 end-->
     <div class="online_class">
@@ -37,16 +40,16 @@
             </div>
             
             <div class="list clearfix">
- 				[@SpecialList  limit='8';list]
+ 				[@SpecialList categoryId=categoryId limit='8';list]
 				[#list list as course]               
                 <div class="box">
                     <a href="${ctx}/special/${course.id}.jspx">
-                        <img src="_files/a_upload/class.jpg" alt="">
+                        <img src="${course.smallImage}" alt="">
                         <!--尺寸必须是270x155-->
 						<!-- <img src="${course.smallImage}" alt="">270x155 -->
                         <b>${course.title}</b>
                         <div class="info">
-                            <span class="count">${course.soldCount!0}人已购买</span>
+                            <span class="count">${course.soldCount!0}已人购买</span>
                             <span class="cat">${course.metaKeywords}</span>
                         </div>
                         [#if (course.customs['price']?number > 0)]
@@ -60,28 +63,17 @@
                 [/#list]
                 [/@SpecialList]
             </div>
-			
-			
             <a href="javascript:;" class="more">点击查看更多</a>
         </div>
     </div>
-
-
 
     <!--通用底部start-->
     [#include 'a_end.html'/]
     <!--通用底部end-->
 
-
     <!--侧边滑动通用start-->
     [#include 'a_side.html'/]
     <!--侧边滑动通用end-->
 </body>
-<script src="_files/a_js/jquery-1.9.1.min.js"></script>
-
-<script src="_files/a_js/common.js"></script>
-<script>
-
-</script>
 </html>
 [/#escape]

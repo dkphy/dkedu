@@ -41,7 +41,8 @@
 			$.post(action, {"objectId" : "${special.id}", "type" : "onlineCourse"}, function(data) {
 				var d = $.parseJSON(data);
 				if (d !== true) {
-					alert('收藏失败');
+					alert('请先登录');
+					location.href="${ctx}/login.jspx";
 				} else {
 					alert('收藏成功');
 				} 
@@ -51,13 +52,13 @@
 </head>
 <body>
     <!--通用顶部 start-->
-
+	[#assign speicalsPage]exist[/#assign]
     [#include 'a_head.html'/]
     <!--通用顶部 end-->
     <div class="page_online_detail">
         <div class="page_head">
             <div class="wrap ">
-                <img src="${special.smallImage}" alt=""><!--524x288-->
+                <img src="${special.largeImage}" alt=""><!--524x288-->
                 <div class="main">
                     <h1>${special.title}</h1>
                     <div id="starGroup" class="score">
@@ -125,7 +126,7 @@
                     <div id="c_schedule" class="schedule" style="display:none">
                         <table>
                             <tbody>
-                            	[@InfoPage specialId=special.id pageSize='10';pagedList]
+                            	[@InfoPage specialId=special.id pageSize='100';pagedList]
                             	[#list pagedList.content as info]
                                 <tr>
                                     <td class="c_name">课时${info.priority}：  ◇${info.title}</td>
@@ -203,7 +204,6 @@
                     
                 </div>
             </div>
-           
             <div class="sidebar">
                 <div class="com_tit long">
                     <h2>课程教师</h2>
@@ -221,25 +221,8 @@
                 </div>
             </div>
 
-            <div class="classes">
-                <div class="com_tit">
-                    <h2>相关课程</h2>
-                </div>
-                <div class="class_list clearfix">
-                   [@SpecialPage specialId=special.id pageSize='4';pagedList]
-					[#list pagedList.content as course] 
-                    <div class="box_wrap">
-                        <div class="box">
-                            <a href="${ctx}/special/${course.id}.jspx"><img src="${course.smallImage}" alt=""></a><!--270x155-->
-                            <b><a href="${ctx}/special/${course.id}.jspx">${course.title}</a></b>
-                            <span>230人已购买</span>
-                            <a href="${ctx}/special/${course.id}.jspx" class="btn">￥${course.customs['price']}</a>
-                        </div>
-                    </div>
-					[/#list]
-					[/@SpecialPage]
-                </div>
-            </div>
+            <!-- 相关课程 -->
+        	[#include 'a_inc_relate_courses.html'/]
         </div>
     </div>
 

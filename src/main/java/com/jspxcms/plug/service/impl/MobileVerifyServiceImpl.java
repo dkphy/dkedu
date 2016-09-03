@@ -29,7 +29,7 @@ import com.jspxcms.plug.service.MobileVerifyService;
 @Service
 public class MobileVerifyServiceImpl implements MobileVerifyService{
 	
-	public static final String linkUrl = "http://www.edu.dkxl.cn";
+	public static final String linkUrl = "http://www.dkxl.cn/edu.jspx";
 	
 	private static final Logger logger = LoggerFactory.getLogger(MobileVerifyServiceImpl.class);
 	
