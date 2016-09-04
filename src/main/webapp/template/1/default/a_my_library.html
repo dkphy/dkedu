@@ -12,6 +12,17 @@
     <link rel="stylesheet" href="_files/a_css/ucenter.css">
     <script src="_files/a_js/jquery-1.9.1.min.js"></script>
 	<script src="_files/a_js/common.js"></script>
+<script type="text/javascript">
+// 为tab设置current标记
+$(function() {
+	var filter = '${Param.type}';
+	if(filter === 'file') {
+		$("#tab_file").addClass("current");
+	} else {
+		$("#tab_train").addClass("current");
+	}
+});
+</script>
 </head>
 <body>
     <!--通用顶部 start-->
@@ -19,14 +30,13 @@
     [#include 'a_head.html'/]
     <!--通用顶部 end-->
 
-
 	<div class="wrap my_docs">
         <div class="col">
             <div class="com_tit long">
                 <h2>我的资料</h2>
                 <div class="nav">
-                    <a href="${ctx}/myLibrary.jspx?type=file" class="current">收藏的文库</a>
-                    <a href="${ctx}/myLibrary.jspx?type=train">收藏的题库</a>
+                    <a href="${ctx}/myLibrary.jspx?type=file" id="tab_file">收藏的文库</a>
+                    <a href="${ctx}/myLibrary.jspx?type=train" id="tab_train">收藏的题库</a>
                 </div>
             </div>
             <div class="database_list">

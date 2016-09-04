@@ -12,6 +12,18 @@
     <link rel="stylesheet" href="_files/a_css/class_list.css">
     <script src="_files/a_js/jquery-1.9.1.min.js"></script>
 	<script src="_files/a_js/common.js"></script>
+	
+<script type="text/javascript">
+// 为tab设置current标记
+$(function() {
+	var filter = '${category.id}';
+	if(filter === '') {
+		$("#category_all").addClass("current");
+	} else {
+		$("#category_" + filter).addClass("current");
+	}
+});
+</script>
 </head>
 <body>
     <!--通用顶部 start-->
@@ -22,11 +34,11 @@
     <div class="online_class">
         <div class="wrap">
             <div class="filter clearfix">
-                <a href="${ctx}/specials.jspx" class="current">全部课程</a>
+                <a href="${ctx}/specials.jspx" id="category_all">全部课程</a>
             	<!-- 课程的类别 --> 
                 [@SpecialCategoryList;list]
 				[#list list as sc]
-                <a href="${ctx}/specials/${sc.id}.jspx">${sc.name}</a>
+                <a href="${ctx}/specials/${sc.id}.jspx" id="category_${sc.id}">${sc.name}</a>
                 [/#list]
                 [/@SpecialCategoryList]
             
@@ -44,9 +56,8 @@
 				[#list list as course]               
                 <div class="box">
                     <a href="${ctx}/special/${course.id}.jspx">
-                        <img src="${course.smallImage}" alt="">
                         <!--尺寸必须是270x155-->
-						<!-- <img src="${course.smallImage}" alt="">270x155 -->
+                        <img src="${course.smallImage}" alt="">
                         <b>${course.title}</b>
                         <div class="info">
                             <span class="count">${course.soldCount!0}已人购买</span>

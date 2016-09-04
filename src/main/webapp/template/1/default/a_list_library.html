@@ -14,12 +14,17 @@
 	<script src="_files/a_js/common.js"></script>
 	<script src="_files/js/common-dev.js"></script>
 <script type="text/javascript">
+// 为tab设置current标记
+$(function() {
+	var filter = '${node.id}';
+	$("#tab_" + filter).addClass("current");
+});
 	// 生成单条记录
 	function getOneRecordHTML(infoObj) {
         var describ = infoObj.description.substring(80);
 		var html = '<li>';
 		html += '<a href="' + infoObj.url + '">';
-		html += '<img src="' + infoObj.smallImage + '" alt="">';
+		html += '<img src="' + infoObj.smallImageUrl + '" alt="">';
 		html += '<div class="ft">';
         html += '<b>'+ infoObj.title +'</b>';
         html += '<span><i class="icon-view"></i><strong>' + infoObj.bufferViews + '</strong>人查阅</span>';
@@ -39,10 +44,10 @@
         <div class="wrap">
             <div class="filter clearfix">
             	[@Node number = 'questions'; node]
-                <a href="${node.url}" class="current">全部</a>
+                <a href="${node.url}" id="tab_${node.id}">全部</a>
                 	[@NodeList parentId=node.id;list]
 					[#list list as n]
-                		<a href="${n.url}">${n.name}</a>
+                		<a href="${n.url}" id="tab_${n.id}">${n.name}</a>
                 	[/#list]
                		 [/@NodeList]
                 [/@Node]
