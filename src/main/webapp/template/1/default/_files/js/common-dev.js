@@ -15,7 +15,7 @@ function loadMore(ctx, targetId, type) {
 	case 'search':
 		url = ctx + "/ajaxSearch.jspx";
 	}
-	var loadCount = 5;
+	var loadCount = 4;
 	var offset = $("#offset")[0].innerHTML;
 	// ajax post method
 	$.post(url, {
@@ -31,7 +31,8 @@ function loadMore(ctx, targetId, type) {
 			$("#offset")[0].innerHTML = ++offset;
 		});
 		if (json.length <= 0) {
-			$(".get_more")[0].innerHTML = "--- 到底了 ---";
+			//$(".get_more")[0].innerHTML = "--- 到底了 ---";
+			$("#more_button").html("--- 到底了 ---");
 		}
 	});
 }

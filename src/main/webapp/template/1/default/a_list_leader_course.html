@@ -12,7 +12,22 @@
     <link rel="stylesheet" href="_files/a_css/class_list.css">
     <script src="_files/a_js/jquery-1.9.1.min.js"></script>
 	<script src="_files/a_js/common.js"></script>
-	<script src="_files/a_js/common-dev.js"></script>
+	<script src="_files/js/common-dev.js"></script>
+	
+<script type="text/javascript">
+	// 生成单条记录
+	function getOneRecordHTML(infoObj) {
+        var describ = infoObj.description.substring(80);
+		var html = '<li>';
+		html += '<a href="' + infoObj.url + '">';
+		html += '<img src="' + infoObj.smallImage + '" alt="">';
+        html += '<b>'+ infoObj.title +'</b>';
+        html += '<p>' + describ + '</p>';
+        html += '</a>';
+        html += '</li>';
+        return html;
+	}
+</script>
 </head>
 <body>
     <!--通用顶部 start-->
@@ -40,7 +55,7 @@
                 		<div id="offset" style="display:none">9</div>
                 		<div id="show_more_list"></div>
                     </ul>
-                    <a href="javascript:loadMore('${dy}', ${node.id}, 'info');" class="more"">点击查看更多</a>
+                    <a href="javascript:loadMore('${dy}', ${node.id}, 'info');" class="more" id="more_button">点击查看更多</a>
                 </div>
                 <div class="sidebar">
                     <div class="qrcode">
@@ -63,23 +78,5 @@
     [#include 'a_side.html'/]
     <!--侧边滑动通用end-->
 </body>
-
-<script type="text/javascript">
-	// 生成单条记录
-	function getOneRecordHTML(infoObj) {
-		alert('生成单挑记录');
-		var html = '<li>';
-		html += '<a href="' + infoObj.url + '">';
-		html += '<img src="' + infoObj.smallImageUrl + '" alt="">';
-        html += '<div class="wd" >';
-        html += '<b>'+ infoObj.title +'</b>';
-        var describ = infoObj.metaDescription;
-        html += '<p>' + describ + '</p>';
-        html += '</div></a>';
-        html += genTagHtml(infoObj);
-        html += '</li>';
-        return html;
-	}
-</script>
 </html>
 [/#escape]

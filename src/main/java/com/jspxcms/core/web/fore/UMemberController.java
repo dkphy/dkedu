@@ -1,5 +1,6 @@
 package com.jspxcms.core.web.fore;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
@@ -7,32 +8,51 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.jspxcms.common.file.FileHandler;
+import com.jspxcms.common.security.CredentialsDigest;
+import com.jspxcms.common.upload.Uploader;
+import com.jspxcms.common.web.PathResolver;
+import com.jspxcms.common.web.Validations;
+import com.jspxcms.core.domain.GlobalMail;
+import com.jspxcms.core.domain.GlobalUpload;
 import com.jspxcms.core.domain.Info;
+import com.jspxcms.core.domain.PublishPoint;
 import com.jspxcms.core.domain.Site;
 import com.jspxcms.core.domain.User;
 import com.jspxcms.core.domain.UserDetail;
 import com.jspxcms.core.service.InfoBufferService;
 import com.jspxcms.core.service.InfoQueryService;
 import com.jspxcms.core.service.UserService;
+import com.jspxcms.core.service.UserShiroService;
+import com.jspxcms.core.support.Constants;
 import com.jspxcms.core.support.Context;
 import com.jspxcms.core.support.ForeContext;
 import com.jspxcms.core.support.Response;
 import com.jspxcms.plug.domain.Order;
+import com.jspxcms.plug.service.MobileVerifyService;
 import com.jspxcms.plug.service.PayService;
+import com.sun.star.uno.RuntimeException;
 
 @Controller
 public class UMemberController implements ServletContextAware {
@@ -43,6 +63,7 @@ public class UMemberController implements ServletContextAware {
 	private static final String MY_SECURE_PASS = "a_my_secure_pass.html";
 	private static final String MY_SECURE_PHONE = "a_my_secure_phone.html";
 	private static final String MY_SECURE_EMAIL = "a_my_secure_email.html";
+	private static final String MY_SECURE_EMAIL_VERIFY = "a_my_secure_email_send.html";
 	private static final String MY_LIBRARY = "a_my_library.html";
 	private static final String MY_SCORE = "a_my_score.html";
 	private static final String MY_ORDER = "a_my_order.html";
@@ -50,6 +71,8 @@ public class UMemberController implements ServletContextAware {
 	
 	//Spring这里是通过实现ServletContextAware接口来注入ServletContext对象  
     private ServletContext servletContext;  
+    
+    private static final Logger logger = LoggerFactory.getLogger(UMemberController.class);
 
 	@RequestMapping(value = "myCourse.jspx")
 	public String myCourse(HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -85,17 +108,64 @@ public class UMemberController implements ServletContextAware {
 	
 	@RequestMapping(value = "updateProfile.jspx", method = RequestMethod.POST)
 	public String profileSubmit(String username,String gender,String comeFrom,
+			@RequestParam(value = "file", required = false) MultipartFile file,
 			HttpServletRequest request, HttpServletResponse response,
 			org.springframework.ui.Model modelMap) {
 		Response resp = new Response(request, response, modelMap);
+		User userExist = userService.findByUsername(username);
+		if(userExist != null) {
+			resp.post(502, "昵称"+username+"已被占用");
+		}
 		User user = Context.getCurrentUser(request);
 		user.setGender(gender);
 		UserDetail detail = user.getDetail();
 		detail.setComeFrom(comeFrom);
+		try {
+			doAvatarUpload(file, request, response);
+			detail.setWithAvatar(true);
+		} catch (Exception e) {
+			logger.error("upload avatar image error.", e);
+		}
 		userService.update(user, detail);
 		return resp.post();
 	}
 	
+	private String doAvatarUpload(MultipartFile file,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		// 文件是否存在
+		validateFile(file);
+		Site site = Context.getCurrentSite(request);
+		User user = Context.getCurrentUser(request);
+
+		String origFilename = file.getOriginalFilename();
+		String ext = FilenameUtils.getExtension(origFilename).toLowerCase();
+		GlobalUpload gu = site.getGlobal().getUpload();
+		// 后缀名是否合法
+		validateExt(ext, Uploader.IMAGE, gu);
+		BufferedImage buffImg = ImageIO.read(file.getInputStream());
+
+		PublishPoint point = user.getGlobal().getUploadsPublishPoint();
+		FileHandler fileHandler = point.getFileHandler(pathResolver);
+		String pathname = "/users/" + user.getId() + "/avatar.jpg";
+		String urlPrefix = point.getUrlPrefix();
+		String fileUrl = urlPrefix + pathname;
+		// 一律存储为jpg
+		fileHandler.storeImage(buffImg, "jpg", pathname);
+		return fileUrl;
+	}
+
+	private void validateFile(MultipartFile partFile) {
+		if (partFile == null || partFile.isEmpty()) {
+			throw new RuntimeException("file is empty");
+		}
+	}
+	
+	private void validateExt(String extension, String type, GlobalUpload gu) {
+		if (!gu.isExtensionValid(extension, type)) {
+			throw new RuntimeException("image extension not allowed: " + extension);
+		}
+	}
 	
 	@RequestMapping(value = "mySecure.jspx")
 	public String mySecure(HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -107,73 +177,162 @@ public class UMemberController implements ServletContextAware {
 		if(user == null) {
 			return site.getTemplate(TO_LOGIN);
 		}
-		dataMap.put("userId", user.getId());
 		return site.getTemplate(MY_SECURE);
 	}
 	
 	@RequestMapping(value = "updatePass.jspx")
-	public String mySecurePass(HttpServletRequest request, HttpServletResponse response, Model model,Integer userId) {
+	public String modifyPassword(HttpServletRequest request, HttpServletResponse response, Model model) {
 		Map<String, Object> dataMap = model.asMap();
 		ForeContext.setData(dataMap, request);
 		Site site = Context.getCurrentSite(request);
 		return site.getTemplate(MY_SECURE_PASS);
 	}
 	
-	@RequestMapping(value = "updatePassSuccess.jspx",method = RequestMethod.POST)
-	public String mySecurePassSuccess(HttpServletRequest request, HttpServletResponse response,
-			Model model,String pass, String rawPassword) {
-		User u = Context.getCurrentUser(request);
-		//验证 TODO
-		System.out.println("密码=="+rawPassword);
-		userService.updatePassword(u.getId(), rawPassword);
-		Map<String, Object> dataMap = model.asMap();
-		ForeContext.setData(dataMap, request);
-		Site site = Context.getCurrentSite(request);
+	@RequestMapping(value = "updatePassword.jspx",method = RequestMethod.POST)
+	public String modifyPassword(HttpServletRequest request, HttpServletResponse response,
+			Model model,String passwordOld, String password, String passwordAgain) {
 		Response resp = new Response(request, response, model);
+		if(!password.equals(passwordAgain)) {
+			return resp.post(501, "两次输入密码不一致");
+		}
+		User user = Context.getCurrentUser(request);
+		if (!credentialsDigest.matches(user.getPassword(), passwordOld,
+				user.getSaltBytes())) {
+			return resp.post(501, "member.passwordError");
+		}
+		userService.updatePassword(user.getId(), password);
 		return resp.post();
 	}
+	
 	@RequestMapping(value = "updatePhone.jspx")
-	public String mySecurePhone(HttpServletRequest request, HttpServletResponse response, Model model,Integer userId) {
-		User u = userService.get(userId);
+	public String modifyMobile(HttpServletRequest request, HttpServletResponse response, Model model) {
+		User user = Context.getCurrentUser(request);
 		Map<String, Object> dataMap = model.asMap();
-		dataMap.put("userId", userId);
-		dataMap.put("mobile", u.getMobile());
+		dataMap.put("mobile", user.getMobile());
 		ForeContext.setData(dataMap, request);
 		Site site = Context.getCurrentSite(request);
 		return site.getTemplate(MY_SECURE_PHONE);
 	}
 	
-	@RequestMapping(value = "updatePhoneSuccess.jspx",method=RequestMethod.POST)
-	public String mySecurePhoneSuccess(HttpServletRequest request, HttpServletResponse response, Model model,Integer userId,String phone) {
-		User u = userService.get(userId);
-		userService.updatePhone(userId, phone);
-		Map<String, Object> dataMap = model.asMap();
-		dataMap.put("userId", userId);
-		dataMap.put("mobile", u.getMobile());
-		ForeContext.setData(dataMap, request);
-		Site site = Context.getCurrentSite(request);
-		return site.getTemplate(MY_SECURE_PHONE);
+	/**
+	 * 修改手机-发送短信
+	 * @param mobile
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "modify_mobile_send_sms_verify_code.jspx", method = RequestMethod.POST)
+	public String sendSmsVerifyCode(String mobile, HttpServletRequest request,
+			HttpServletResponse response) {
+		if(StringUtils.isBlank(mobile)) {
+			return "false";
+		}
+		// 不允许重复注册
+		User user = userShiroService.findByMobile(mobile);
+		if(user != null) {
+			return "false";
+		}
+		String verifyCode = mobileVerifyService.generateNewVerifyCode(mobile);
+		// send sms
+		boolean sendSucc = mobileVerifyService.sendSmsVerifyCodeForAlterMobile(mobile, verifyCode);
+		if(sendSucc) {
+			return "true";
+		} else {
+			return "false";
+		}
 	}
 	
+	@RequestMapping(value = "modify_mobile.jspx",method=RequestMethod.POST)
+	public String modifyMobile(String mobile, String smsVerifyCode, String password,
+			HttpServletRequest request, HttpServletResponse response, Model model) {
+		Response resp = new Response(request, response, model);
+		User user = Context.getCurrentUser(request);
+		if(StringUtils.isBlank(smsVerifyCode) || StringUtils.isBlank(mobile)) {
+			return resp.post(501, "手机号和验证码不能为空");
+		}
+		// 检查手机号是否使用过
+		if(userShiroService.findByMobile(mobile) != null) {
+			return resp.post(501, "手机号已被使用，请更换");
+		}
+		// 验证密码
+		if (!credentialsDigest.matches(user.getPassword(), password,
+				user.getSaltBytes())) {
+			return resp.post(501, "member.passwordError");
+		}
+		// 验证码
+		if(!mobileVerifyService.verify(mobile, smsVerifyCode)) {
+			return resp.post(501, "验证码错误");
+		}
+		userService.updatePhone(user.getId(), mobile);
+		return resp.post();
+	}
 	
 	@RequestMapping(value = "updateEmail.jspx")
-	public String mySecureEmail(HttpServletRequest request, HttpServletResponse response, Model model,Integer userId) {
-		User u = userService.get(userId);
+	public String mySecureEmail(HttpServletRequest request, HttpServletResponse response, Model model) {
+		User user = Context.getCurrentUser(request);
 		Map<String, Object> dataMap = model.asMap();
-		dataMap.put("userId", userId);
-		dataMap.put("email", u.getEmail());
+		dataMap.put("email", user.getEmail());
 		ForeContext.setData(dataMap, request);
 		Site site = Context.getCurrentSite(request);
 		return site.getTemplate(MY_SECURE_EMAIL);
 	}
 	
-	@RequestMapping(value = "updateEmailSuccess.jspx",method = RequestMethod.POST)
-	public String mySecureEmailSuccess(HttpServletRequest request, HttpServletResponse response, Model model,Integer userId,String email) {
-		userService.updateEmail(userId, email);
-		Map<String, Object> dataMap = model.asMap();
-		ForeContext.setData(dataMap, request);
+	/**
+	 * 修改邮箱-发送邮件
+	 * @param email
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "sendVerifyEmail.jspx",method = RequestMethod.POST)
+	public String sendVerifyEmail(String email, String password,
+			HttpServletRequest request, HttpServletResponse response, Model model) {
+		Response resp = new Response(request, response, model);
+		User user = Context.getCurrentUser(request);
+		// 检查邮箱是否使用过
+		if(userShiroService.findByEmail(email) != null) {
+			return resp.post(502, "邮箱已被使用，请更换");
+		}
+		// 验证密码
+		if (!credentialsDigest.matches(user.getPassword(), password, user.getSaltBytes())) {
+			return resp.post(501, "member.passwordError");
+		}
+		
 		Site site = Context.getCurrentSite(request);
-		return site.getTemplate(MY_SECURE_EMAIL);
+		GlobalMail mail = site.getGlobal().getMail();
+		userService.sendModifyEmail(site, user, email, mail);
+		Map<String, Object> dataMap = model.asMap();
+		dataMap.put("email", user.getEmail());
+		ForeContext.setData(dataMap, request);
+		return site.getTemplate(MY_SECURE_EMAIL_VERIFY);
+	}
+	
+	/**
+	 * 修改邮箱-验证key
+	 * @param key
+	 * @param request
+	 * @param response
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(value = "verify_email_for_modify.jspx")
+	public String modifyEmail(String key, String email, HttpServletRequest request,
+			HttpServletResponse response, Model modelMap) {
+		Response resp = new Response(request, response, modelMap);
+		List<String> messages = resp.getMessages();
+		if (!Validations.notEmpty(key, messages, "key")) {
+			return resp.badRequest();
+		}
+		User keyUser = userService.findByValidation(
+				Constants.VERIFY_EMAIL_TYPE, key);
+		if(keyUser == null) {
+			return resp.post(501, "无效链接");
+		}
+		// 更新邮箱
+		userService.updateEmail(keyUser.getId(), email);
+		return resp.post();
 	}
 	
 	@RequestMapping(value = "myLibrary.jspx")
@@ -227,15 +386,11 @@ public class UMemberController implements ServletContextAware {
 		return site.getTemplate(MY_ORDER);
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "myOrderDelete.jspx", method = RequestMethod.POST)
+	@RequestMapping(value = "myOrderDelete.jspx")
 	public String myOrderDelete(HttpServletRequest request, HttpServletResponse response, Model model,Integer orderId) {
-		User user = Context.getCurrentUser(request);
-		if(user == null) {
-			return "false";
-		}
 		pay.cancelOrder(orderId);
-		return "true";
+		Response resp = new Response(request, response, model);
+		return resp.post();
 	}
 	
 	/**
@@ -309,6 +464,14 @@ public class UMemberController implements ServletContextAware {
 	private InfoQueryService infoQueryService;
 	@Autowired
 	private InfoBufferService infoBufferService;
+	@Autowired
+	protected PathResolver pathResolver;
+	@Autowired
+	private CredentialsDigest credentialsDigest;
+	@Autowired
+	private MobileVerifyService mobileVerifyService;
+	@Autowired
+	private UserShiroService userShiroService;
 
 	@Override
 	public void setServletContext(ServletContext servletContext) {

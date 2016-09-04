@@ -1,9 +1,11 @@
 package com.jspxcms.plug.domain;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.*;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 
 
@@ -91,5 +93,18 @@ public class UserCode {
 	}
 	public void setVersion(Integer version){
 		this.version = version;
+	}
+
+	@Transient
+	public void applyDefaultValue() {
+		if (getGmtCreate() == null) {
+			setGmtCreate(new Timestamp(System.currentTimeMillis()));
+		}
+		if (getGmtModify() == null) {
+			setGmtModify(new Timestamp(System.currentTimeMillis()));
+		}
+		if (StringUtils.isBlank(getScoreStatus())) {
+			setScoreStatus(ScoreStatus.SCORE_USEABLE);
+		}
 	}
 }

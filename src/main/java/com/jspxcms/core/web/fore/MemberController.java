@@ -183,7 +183,6 @@ public class MemberController {
 		fileHandler.storeImage(buffSmall, "jpg", pathnameSmall);
 		// 删除临时头像
 		fileHandler.delete(pathnameTemp);
-
 		UserDetail detail = user.getDetail();
 		detail.setWithAvatar(true);
 		userService.update(user, detail);

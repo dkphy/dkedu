@@ -24,6 +24,8 @@ public class Constants implements ConstantConfigurer {
 
 	public static final String VERIFY_MEMBER_TYPE = "verify_member";
 	public static final String VERIFY_MEMBER_URL = "/verify_member.jspx?key=";
+	public static final String VERIFY_EMAIL_TYPE = "verify_email";
+	public static final String VERIFY_EMAIL_MODIFY_URL = "/verify_email_for_modify.jspx?key=";
 	public static final String RETRIEVE_PASSWORD_TYPE = "retrieve_password";
 	public static final String RETRIEVE_PASSWORD_URL = "/retrieve_password.jspx?key=";
 	/**

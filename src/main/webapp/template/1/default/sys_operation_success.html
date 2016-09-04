@@ -19,10 +19,10 @@
 		[#--timeout等于0，直接跳转，不延时--]
 		//location.href="${(nextUrl!(ctx+'/'))?html}";
 	[#else]
-		setTimeout(function(){location.href="${(nextUrl!(ctx+'/dk_edu.jspx'))?html}";},${timeout});
+		setTimeout(function(){location.href="${(nextUrl!(ctx+'/edu.jspx'))?html}";},${timeout});
 	[/#if]
 [#else]
-	setTimeout(function(){location.href="${(nextUrl!(ctx+'/dk_edu.jspx'))?html}";},3000);
+	setTimeout(function(){location.href="${(nextUrl!(ctx+'/edu.jspx'))?html}";},3000);
 [/#if]
 </script>
 </head>
@@ -37,7 +37,7 @@
             <h1>操作成功</h1>
             <h2>当前页面正在跳转，请稍后…</h2>
             <p class="count" id="count"></p>
-            <a href="${nextUrl!(ctx+'/')}" class="jump_btn">手动跳转</a>
+            <a href="${nextUrl!(ctx+'/edu.jspx')}" class="jump_btn">手动跳转</a>
         </div>
     </div>
 

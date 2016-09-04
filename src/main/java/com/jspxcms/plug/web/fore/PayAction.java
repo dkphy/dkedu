@@ -111,15 +111,8 @@ public class PayAction {
 		aiDTO.setProductionName(course.getTitle());
 		payService.addItem(aiDTO);
 		
-		String subject = "";
-		try {
-			subject = URLEncoder.encode(order.getSubject(), "utf-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
 		//在这里拼接一个参数的跳转
-		String url = "http://dkxl.cn/alipay/alipayapi.jsp?WIDout_trade_no="+order.getId()
-				+"&WIDsubject="+subject+"&WIDtotal_fee="+skuPrice+"&WIDbody=DK";
+		String url = buildPaymentUrl(order.getId(), order.getSubject(), skuPrice);
 		logger.info("jump to alipay, url=" + url);
 		return new RedirectView(url,true,false,false);
 	}
@@ -127,10 +120,19 @@ public class PayAction {
 	@RequestMapping(value = "toAlipay.jspx")
 	public RedirectView jumpToAlipay(Integer orderId) {
 		Order order = payService.findOrderByOrderId(orderId);
-		String url = "http://dkxl.cn/alipay/alipayapi.jsp?WIDout_trade_no="+order.getId()
-				+"&WIDsubject="+order.getSubject()+"&WIDtotal_fee="+order.getTotalMoney()+"&WIDbody=' '";
+		String url = buildPaymentUrl(order.getId(), order.getSubject(), order.getTotalMoney());
 		logger.info("jump to alipay, url=" + url);
 		return new RedirectView(url,true,false,false);
+	}
+	
+	private String buildPaymentUrl(Integer orderId, String subject, Double totalMoney) {
+		try {
+			subject = URLEncoder.encode(subject, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return "http://dkxl.cn/alipay/alipayapi.jsp?WIDout_trade_no="+orderId
+				+"&WIDsubject="+subject+"&WIDtotal_fee="+totalMoney+"&WIDbody='DK'";
 	}
 	
 	@RequestMapping(value="alipay/callback.jspx")

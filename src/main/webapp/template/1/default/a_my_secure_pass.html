@@ -11,18 +11,11 @@
     <link rel="stylesheet" href="_files/a_css/common.css">
     <link rel="stylesheet" href="_files/a_css/ucenter.css">
     <script src="_files/a_js/jquery-1.9.1.min.js"></script>
-
 	<script src="_files/a_js/common.js"></script>
+	<script src="_files/a_js/member.js"></script>
 	<script>
-    $(".pay_type .pays span").click(function(){
-        var t=$(this);
-        t.addClass("current").siblings().removeClass("current");
-        $("#type_val").val(t.index());
-    })
     function update(){
-    	var a = document.getElementById('rawPassword').value;
-    	var action ="${ctx}/updatePassSuccess.jspx";
-    	$.post(action, {"rawPassword" : a});
+    	$("#submitForm").submit();
     }
 </script>
 </head>
@@ -37,16 +30,20 @@
                 <h2>修改登录密码</h2>
             </div>
             <div class="form_group">
+            	<form id="submitForm" action="${ctx}/updatePassword.jspx" method="post">
                 <div class="line">
-                    <input type="password"  placeholder="输入原始密码">
+                    <input type="password" name="passwordOld" placeholder="输入原始密码">
                 </div>
                 <div class="line">
-                    <input type="password"  name="rawPassword" id="rawPassword" placeholder="输入新密码">
+                    <input type="password" id="password" name="password" onblur="return checkpass()" placeholder="输入新密码">
+                    <p id="warn_password" class="warn" style="display:none"></p>
                 </div>
                 <div class="line">
-                    <input type="password" placeholder="再次输入新密码">
+                    <input type="password" id="passwordAgain" name="passwordAgain" onblur="return checkrpass()" placeholder="再次输入新密码">
+                    <p id="warn_passwordAgain" class="warn" style="display:none"></p>
                 </div>
                 <a href="#" class="long_btn" onclick="update()">确定</a>
+                </form>
             </div>
 
         </div>

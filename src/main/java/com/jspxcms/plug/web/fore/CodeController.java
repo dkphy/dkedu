@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jspxcms.core.domain.Site;
 import com.jspxcms.core.support.Context;
 import com.jspxcms.core.support.ForeContext;
-import com.jspxcms.plug.domain.ScoreStatus;
 import com.jspxcms.plug.domain.UserCode;
 import com.jspxcms.plug.service.CodeService;
 import com.jspxcms.plug.web.back.ResumeController;
@@ -71,7 +70,7 @@ public class CodeController {
 	@RequestMapping(value = "/getCode.jspx")
 	public String findCode(String name,String idCard){
 		log.info("idCard="+idCard);
-		UserCode u = fc.find(name, idCard);
+		UserCode u = fc.findByNameAndIdCard(name, idCard);
 		if(u != null) {
 			return u.getScore() + "";
 		} else {

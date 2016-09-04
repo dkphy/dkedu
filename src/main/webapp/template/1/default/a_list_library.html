@@ -10,6 +10,25 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="_files/a_css/common.css">
     <link rel="stylesheet" href="_files/a_css/class_list.css">
+    <script src="_files/a_js/jquery-1.9.1.min.js"></script>
+	<script src="_files/a_js/common.js"></script>
+	<script src="_files/js/common-dev.js"></script>
+<script type="text/javascript">
+	// 生成单条记录
+	function getOneRecordHTML(infoObj) {
+        var describ = infoObj.description.substring(80);
+		var html = '<li>';
+		html += '<a href="' + infoObj.url + '">';
+		html += '<img src="' + infoObj.smallImage + '" alt="">';
+		html += '<div class="ft">';
+        html += '<b>'+ infoObj.title +'</b>';
+        html += '<span><i class="icon-view"></i><strong>' + infoObj.bufferViews + '</strong>人查阅</span>';
+        html += '</div>';
+        html += '</a>';
+        html += '</li>';
+        return html;
+	}
+</script>
 </head>
 <body>
     <!--通用顶部 start-->
@@ -45,8 +64,11 @@
                         </li>
                   		[/#list]
                   		[/@InfoList]
+                  		<!-- 记录已展示记录的offset -->
+		                <div id="offset" style="display:none">15</div>
+		                <div id="show_more_list"></div>
                     </ul>
-                    <a href="#" class="more">点击查看更多</a>
+                    <a href="javascript:loadMore('${dy}', ${node.id}, 'info');" class="more" id="more_button">点击查看更多</a>
                 </div>
               
               
@@ -83,22 +105,13 @@
         </div>
     </div>
 
-
-
     <!--通用底部start-->
     [#include 'a_end.html'/]
     <!--通用底部end-->
-
 
     <!--侧边滑动通用start-->
     [#include 'a_side.html'/]
     <!--侧边滑动通用end-->
 </body>
-<script src="_files/a_js/jquery-1.9.1.min.js"></script>
-
-<script src="_files/a_js/common.js"></script>
-<script>
-
-</script>
 </html>
 [/#escape]

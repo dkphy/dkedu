@@ -1,0 +1,76 @@
+[#escape x as (x)!?html]
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>邮箱验证_${site.fullNameOrName}${global.customs['poweredby']}</title>
+	<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+	<meta content="webkit" name="renderer" />
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="_files/a_css/common.css">
+    <link rel="stylesheet" href="_files/a_css/ucenter.css">
+</head>
+<body>
+    
+    <!--通用顶部 start-->
+   [#include 'a_head.html'/]
+    <!--通用顶部 end-->
+    <input type="hidden" id="email" value="${Param.email}"/>
+    <div class="wrap">
+        <div class="res_col">
+            <div class="mail_res">
+                <img src="_files/a_css/img/logo.png" alt="">
+                <b>重置邮箱操作成功</b>
+                <p>验证邮件已经发到您的邮箱，请登录邮箱激活链接以完成验证</p>
+            </div>
+            <a href="" class="jump_btn" target="_blank">查看邮件</a>
+        </div>
+    </div>
+
+    <!--通用底部start-->
+    [#include 'a_end.html'/]
+    <!--通用底部end-->
+
+    <!--侧边滑动通用start-->
+    [#include 'a_side.html'/]
+    <!--侧边滑动通用end-->
+</body>
+<script src="_files/a_js/jquery-1.9.1.min.js"></script>
+<script src="_files/a_js/common.js"></script>
+<script type="text/javascript">
+var hash = {
+    'qq.com': 'http://mail.qq.com',
+    'gmail.com': 'http://mail.google.com',
+    'sina.com': 'http://mail.sina.com.cn',
+    '163.com': 'http://mail.163.com',
+    '126.com': 'http://mail.126.com',
+    'yeah.net': 'http://www.yeah.net/',
+    'sohu.com': 'http://mail.sohu.com/',
+    'tom.com': 'http://mail.tom.com/',
+    'sogou.com': 'http://mail.sogou.com/',
+    '139.com': 'http://mail.10086.cn/',
+    'hotmail.com': 'http://www.hotmail.com',
+    'live.com': 'http://login.live.com/',
+    'live.cn': 'http://login.live.cn/',
+    'live.com.cn': 'http://login.live.com.cn',
+    '189.com': 'http://webmail16.189.cn/webmail/',
+    'yahoo.com.cn': 'http://mail.cn.yahoo.com/',
+    'yahoo.cn': 'http://mail.cn.yahoo.com/',
+    'eyou.com': 'http://www.eyou.com/',
+    '21cn.com': 'http://mail.21cn.com/',
+    '188.com': 'http://www.188.com/',
+    'foxmail.com': 'http://www.foxmail.com',
+    'outlook.com': 'http://www.outlook.com'
+}
+
+// 点击登录邮箱
+var _mail = $("#email").val().split('@')[1];    //获取邮箱域
+for (var j in hash){
+    if(j == _mail){
+        $(".jump_btn").show().attr("href", hash[_mail]);    //替换登陆链接
+    }
+}
+</script>
+</html>
+[/#escape]

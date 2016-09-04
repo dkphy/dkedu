@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.hsmf.datatypes.RecipientChunks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -265,7 +264,6 @@ public class RegisterController {
 			return "false";
 		}
 		String verifyCode = mobileVerifyService.generateNewVerifyCode(mobile);
-		System.out.println(verifyCode);
 		// send sms
 		boolean sendSucc = mobileVerifyService.sendSmsVerifyCodeForReg(mobile, verifyCode);
 		if(sendSucc) {

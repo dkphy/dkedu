@@ -143,7 +143,7 @@ function optDelete(form) {
 	<div class="ls-btn"></div>
 	</shiro:hasPermission>
 	<shiro:hasPermission name="core:info:copy">
-<!-- 	<div class="ls-btn"><input type="button" value="<s:message code="copy"/>" onclick="return optSingle('#copy_opt_');"/></div> -->
+<!-- 		<div class="ls-btn"><input type="button" value="<s:message code="copy"/>" onclick="return optSingle('#copy_opt_');"/></div> -->
 	</shiro:hasPermission>
   <shiro:hasPermission name="core:info:edit">
   <div class="ls-btn"><input type="button" value="<s:message code="edit"/>" onclick="return optSingle('#edit_opt_');"/></div>
@@ -220,7 +220,7 @@ function optDelete(form) {
     <td><input type="checkbox" name="ids" value="${bean.id}"/></td>
     <td align="center">
 	  <shiro:hasPermission name="core:info:copy">
-<!--       <a id="copy_opt_${bean.id}" href="create.do?id=${bean.id}&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&${searchstring}" class="ls-opt"><s:message code="copy"/></a> -->
+      <a id="copy_opt_${bean.id}" href="create.do?id=${bean.id}&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&${searchstring}" class="ls-opt"><s:message code="copy"/></a>
       </shiro:hasPermission>      
     	<shiro:hasPermission name="core:info:edit">
       <a id="edit_opt_${bean.id}" href="edit.do?id=${bean.id}&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&position=${pagedList.number*pagedList.size+status.index}&${searchstring}" class="ls-opt"><s:message code="edit"/></a>

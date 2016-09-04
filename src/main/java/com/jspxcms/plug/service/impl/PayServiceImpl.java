@@ -23,8 +23,6 @@ import com.jspxcms.plug.service.PayService;
 import com.jspxcms.plug.status.OrderStatus;
 import com.sun.star.uno.RuntimeException;
 
-import freemarker.template.utility.StringUtil;
-
 /**
  * @author YRee
  * 

@@ -11,19 +11,12 @@
     <link rel="stylesheet" href="_files/a_css/common.css">
     <link rel="stylesheet" href="_files/a_css/ucenter.css">
     <script src="_files/a_js/jquery-1.9.1.min.js"></script>
-
 	<script src="_files/a_js/common.js"></script>
+	<script src="_files/a_js/member.js"></script>
 	<script>
-    $(".pay_type .pays span").click(function(){
-        var t=$(this);
-        t.addClass("current").siblings().removeClass("current");
-        $("#type_val").val(t.index());
-    })
-    function updateEmail(id){
-    	var a = document.getElementById('email').value;
-    	var action ="${ctx}/updateEmailSuccess.jspx";
-    	$.post(action, {"email" : a,"userId":id});
-    	}
+    function submitForm() {
+    	$("#submitForm").submit();
+    }
 </script>
 </head>
 <body>
@@ -31,21 +24,33 @@
    <!--通用顶部 start-->
     [#include 'a_head.html'/]
     <!--通用顶部 end-->
+    [#if email??]
+    	[#assign title]重新设置邮箱[/#assign]
+    	[#assign tips]当前绑定的邮箱为：${email}，修改邮箱后请使用新邮箱进行登录[/#assign]
+    [#else]
+    	[#assign title]绑定新邮箱[/#assign]
+    	[#assign tips]当前帐户未设置邮箱帐号，您可以设置邮箱帐户进行登录[/#assign]
+    [/#if]
     <div class="wrap">
         <div class="col_box padd_col">
             <div class="com_tit long">
-                <h2>重新设置邮箱</h2>
+                <h2>${title}</h2>
             </div>
             <div class="hd_tip">
-                当前绑定的邮箱为：${email}，修改邮箱后请使用新邮箱进行登录
+                ${tips}
             </div>
             <div class="form_group">
+            <form action="sendVerifyEmail.jspx" id="submitForm" method="post">
                 <div class="line">
-                    <input type="text" placeholder="邮箱账号" id="email">
+                    <input type="text" id="email" name="email" onblur="return checkemail()" placeholder="邮箱账号">
+                    <p id="warn_email" class="warn" style="display:none">! 该邮箱已被注册</p>
                 </div>
-                <a href="#" class="long_btn" onclick="updateEmail('${userId}')">发送邮箱验证</a>
+                <div class="line">
+                    <input type="password" id="password" name="password" placeholder="输入密码">
+                </div>
+                <a href="#" class="long_btn" onclick="submitForm()">发送邮箱验证</a>
+			</form>
             </div>
-
         </div>
     </div>
 

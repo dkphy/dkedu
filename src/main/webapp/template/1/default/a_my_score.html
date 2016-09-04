@@ -64,7 +64,7 @@
 
     function show_score(){
         /*ajax获取得分*/
-		$.get("getCode.jspx",
+		$.post("getCode.jspx",
 	    {
 	      name:$("#name").val(),
 	      idCard:$("#idCard").val()

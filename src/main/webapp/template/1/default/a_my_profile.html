@@ -12,7 +12,13 @@
     <link rel="stylesheet" href="_files/a_css/ucenter.css">
     <script src="_files/a_js/jquery-1.9.1.min.js"></script>
 	<script src="_files/a_js/common.js"></script>
+	<script src="_files/a_js/member.js"></script>
 	
+<script>
+function submitProfile() {
+	$("#profile_form").submit();
+}
+</script>
 </head>
 <body>
     <!--通用顶部 start-->
@@ -27,36 +33,38 @@
                 <h2>基本信息</h2>
             </div>
             <div class="form_group form_group_tit">
+            <form id="profile_form" action="updateProfile.jspx" method="post" enctype="multipart/form-data">
                 <div class="line">
                     <b class="tit">昵称</b>
-                    <input type="text" placeholder="" value="${user.username}">
-                    <p class="warn">! 示例提醒</p>
+                    <input type="text" placeholder="" id="username" name="username" onblur="checkname()"value="${user.username}">
+                    <p class="warn" id="warn_username"></p>
                 </div>
                 <div class="line no_border">
                     <b class="tit">性别</b>
                     <label for="sex_nan" class="f_l">
-                        <input type="radio" name="gender" class="radio_box" id="sex_nan" [#if user.gender?? && user.gender=='M'] checked="checked" [/#if]/>
+                        <input type="radio" name="gender" class="radio_box" id="sex_nan" value="M" [#if user.gender?? && user.gender=='M'] checked="checked" [/#if]/>
                         男
                     </label>
                     <label for="sex_nv" class="f_l">
-                        <input type="radio" name="gender" class="radio_box" id="sex_nv"[#if user.gender?? && user.gender=='F']  checked="checked" [/#if]/>
+                        <input type="radio" name="gender" class="radio_box" id="sex_nv" value="F" [#if user.gender?? && user.gender=='F']  checked="checked" [/#if]/>
                         女
                     </label>
                 </div>
                 <div class="line">
                     <b class="tit">地区</b>
-                    <input type="text" placeholder="" value="${user.comeFrom!}">
+                    <input type="text" placeholder="" id="comeFrom" name="comeFrom" value="${user.comeFrom!}">
                 </div>
                 <div class="line no_border avatar">
                     <b class="tit">头像</b>
+					<img src="${user.avatar}" alt="">
                     <span class="pic_upload">
-                        <input type="file">
+                        <input type="file" id="file" name="file">
                     </span>
                     <p class="warn">上传头像</p>
                 </div>
-                <a href="#" class="long_btn">保存</a>
+                <a href="#" class="long_btn" onclick="submitProfile()">保存</a>
+            </form>
             </div>
-
         </div>
     </div>
 

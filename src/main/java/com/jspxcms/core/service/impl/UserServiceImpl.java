@@ -50,7 +50,6 @@ import com.jspxcms.core.service.UserRoleService;
 import com.jspxcms.core.service.UserService;
 import com.jspxcms.core.support.Constants;
 import com.jspxcms.core.support.DeleteException;
-import com.sun.star.uno.RuntimeException;
 
 /**
  * UserServiceImpl
@@ -175,6 +174,24 @@ public class UserServiceImpl implements UserService, OrgDeleteListener,
 		subject = GlobalRegister.replaceVerifyEmail(subject, username,
 				sitename, url);
 		text = GlobalRegister.replaceVerifyEmail(text, username, sitename, url);
+		mail.sendMail(new String[] { email }, subject, text);
+	}
+	
+	@Transactional
+	public void sendModifyEmail(Site site, User user, String email, GlobalMail mail) {
+		UserDetail detail = user.getDetail();
+		String key = StringUtils.remove(UUID.randomUUID().toString(), '-');
+		user.setValidationKey(key);
+		user.setValidationType(Constants.VERIFY_EMAIL_TYPE);
+		detail.setValidationDate(new Date());
+		detail.setValidationValue(null);
+
+		String subject = "大康心理教育重置邮箱信息验证";
+		String text = "Hi ${username}，\n  您的登录邮箱重置要求已经收到,请点击以下链接进行验证：\n${url}\n\n  如果以上链接无法点击，请将上面的链接地址粘贴至您浏览器的地址栏并敲击回车，该链接地址24小时内打开有效。\n\n感谢对【大康心理教育】的支持！\n\n-----------------------------------------\n大康心理教育 http://www.dkxl.cn/edu.jspx\n(这是一封自动产生的email，请勿回复。)";
+		// 发送邮件
+		String url = site.getProtocol() + ":" + site.getUrlFull()
+				+ Constants.VERIFY_EMAIL_MODIFY_URL + key + "&email=" + email;
+		text = GlobalRegister.replaceVerifyEmail(text, user.getUsername(), site.getFullNameOrName(), url);
 		mail.sendMail(new String[] { email }, subject, text);
 	}
 

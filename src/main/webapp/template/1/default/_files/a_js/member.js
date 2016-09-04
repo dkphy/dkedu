@@ -56,8 +56,8 @@ function isEmail(str) {
 
 function checkname() {
 	var name = $("#username").val();
-	if (name.length < 6 || name.length > 15) {
-		$("#warn_username").html("！昵称长度须在6-15之间");
+	if (name.length < 3 || name.length > 15) {
+		$("#warn_username").html("！昵称长度须在3-15之间");
 		$("#warn_username").css("display", "block");
 		return false;
 	}

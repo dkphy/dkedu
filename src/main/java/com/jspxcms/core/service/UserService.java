@@ -51,6 +51,8 @@ public interface UserService {
 
 	public void sendVerifyEmail(Site site, User user, GlobalMail mail,
 			String subject, String text);
+	
+	public void sendModifyEmail(Site site, User user, String email, GlobalMail mail);
 
 	public User verifyMember(User user);
 

@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jspxcms.common.orm.Limitable;
 import com.jspxcms.plug.domain.Browse;
 import com.jspxcms.plug.repository.BrowseDao;
 import com.jspxcms.plug.service.BrowseService;

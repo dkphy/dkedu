@@ -11,19 +11,12 @@
     <link rel="stylesheet" href="_files/a_css/common.css">
     <link rel="stylesheet" href="_files/a_css/ucenter.css">
     <script src="_files/a_js/jquery-1.9.1.min.js"></script>
-
 	<script src="_files/a_js/common.js"></script>
+	<script src="_files/a_js/member.js"></script>
 	<script>
-    $(".pay_type .pays span").click(function(){
-        var t=$(this);
-        t.addClass("current").siblings().removeClass("current");
-        $("#type_val").val(t.index());
-    })
-	function updatePhone(id){
-    	var a = document.getElementById('email').value;
-    	var action ="${ctx}/updatePhoneSuccess.jspx";
-    	$.post(action, {"email" : a,"userId":id});
-    	}
+	function submitForm(){
+    	$("#submitForm").submit();
+    }
 	</script>
 </head>
 <body>
@@ -31,28 +24,39 @@
     <!--通用顶部 start-->
     [#include 'a_head.html'/]
     <!--通用顶部 end-->
+    
+    [#if mobile??]
+    	[#assign title]重新设置手机号[/#assign]
+    	[#assign tips]当前绑定的手机号码为：${mobile}，修改手机号码后请使用新号码进行登录[/#assign]
+    [#else]
+    	[#assign title]绑定新的手机号[/#assign]
+    	[#assign tips]当帐号未设置手机号，您可以设置手机号进行登录[/#assign]
+    [/#if]
     <div class="wrap">
         <div class="col_box padd_col">
             <div class="com_tit long">
-                <h2>重新设置手机号</h2>
+                <h2>${title}</h2>
             </div>
             <div class="hd_tip">
-                当前绑定的手机号码为：${mobile}，修改手机号码后请使用新号码进行登录
+            ${tips}
             </div>
             <div class="form_group">
+            <form id="submitForm" action="modify_mobile.jspx" method="post">
                 <div class="line">
-                    <input type="text" placeholder="手机号码">
+                    <input type="text" id="mobile" name="mobile" onblur="return checkmobile()" placeholder="手机号码">
+                    <p id="warn_mobile" class="warn" style="display:none">! 该手机号已被注册</p>
                 </div>
                 <div class="line with_btn">
-                    <input type="text" placeholder="验证码">
-                    <a href="#" class="btn">获取验证码</a>
+                    <input type="text" id="smsVerifyCode" name="smsVerifyCode" placeholder="验证码">
+                    <a href="#" class="btn" onclick="return sendSmsCode('modify_mobile_send_sms_verify_code.jspx')">获取验证码</a>
+                    <p id="warn_code" class="warn" style="display:none">! 请输入验证码</p>
                 </div>
                 <div class="line">
-                    <input type="password" placeholder="输入密码">
+                    <input type="password" id="password" name="password" placeholder="输入密码">
                 </div>
-                <a href="#" class="long_btn" onclick="updatePhone('${userId}')">确定修改</a>
+                <a href="#" class="long_btn" onclick="submitForm()">确定</a>
+			</form>
             </div>
-
         </div>
     </div>
 

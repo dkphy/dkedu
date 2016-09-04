@@ -12,19 +12,31 @@
     <link rel="stylesheet" href="_files/a_css/ucenter.css">
     <script src="_files/a_js/jquery-1.9.1.min.js"></script>
 	<script src="_files/a_js/common.js"></script>
-	<script>
-	function deleteOrder(id){
-			var action = "${ctx}/myOrderDelete.jspx";
-			$.post(action, {"orderId" : id}, function(data) {
-				var d = $.parseJSON(data);
-				if (d !== true) {
-					alert('删除失败');
-				} else {
-					alert('删除成功');
-				} 
-			});
+<script>
+// 为tab设置current标记
+$(function() { 
+	var filter = '${Param.status}';
+	if(filter == 'waiting') {
+		$("#tab_waiting").addClass("current");
+	} else if(filter == 'paid') {
+		$("#tab_paid").addClass("current");
+	} else {
+		$("#tab_all").addClass("current");
+	}
+});
+
+function deleteOrder(id){
+	var action = "${ctx}/myOrderDelete.jspx";
+	$.post(action, {"orderId" : id}, function(data) {
+		var d = $.parseJSON(data);
+		if (d !== true) {
+			alert('删除失败');
+		} else {
+			alert('删除成功');
 		}
-		</script>
+	});
+}
+</script>
 </head>
 <body>
     <!--通用顶部 start-->
@@ -39,9 +51,9 @@
             <div class="com_tit long">
                 <h2>我的订单</h2>
                 <div class="nav">
-                    <a href="${ctx}/myOrder.jspx" class="current">全部订单</a>
-                    <a href="${ctx}/myOrder.jspx?status=waiting">待支付</a>
-                    <a href="${ctx}/myOrder.jspx?status=paid">交易成功</a>
+                	<a href="${ctx}/myOrder.jspx" id="tab_all">全部订单</a>
+                    <a href="${ctx}/myOrder.jspx?status=waiting" id="tab_waiting">待支付</a>
+                    <a href="${ctx}/myOrder.jspx?status=paid" id="tab_paid">交易成功</a>
                 </div>
             </div>
 
@@ -72,7 +84,8 @@
                             [#else]
                             <td>￥0</td>
                             <td><span class="red">待支付</span></td>
-                            <td><a href="${ctx}/miniPay/pay_index.jspx?courseId=${order.subjectId}" class="btn">去支付</a><a class="red s" href="#" onclick="return deleteOrder('${order.id}')">删除订单</a></td>
+                            <td><a href="${ctx}/miniPay/toAlipay.jspx?orderId=${order.id}" class="btn">去支付</a>
+                            <a class="red s" href="${ctx}/myOrderDelete.jspx?orderId=${order.id}&redirectUrl=${url}">删除订单</a></td>
                        		[/#if]
                         </tr>
                         [/#list]
