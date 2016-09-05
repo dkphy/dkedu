@@ -31,7 +31,9 @@ import com.jspxcms.core.service.VoteMarkService;
 import com.jspxcms.core.support.Context;
 import com.jspxcms.core.support.ForeContext;
 import com.jspxcms.core.support.Response;
+import com.jspxcms.plug.domain.Order;
 import com.jspxcms.plug.service.BrowseService;
+import com.jspxcms.plug.service.PayService;
 
 /**
  * SpecialController
@@ -42,6 +44,15 @@ import com.jspxcms.plug.service.BrowseService;
 @Controller
 public class SpecialController {
 
+	/**
+	 * 课程详情页
+	 * @param id
+	 * @param page
+	 * @param request
+	 * @param response
+	 * @param modelMap
+	 * @return
+	 */
 	@RequestMapping(value = "/special/{id:[0-9]+}.jspx")
 	public String special(@PathVariable Integer id, Integer page,
 			HttpServletRequest request, HttpServletResponse response, org.springframework.ui.Model modelMap) {
@@ -50,16 +61,23 @@ public class SpecialController {
 			Response resp = new Response(request, response, modelMap);
 			return resp.badRequest("course not found: " + id);
 		}
-		modelMap.addAttribute("special", special);
-		Map<String, Object> data = modelMap.asMap();
-		ForeContext.setData(data, request);
-		ForeContext.setPage(data, page);
 		User user = Context.getCurrentUser(request);
 		//浏览记录
 		service.addView(id, 1);
 		if(user != null) {
+			// 为该学员增加浏览记录，方便个人中心查看
 			bs.addBrowse(user.getId(), id);
+			// 已经购买过的，页面不展示"购买"和"试听"，展示"继续学习"
+			List<Order> list = payService.findOrderByUserIdAndSubjectId(user.getId(), id);
+			if(list != null && !list.isEmpty()) {
+				modelMap.addAttribute("isBuyed", Boolean.TRUE);
+			}
 		}
+		modelMap.addAttribute("special", special);
+		Map<String, Object> data = modelMap.asMap();
+		ForeContext.setData(data, request);
+		ForeContext.setPage(data, page);
+		
 		return special.getTemplate();
 	}
 	
@@ -146,4 +164,6 @@ public class SpecialController {
 	private CommentService commentService;
 	@Autowired
 	private SensitiveWordService sensitiveWordService;
+	@Autowired
+	private PayService payService;
 }

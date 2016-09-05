@@ -158,6 +158,12 @@ public class InfoController {
 		}
 		// 课时类型
 		else if(MODEL_TYPE_LESSON.equals(info.getModel().getNumber())) {
+			User user = Context.getCurrentUser(request);
+			if(user == null) {// 如果未登录，则跳转至登录页面
+				Map<String, Object> data = modelMap.asMap();
+				ForeContext.setData(data, request);
+				return site.getTemplate(UMemberController.TO_LOGIN);
+			}
 			String courseIdStr = request.getParameter("specialId");
 			Integer courseId = Integer.valueOf(courseIdStr);
 			// 查询课程
@@ -165,7 +171,6 @@ public class InfoController {
 			if(course == null) {
 				return resp.badRequest("course not found: " + courseId);
 			}
-			User user = Context.getCurrentUser(request);
 			Boolean canPlay = null;
 			if(user != null && isCanPlay(course, user.getId())) {
 				canPlay = Boolean.TRUE;

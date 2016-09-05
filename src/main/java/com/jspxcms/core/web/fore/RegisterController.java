@@ -236,7 +236,7 @@ public class RegisterController {
 		}
 		String verifyCode = mobileVerifyService.generateNewVerifyCode(mobile);
 		// send sms
-		boolean sendSucc = mobileVerifyService.sendSmsVerifyCodeForReg(mobile, verifyCode);
+		boolean sendSucc = mobileVerifyService.sendSmsVerifyCodeForForgotPsw(mobile, verifyCode);
 		if(sendSucc) {
 			return "true";
 		} else {
@@ -245,7 +245,7 @@ public class RegisterController {
 	}
 	
 	/**
-	 * 忘记密码-发送短信
+	 * 注册账号-发送短信
 	 * @param mobile
 	 * @param request
 	 * @param response

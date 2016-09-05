@@ -85,10 +85,11 @@
 						[#assign tips = '立即试听']
                         <a href="${ctx}/miniPay/pay_index.jspx?courseId=${special.id}" class="btn btn_buy"><b>￥${special.customs['price']}</b><span>购买该课程</span></a>
                         [#else]
-						[#assign tips = '免费观看']
+						[#assign tips = '观看']
                         [/#if]
                         
                         <a href="#" class="btn" onclick = "return favorite()">收藏</a>
+                        <!-- 从第一条开始播放 -->
                        [@InfoPage specialId=special.id pageSize='1';pagedList]
                          [#list pagedList.content as info]
                         <a href="${info.url}?specialId=${special.id}" class="btn">${tips}</a>

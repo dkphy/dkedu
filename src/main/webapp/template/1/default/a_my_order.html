@@ -74,7 +74,7 @@ function deleteOrder(id){
                     [#list orderList as order]
                         <tr>
                             <td>${order.id}</td>
-                            <td>${order.subject}</td>
+                            <td><a href="${ctx}/special/${order.subjectId}.jspx">${order.subject}</a></td>
                             <td>${order.gmtCreate?string('yyyy-MM-dd')}</td>
                             <td>￥${order.totalMoney}</td>
                            	[#if order.status=='paid']

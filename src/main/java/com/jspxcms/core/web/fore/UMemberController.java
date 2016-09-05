@@ -112,11 +112,12 @@ public class UMemberController implements ServletContextAware {
 			HttpServletRequest request, HttpServletResponse response,
 			org.springframework.ui.Model modelMap) {
 		Response resp = new Response(request, response, modelMap);
+		User user = Context.getCurrentUser(request);
 		User userExist = userService.findByUsername(username);
-		if(userExist != null) {
+		if(userExist != null && userExist.getId() != user.getId()) {
 			resp.post(502, "昵称"+username+"已被占用");
 		}
-		User user = Context.getCurrentUser(request);
+		user.setUsername(username);
 		user.setGender(gender);
 		UserDetail detail = user.getDetail();
 		detail.setComeFrom(comeFrom);

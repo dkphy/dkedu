@@ -200,6 +200,9 @@ public class Special implements java.io.Serializable, Anchor, Siteable, Commenta
 		if (getRecommend() == null) {
 			setRecommend(0);
 		}
+		if (getSoldCount() == null) {
+			setSoldCount(0);
+		}
 	}
 
 	private Integer id;
