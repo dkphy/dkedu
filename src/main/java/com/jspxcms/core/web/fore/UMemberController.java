@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,10 +108,13 @@ public class UMemberController implements ServletContextAware {
 	}
 	
 	@RequestMapping(value = "updateProfile.jspx", method = RequestMethod.POST)
-	public String profileSubmit(String username,String gender,String comeFrom,
+	public String profileSubmit(Integer top, Integer left, Integer width,
+			Integer height, String username,String gender,String comeFrom,
 			@RequestParam(value = "file", required = false) MultipartFile file,
 			HttpServletRequest request, HttpServletResponse response,
 			org.springframework.ui.Model modelMap) {
+		
+		Site site = Context.getCurrentSite(request);
 		Response resp = new Response(request, response, modelMap);
 		User user = Context.getCurrentUser(request);
 		User userExist = userService.findByUsername(username);
@@ -122,7 +126,8 @@ public class UMemberController implements ServletContextAware {
 		UserDetail detail = user.getDetail();
 		detail.setComeFrom(comeFrom);
 		try {
-			doAvatarUpload(file, request, response);
+//			doAvatarUpload(file, request, response);
+			resizeAvatar(user, site, top, left, width, height);
 			detail.setWithAvatar(true);
 		} catch (Exception e) {
 			logger.error("upload avatar image error.", e);
@@ -131,6 +136,41 @@ public class UMemberController implements ServletContextAware {
 		return resp.post();
 	}
 	
+	private void resizeAvatar(User user, Site site, Integer top, Integer left, Integer width, Integer height) {
+		try {
+			PublishPoint point = site.getGlobal().getUploadsPublishPoint();
+			FileHandler fileHandler = point.getFileHandler(pathResolver);
+			// 读取头像临时文件
+			String pathnameTemp = "/users/" + user.getId() + "/avatar_temp.jpg";
+			BufferedImage buff = fileHandler.readImage(pathnameTemp);
+			// 保存头像原图
+			String pathnameOrig = "/users/" + user.getId() + "/" + User.AVATAR;
+			fileHandler.storeImage(buff, "jpg", pathnameOrig);
+			// 裁剪头像
+			if (left != null && top != null && width != null && height != null) {
+				buff = Scalr.crop(buff, left, top, width, height);
+			}
+			// 保存大头像
+			String pathnameLarge = "/users/" + user.getId() + "/"
+					+ User.AVATAR_LARGE;
+			Integer avatarLarge = site.getGlobal().getRegister().getAvatarLarge();
+			BufferedImage buffLarge = Scalr.resize(buff, Scalr.Method.QUALITY,
+					avatarLarge, avatarLarge);
+			fileHandler.storeImage(buffLarge, "jpg", pathnameLarge);
+			// 保存小头像
+			String pathnameSmall = "/users/" + user.getId() + "/"
+					+ User.AVATAR_SMALL;
+			Integer avatarSmall = site.getGlobal().getRegister().getAvatarSmall();
+			BufferedImage buffSmall = Scalr.resize(buff, Scalr.Method.QUALITY,
+					avatarSmall, avatarSmall);
+			fileHandler.storeImage(buffSmall, "jpg", pathnameSmall);
+			// 删除临时头像
+			fileHandler.delete(pathnameTemp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private String doAvatarUpload(MultipartFile file,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {

@@ -173,7 +173,7 @@
 						[#if list?size > 0]
 							[#list list as comment]
                             <div class="item">
-                                <img src="${comment.creator.avatar}" alt="">
+                                <img src="${comment.creator.avatarSmall}" alt="">
                                 <b>[#if comment.creator.id==0]匿名学员[#else]${comment.creator.username}[/#if]</b>
                                 <div class="stars">
                                     <span id="user_star_${comment.creator.id}_1" class="icon-star"></span>
