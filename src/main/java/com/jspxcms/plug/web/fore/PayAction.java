@@ -77,7 +77,7 @@ public class PayAction {
 	public RedirectView confirmOrder(@RequestParam("productionId")int productionId,@RequestParam("skuPrice") double skuPrice, HttpServletRequest request, Model model){
 		User user = Context.getCurrentUser(request);
 		if(user == null) {
-			return new RedirectView("/login.jspx",true,false,false);
+			return new RedirectView("/login.jspx?fallback=miniPay/pay_index.jspx?courseId=" + productionId,true,false,false);
 		}
 		
 		Special course = specialService.get(productionId);
@@ -93,6 +93,7 @@ public class PayAction {
 		}
 		
 		// 先创建订单，目前关键字段只有buyerId
+		// 增加商品销售量
 		CreateOrderDTO coDTO = new CreateOrderDTO();
 		coDTO.setBuyerId(user.getId());
 		coDTO.setOrderItemCount(1);

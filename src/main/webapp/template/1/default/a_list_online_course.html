@@ -10,20 +10,6 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="_files/a_css/common.css">
     <link rel="stylesheet" href="_files/a_css/class_list.css">
-    <script src="_files/a_js/jquery-1.9.1.min.js"></script>
-	<script src="_files/a_js/common.js"></script>
-	
-<script type="text/javascript">
-// 为tab设置current标记
-$(function() {
-	var filter = '${category.id}';
-	if(filter === '') {
-		$("#category_all").addClass("current");
-	} else {
-		$("#category_" + filter).addClass("current");
-	}
-});
-</script>
 </head>
 <body>
     <!--通用顶部 start-->
@@ -85,6 +71,20 @@ $(function() {
     <!--侧边滑动通用start-->
     [#include 'a_side.html'/]
     <!--侧边滑动通用end-->
+    
+<script src="_files/a_js/jquery-1.9.1.min.js"></script>
+<script src="_files/a_js/common.js"></script>
+<script type="text/javascript">
+// 为tab设置current标记
+$(function() {
+	var filter = '${category.id}';
+	if(filter === '') {
+		$("#category_all").addClass("current");
+	} else {
+		$("#category_" + filter).addClass("current");
+	}
+});
+</script>
 </body>
 </html>
 [/#escape]

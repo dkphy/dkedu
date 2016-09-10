@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 public class SmsSender {
 
 	public static final String account = "1001@501318520001";
-	public static final String authKey = "242993BFFAA7DE5D27A44A693BA5938C";
+	public static final String authKey = "42AE441DC0BA44D911E3ABAC4C168656";
 	public static final String cgid = "7015";
 	public static final String csid = "7276";
 

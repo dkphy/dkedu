@@ -131,7 +131,8 @@ public class AjaxPageController {
 				nodeIds = null;
 			}
 		}
-		Sort defSort = new Sort(Direction.DESC, "priority", "publishDate", "id");
+		Sort defSort = new Sort(new Sort.Order(Direction.ASC, "priority"), 
+				new Sort.Order(Direction.DESC, "publishDate"), new Sort.Order(Direction.DESC, "id"));
 		Limitable limitable = new LimitRequest(offset, count, defSort);
 		return query.findList(modelId, nodeIds, attrId,
 				specialId, tagIds, siteId, mainNodeId, userId, viewGroupId,
