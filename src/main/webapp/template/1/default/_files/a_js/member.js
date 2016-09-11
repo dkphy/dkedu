@@ -1,7 +1,12 @@
 /**
  * 注册检查 start---
  */
-function checkmobile() {
+function checkmobile(ctx) {
+	if(ctx == null) {
+		ctx = "";
+	} else {
+		ctx = ctx + "/";
+	}
 	var mobile = $("#mobile").val();
 	if (!isMobile(mobile)) {
 		$("#warn_mobile").css('display', 'block');
@@ -9,7 +14,7 @@ function checkmobile() {
 		return false;
 	}
 	// 检查手机号是否存在
-	$.post("check_mobile.jspx", {
+	$.post(ctx + "check_mobile.jspx", {
 		"mobile" : mobile
 	}, function(data) {
 		var d = $.parseJSON(data);
@@ -54,7 +59,12 @@ function isEmail(str) {
 }
 
 
-function checkname() {
+function checkname(ctx) {
+	if(ctx == null) {
+		ctx = "";
+	}else {
+		ctx = ctx + "/";
+	}
 	var name = $("#username").val();
 	if (name.length < 3 || name.length > 15) {
 		$("#warn_username").html("！昵称长度须在3-15之间");
@@ -62,7 +72,7 @@ function checkname() {
 		return false;
 	}
 	// 检查昵称是否存在
-	$.post("check_username.jspx", {
+	$.post(ctx + "check_username.jspx", {
 		"username" : name
 	}, function(data) {
 		var d = $.parseJSON(data);

@@ -14,6 +14,9 @@ function loadMore(ctx, targetId, type) {
 		break;
 	case 'search':
 		url = ctx + "/ajaxSearch.jspx";
+		break;
+	case 'course':
+		url = ctx + "/ajaxCourse.jspx";
 	}
 	var loadCount = 4;
 	var offset = $("#offset")[0].innerHTML;

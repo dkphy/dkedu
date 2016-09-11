@@ -136,12 +136,12 @@ public interface PayService {
 	public boolean isOrderCanBeCancel(Integer orderId);
 
 	/**
-	 * 根据用户ID和商品ID查找订单
+	 * 判断用户是否购买过商品
 	 * @param userId
 	 * @param subjectId
 	 * @return
 	 */
-	public List<Order> findOrderByUserIdAndSubjectId(Integer userId, Integer subjectId);
+	public boolean isBuyed(Integer userId, Integer subjectId);
 	
 	/**
 	 * 根据用户ID和状态

@@ -60,11 +60,13 @@ public class UMemberController implements ServletContextAware {
 	
 	private static final String MY_COURSE = "a_my_course.html";
 	private static final String MY_PROFILE = "a_my_profile.html";
+	private static final String MY_MESSAGE = "a_my_message.html";
 	private static final String MY_SECURE = "a_my_secure.html";
 	private static final String MY_SECURE_PASS = "a_my_secure_pass.html";
 	private static final String MY_SECURE_PHONE = "a_my_secure_phone.html";
 	private static final String MY_SECURE_EMAIL = "a_my_secure_email.html";
 	private static final String MY_SECURE_EMAIL_VERIFY = "a_my_secure_email_send.html";
+	private static final String MY_BIND = "a_my_bind.html";
 	private static final String MY_LIBRARY = "a_my_library.html";
 	private static final String MY_SCORE = "a_my_score.html";
 	private static final String MY_ORDER = "a_my_order.html";
@@ -126,7 +128,6 @@ public class UMemberController implements ServletContextAware {
 		UserDetail detail = user.getDetail();
 		detail.setComeFrom(comeFrom);
 		try {
-//			doAvatarUpload(file, request, response);
 			resizeAvatar(user, site, top, left, width, height);
 			detail.setWithAvatar(true);
 		} catch (Exception e) {
@@ -171,43 +172,6 @@ public class UMemberController implements ServletContextAware {
 		}
 	}
 
-	private String doAvatarUpload(MultipartFile file,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		// 文件是否存在
-		validateFile(file);
-		Site site = Context.getCurrentSite(request);
-		User user = Context.getCurrentUser(request);
-
-		String origFilename = file.getOriginalFilename();
-		String ext = FilenameUtils.getExtension(origFilename).toLowerCase();
-		GlobalUpload gu = site.getGlobal().getUpload();
-		// 后缀名是否合法
-		validateExt(ext, Uploader.IMAGE, gu);
-		BufferedImage buffImg = ImageIO.read(file.getInputStream());
-
-		PublishPoint point = user.getGlobal().getUploadsPublishPoint();
-		FileHandler fileHandler = point.getFileHandler(pathResolver);
-		String pathname = "/users/" + user.getId() + "/avatar.jpg";
-		String urlPrefix = point.getUrlPrefix();
-		String fileUrl = urlPrefix + pathname;
-		// 一律存储为jpg
-		fileHandler.storeImage(buffImg, "jpg", pathname);
-		return fileUrl;
-	}
-
-	private void validateFile(MultipartFile partFile) {
-		if (partFile == null || partFile.isEmpty()) {
-			throw new RuntimeException("file is empty");
-		}
-	}
-	
-	private void validateExt(String extension, String type, GlobalUpload gu) {
-		if (!gu.isExtensionValid(extension, type)) {
-			throw new RuntimeException("image extension not allowed: " + extension);
-		}
-	}
-	
 	@RequestMapping(value = "mySecure.jspx")
 	public String mySecure(HttpServletRequest request, HttpServletResponse response, Model model) {
 		Map<String, Object> dataMap = model.asMap();
@@ -495,6 +459,82 @@ public class UMemberController implements ServletContextAware {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * 我的消息
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "myMessage.jspx")
+	public String myMessage(HttpServletRequest request, HttpServletResponse response, Model model) {
+		Site site = Context.getCurrentSite(request);
+		Map<String, Object> dataMap = model.asMap();
+		ForeContext.setData(dataMap, request);
+		
+		User user = Context.getCurrentUser(request);
+		if(user == null) {
+			return site.getTemplate(TO_LOGIN);
+		}
+		dataMap.put("userId", user.getId());
+		return site.getTemplate(MY_MESSAGE);
+	}
+	
+	/**
+	 * 第三方账户绑定
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "myBind.jspx")
+	public String myBind(HttpServletRequest request, HttpServletResponse response, Model model) {
+		Site site = Context.getCurrentSite(request);
+		Map<String, Object> dataMap = model.asMap();
+		ForeContext.setData(dataMap, request);
+		
+		User user = Context.getCurrentUser(request);
+		if(user == null) {
+			return site.getTemplate(TO_LOGIN);
+		}
+		dataMap.put("user", user);
+		return site.getTemplate(MY_BIND);
+	}
+	
+	private static final String BIND_TYPE_QQ = "qq";
+	private static final String BIND_TYPE_WECHAT = "wechat";
+	private static final String BIND_TYPE_WEIBO = "weibo";
+	
+	/**
+	 * 解除第三方账号绑定
+	 * @param type
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "removeBind.jspx")
+	public String removeBind(String type, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Site site = Context.getCurrentSite(request);
+		Map<String, Object> dataMap = model.asMap();
+		ForeContext.setData(dataMap, request);
+		
+		User user = Context.getCurrentUser(request);
+		if(user == null) {
+			return site.getTemplate(TO_LOGIN);
+		}
+		if(BIND_TYPE_QQ.equals(type)) {
+			user.setQqOpenid(null);
+		} else if(BIND_TYPE_WECHAT.equals(type)) {
+			//TODO
+		} else if(BIND_TYPE_WEIBO.equals(type)) {
+			user.setWeiboUid(null);
+		}
+		userService.update(user, user.getDetail());
+		dataMap.put("userId", user.getId());
+		return site.getTemplate(MY_BIND);
 	}
 	
 	@Autowired

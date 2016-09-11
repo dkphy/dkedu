@@ -96,6 +96,7 @@ public class PayAction {
 		// 增加商品销售量
 		CreateOrderDTO coDTO = new CreateOrderDTO();
 		coDTO.setBuyerId(user.getId());
+		coDTO.setBuyerName(user.getUsername());
 		coDTO.setOrderItemCount(1);
 		coDTO.setTotalMoney(price);
 		coDTO.setSubject(course.getTitle());

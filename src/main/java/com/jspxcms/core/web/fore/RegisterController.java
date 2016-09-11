@@ -1,6 +1,7 @@
 package com.jspxcms.core.web.fore;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,8 +20,12 @@ import com.jspxcms.common.web.Servlets;
 import com.jspxcms.common.web.Validations;
 import com.jspxcms.core.domain.GlobalMail;
 import com.jspxcms.core.domain.GlobalRegister;
+import com.jspxcms.core.domain.Info;
+import com.jspxcms.core.domain.InfoDetail;
+import com.jspxcms.core.domain.Node;
 import com.jspxcms.core.domain.Site;
 import com.jspxcms.core.domain.User;
+import com.jspxcms.core.service.InfoService;
 import com.jspxcms.core.service.MemberGroupService;
 import com.jspxcms.core.service.OrgService;
 import com.jspxcms.core.service.UserService;
@@ -106,6 +111,8 @@ public class RegisterController {
 		User user = userService.register(ip, groupId, orgId, status, username,
 				password, email, mobile, null, null, gender, birthDate, bio, comeFrom,
 				qq, msn, weixin);
+		// 新增站内信通知
+		addMessageNotify(username, user.getId());
 		// 如果是邮箱注册，发验证邮件
 		if (!"byMobile".equals(regType) && verifyMode == GlobalRegister.VERIFY_MODE_EMAIL) {
 			GlobalMail mail = site.getGlobal().getMail();
@@ -121,6 +128,25 @@ public class RegisterController {
 			resp.addData("email", user.getEmail());
 		}
 		return resp.post();
+	}
+
+	// 新增站内信通知
+	private void addMessageNotify(String username, int userId) {
+		int nodeId = Node.USER_MESSAGE_NODE_ID; // XXX 使用栏目、文章记录站内信
+		final int defaultSiteId = 1;
+		String title = "注册成功";
+		String text = "大康心理教育：亲爱的"+username+"，欢迎加入大康心理教育，祝你学习愉快！如有问题，随时与我们联系。";
+		Info bean = new Info();
+		InfoDetail detail = new InfoDetail();
+		detail.setTitle(title);
+//		detail.setFile(file);
+//		detail.setFileName(fileName);
+//		detail.setFileLength(fileLength);
+		Map<String, String> clobs = new HashMap<String, String>();
+		clobs.put("text", text);
+		String status = Info.CONTRIBUTION;
+		infoService.save(bean, detail, null, null, null, null, null, clobs,
+				null, null, null, null, null, nodeId, userId, status, defaultSiteId);
 	}
 
 	@RequestMapping(value = "/register_message.jspx")
@@ -264,6 +290,7 @@ public class RegisterController {
 			return "false";
 		}
 		String verifyCode = mobileVerifyService.generateNewVerifyCode(mobile);
+		System.out.println(verifyCode);
 		// send sms
 		boolean sendSucc = mobileVerifyService.sendSmsVerifyCodeForReg(mobile, verifyCode);
 		if(sendSucc) {
@@ -544,4 +571,6 @@ public class RegisterController {
 	private UserShiroService userShiroService;
 	@Autowired
 	private MobileVerifyService mobileVerifyService;
+	@Autowired
+	private InfoService infoService;
 }

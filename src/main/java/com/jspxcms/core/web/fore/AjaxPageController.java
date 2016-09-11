@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -21,10 +22,12 @@ import com.jspxcms.common.util.JsonMapper;
 import com.jspxcms.common.web.Servlets;
 import com.jspxcms.core.domain.Info;
 import com.jspxcms.core.domain.Node;
+import com.jspxcms.core.domain.Special;
 import com.jspxcms.core.domain.Tag;
 import com.jspxcms.core.fulltext.InfoFulltextService;
 import com.jspxcms.core.service.InfoQueryService;
 import com.jspxcms.core.service.NodeQueryService;
+import com.jspxcms.core.service.SpecialService;
 
 /**
  * 异步方式分页查询Controller
@@ -56,6 +59,33 @@ public class AjaxPageController {
 			HttpServletResponse response) {
 		List<Info> list = doFullTextQuery(offset, count, q);
 		renderResult(list, response);
+	}
+	
+	/**
+	 * 分页查询课程
+	 * @param categoryId
+	 * @param offset
+	 * @param count
+	 * @param response
+	 */
+	@RequestMapping(value = "/ajaxCourse.jspx")
+	public void ajaxCourse(Integer q, Integer offset, @RequestParam(defaultValue = "4")Integer count,
+			HttpServletResponse response) {
+		List<Special> sList = querySpecials(offset, count, q);
+		List<CourseDTO> list = new ArrayList<CourseDTO>();
+		for (Special special : sList) {
+			CourseDTO course = new CourseDTO();
+			BeanUtils.copyProperties(special, course);
+			String price = special.getCustoms().get("price");
+			if (StringUtils.isBlank(price)) {
+				course.setPrice(0.0);
+			} else {
+				course.setPrice(Double.valueOf(price));
+			}
+			list.add(course);
+		}
+		String jsonResult = new JsonMapper().toJson(list);
+		Servlets.writeHtml(response, jsonResult);
 	}
 	
 	private void renderResult(List<Info> list, HttpServletResponse response) {
@@ -180,10 +210,25 @@ public class AjaxPageController {
 		return numbers;
 	}
 	
+	private List<Special> querySpecials(int offset, int count, Integer categoryId) {
+		Integer[] siteId = null;
+		Integer[] categoryIds = categoryId == null ? null : new Integer[]{categoryId};
+		Date beginDate = null;
+		Date endDate = null;
+
+		Sort defSort = new Sort(Direction.DESC, "creationDate", "id");
+		Limitable limitable = new LimitRequest(offset, count, defSort);
+		List<Special> list = specialService.findList(siteId, categoryIds,
+					beginDate, endDate, null, null, limitable);
+		return list;
+	}
+	
 	@Autowired
 	private NodeQueryService nodeQuery;
 	@Autowired
 	private InfoQueryService query;
 	@Autowired
 	private InfoFulltextService fulltext;
+	@Autowired
+	private SpecialService specialService;
 }

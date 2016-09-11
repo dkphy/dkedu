@@ -10,6 +10,7 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="_files/a_css/common.css">
     <link rel="stylesheet" href="_files/a_css/class_list.css">
+    <script src="_files/js/common-dev.js"></script>
 </head>
 <body>
     <!--通用顶部 start-->
@@ -31,9 +32,9 @@
             </div>
             <div class="sort">
             	[@Node number = 'onlineCourse';node]
-                <a href="${node.url}" class="current">综合排序</a>
-                <a href="${node.url}">最新</a>
-                <a href="#">价格排序</a>
+<!--                 <a href="${node.url}" class="current">综合排序</a> -->
+<!--                 <a href="${node.url}">最新</a> -->
+<!--                 <a href="#">价格排序</a> -->
                 [/@Node]
             </div>
             
@@ -46,7 +47,7 @@
                         <img src="${course.smallImage}" alt="">
                         <b>${course.title}</b>
                         <div class="info">
-                            <span class="count">${course.soldCount!0}已人购买</span>
+                            <span class="count">${course.soldCount!0}人已购买</span>
                             <span class="cat">${course.metaKeywords}</span>
                         </div>
                         [#if (course.customs['price']?number > 0)]
@@ -59,8 +60,11 @@
                 </div>
                 [/#list]
                 [/@SpecialList]
+                <!-- 记录已展示记录的offset -->
+                <div id="offset" style="display:none">7</div>
+                <div id="show_more_list"></div>
             </div>
-            <a href="javascript:;" class="more">点击查看更多</a>
+            <a href="javascript:loadMore('${dy}', [#if categoryId??]${categoryId}[#else]null[/#if], 'course');" class="more" id="more_button">点击查看更多</a>
         </div>
     </div>
 
@@ -84,6 +88,27 @@ $(function() {
 		$("#category_" + filter).addClass("current");
 	}
 });
+
+	// 生成单条记录
+	function getOneRecordHTML(course) {
+		var html = '<div class="box">';
+		html += '<a href="special/' + course.id + '.jspx">';
+		html += '<img src="' + course.smallImage + '" alt="">';
+		html += '<b>' + course.title + '</b>';
+        html += '<div class="info">';
+        html += '<span class="count">' + course.soldCount + '人已购买</span>';
+        html += '<span class="cat">' + course.metaKeywords + '</span>';
+        html += '</div>';
+        if(course.price > 0) {
+        	html += '<span class="price">'+course.price+'</span>';
+	        html += '<span class="try">试听</span>';
+        } else {
+        	html += '<span class="price">免费</span>';
+        }
+        html += '</a>';
+        html += '</div>';
+        return html;
+	}
 </script>
 </body>
 </html>

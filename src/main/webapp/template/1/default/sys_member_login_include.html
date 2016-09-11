@@ -13,7 +13,7 @@
 	[#if user??]
 	<div class="logined_box">
 		<span class="u_head">
-			<a href="#" class="u_head_wrap">
+			<a href="${ctx}/myProfile.jspx" class="u_head_wrap">
 			<img src="${user.avatarSmall}" alt="">
 			</a>
 			<ul>
@@ -34,7 +34,7 @@
 			</ul>
 		</span>
 		<div class="notice">
-			<span class="icon-notice active"></span>
+			<span class="icon-notice" onclick="jumpToMesssage()"></span>
 			<!--如果需要小红点 class中加入active-->
 		</div>
 	</div>

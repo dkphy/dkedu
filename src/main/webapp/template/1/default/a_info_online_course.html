@@ -81,9 +81,9 @@
                         </li>
                     </ul>
                     <div class="btns">
-						[#if (special.customs['price']?number > 0)]
-						[#assign tips = '立即试听']
+						[#if (special.customs['price']?number > 0) && shouldBuy??]
                         <a href="${ctx}/miniPay/pay_index.jspx?courseId=${special.id}" class="btn btn_buy"><b>￥${special.customs['price']}</b><span>购买该课程</span></a>
+						[#assign tips = '立即试听']
                         [#else]
 						[#assign tips = '观看']
                         [/#if]
@@ -132,7 +132,7 @@
                                 <tr>
                                     <td class="c_name">课时${info.priority}：  ◇${info.title}</td>
                                     <td class="c_time">${info.customs['courseTime']}</td>
-                                    <td class="c_btn"><a href="${info.url}?specialId=${special.id}">立即试看</a></td>
+                                    <td class="c_btn"><a href="${info.url}?specialId=${special.id}">${tips}</a></td>
                                 </tr>
                                 [/#list]
                                 [/@InfoPage]

@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +25,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import weibo4j.model.WeiboException;
 
-import com.jspxcms.common.captcha.Captchas;
 import com.jspxcms.common.security.CredentialsDigest;
 import com.jspxcms.common.web.Servlets;
 import com.jspxcms.common.web.Validations;
@@ -35,9 +36,11 @@ import com.jspxcms.core.security.oauth.OAuthToken;
 import com.jspxcms.core.service.MemberGroupService;
 import com.jspxcms.core.service.OrgService;
 import com.jspxcms.core.service.UserService;
+import com.jspxcms.core.service.UserShiroService;
 import com.jspxcms.core.support.Context;
 import com.jspxcms.core.support.ForeContext;
 import com.jspxcms.core.support.Response;
+import com.jspxcms.plug.service.MobileVerifyService;
 import com.octo.captcha.service.CaptchaService;
 import com.qq.connect.QQConnectException;
 import com.qq.connect.oauth.Oauth;
@@ -114,10 +117,10 @@ public class OAuthController {
 
 	@RequestMapping(value = "/oauth/register.jspx", method = RequestMethod.POST)
 	public String oauthRegisterSubmit(String username, String password,
-			String email, String mobile, String gender, Date birthDate, String bio,
-			String comeFrom, String qq, String msn, String weixin,
-			HttpServletRequest request, HttpServletResponse response,
-			org.springframework.ui.Model modelMap) {
+			String email, String mobile, String smsVerifyCode, String gender,
+			Date birthDate, String bio, String comeFrom, String qq, String msn,
+			String weixin, HttpServletRequest request,
+			HttpServletResponse response, org.springframework.ui.Model modelMap) {
 		Response resp = new Response(request, response, modelMap);
 		Site site = Context.getCurrentSite(request);
 		GlobalRegister reg = site.getGlobal().getRegister();
@@ -127,11 +130,10 @@ public class OAuthController {
 			password = RandomStringUtils.randomAscii(32);
 		}
 		String result = validateRegisterSubmit(request, resp, reg, token,
-				username, password, email, gender);
+				username, password, email, gender, mobile, smsVerifyCode);
 		if (resp.hasErrors()) {
 			return result;
 		}
-
 		String ip = Servlets.getRemoteAddr(request);
 		int groupId = reg.getGroupId();
 		int orgId = reg.getOrgId();
@@ -144,8 +146,8 @@ public class OAuthController {
 			weiboUid = token.getOpenid();
 		}
 		userService.register(ip, groupId, orgId, status, username, password,
-				email, mobile, qqOpenid, weiboUid, gender, birthDate, bio, comeFrom,
-				qq, msn, weixin);
+				email, mobile, qqOpenid, weiboUid, gender, birthDate, bio,
+				comeFrom, qq, msn, weixin);
 		return "redirect:/oauth/authc/session.jspx?session=true";
 	}
 
@@ -158,16 +160,16 @@ public class OAuthController {
 				OAuthFilter.OAUTH_TOKEN_SESSION_NAME);
 
 		List<String> messages = resp.getMessages();
-		if (!Captchas.isValid(captchaService, request, captcha)) {
-			return resp.post(100, "error.captcha");
-		}
+		// if (!Captchas.isValid(captchaService, request, captcha)) {
+		// return resp.post(100, "error.captcha");
+		// }
 		if (!Validations.exist(token)) {
 			return resp.post(501, "register.oauthTokenNotFound");
 		}
 		if (!Validations.notEmpty(username, messages, "username")) {
 			return resp.post(401);
 		}
-		User user = userService.findByUsername(username);
+		User user = findUser(username);
 		if (!credentialsDigest.matches(user.getPassword(), password,
 				user.getSaltBytes())) {
 			return resp.post(502, "member.passwordError");
@@ -182,9 +184,34 @@ public class OAuthController {
 		return "redirect:/oauth/authc/session.jspx?session=true";
 	}
 
+	private User findUser(String principal) {
+		User user = null;
+		if (principal.contains("@")) {
+			// email
+			user = userShiroService.findByEmail(principal);
+		} else if (isMobile(principal)) {
+			// mobile
+			user = userShiroService.findByMobile(principal);
+		} else {
+			// username
+			user = userShiroService.findByUsername(principal);
+		}
+		return user;
+	}
+
+	private static boolean isMobile(String principal) {
+		Pattern p = Pattern.compile("1\\d{10}$");
+		Matcher m = p.matcher(principal);
+		while (m.find()) {
+			return true;
+		}
+		return false;
+	}
+
 	private String validateRegisterSubmit(HttpServletRequest request,
 			Response resp, GlobalRegister reg, OAuthToken token,
-			String username, String password, String email, String gender) {
+			String username, String password, String email, String gender,
+			String mobile, String verifyCode) {
 		List<String> messages = resp.getMessages();
 		if (reg.getMode() == GlobalRegister.MODE_OFF) {
 			return resp.post(501, "register.off");
@@ -211,6 +238,11 @@ public class OAuthController {
 				"username")) {
 			return resp.post(403);
 		}
+		// 防止同一昵称重复注册
+		User user = userShiroService.findByUsername(username);
+		if (user != null) {
+			return resp.post(408, "该昵称已注册用户，不允许重复注册");
+		}
 		if (!Validations.notEmpty(password, messages, "password")) {
 			return resp.post(404);
 		}
@@ -219,6 +251,19 @@ public class OAuthController {
 		}
 		if (!Validations.pattern(gender, "[F,M]", messages, "gender")) {
 			return resp.post(407);
+		}
+		// 手机注册，手机号和验证码不能为空，且验证码必须正确
+		if (!Validations.notEmpty(mobile, messages, "mobile")
+				|| !Validations.notEmpty(verifyCode, messages, "verifyCode")) {
+			return resp.post(408, "手机号和验证码不允许为空");
+		}
+		if (!mobileVerifyService.verify(mobile, verifyCode)) {
+			return resp.post(409, "验证码错误");
+		}
+		// 防止同一手机号重复注册
+		User mobileUser = userShiroService.findByMobile(mobile);
+		if (mobileUser != null) {
+			return resp.post(408, "该手机号已注册用户，不允许重复注册");
 		}
 		return null;
 	}
@@ -233,4 +278,8 @@ public class OAuthController {
 	private UserService userService;
 	@Autowired
 	private CredentialsDigest credentialsDigest;
+	@Autowired
+	private UserShiroService userShiroService;
+	@Autowired
+	private MobileVerifyService mobileVerifyService;
 }

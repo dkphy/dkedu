@@ -3,14 +3,19 @@
  */
 package com.jspxcms.plug.service.impl;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jspxcms.core.domain.Info;
+import com.jspxcms.core.domain.InfoDetail;
+import com.jspxcms.core.domain.Node;
+import com.jspxcms.core.service.InfoService;
 import com.jspxcms.core.service.SpecialService;
 import com.jspxcms.plug.bo.MiniPayBo;
 import com.jspxcms.plug.domain.Order;
@@ -36,6 +41,8 @@ public class PayServiceImpl implements PayService {
 	private OrderDao orderDao;
 	@Autowired
 	private SpecialService specialService;
+	@Autowired
+	private InfoService infoService;
 
 	@Transactional
 	public Order createOrder(CreateOrderDTO coDTO) {
@@ -107,6 +114,7 @@ public class PayServiceImpl implements PayService {
 			// 回填订单
 			miniPayBo.backfillOrder(ccDTO.getOrderId(), OrderStatus.PAID,
 					ccDTO.getChannel());
+			addMessageNotify(order.getBuyerName(), order.getBuyerId(), order.getSubject());
 		}
 		// 支付失败
 		else {
@@ -118,6 +126,27 @@ public class PayServiceImpl implements PayService {
 			miniPayBo.backfillOrder(ccDTO.getOrderId(), OrderStatus.FAIL,
 					ccDTO.getChannel());
 		}
+	}
+	
+	// 新增站内信通知
+	private void addMessageNotify(String username, int userId, String subject) {
+		int nodeId = Node.USER_MESSAGE_NODE_ID; // XXX 使用栏目、文章记录站内信
+		final int defaultSiteId = 1;
+		String title = "成功购买课程";
+		String fmt = "大康心理教育：亲爱的%1$s，你已成功购买课程《%2$》s，请及时前往我的课程页面进行学习。";
+		String text = String.format(fmt, username, subject);
+		Info bean = new Info();
+		InfoDetail detail = new InfoDetail();
+		detail.setTitle(title);
+		// detail.setFile(file);
+		// detail.setFileName(fileName);
+		// detail.setFileLength(fileLength);
+		Map<String, String> clobs = new HashMap<String, String>();
+		clobs.put("text", text);
+		String status = Info.CONTRIBUTION;
+		infoService.save(bean, detail, null, null, null, null, null, clobs,
+				null, null, null, null, null, nodeId, userId, status,
+				defaultSiteId);
 	}
 	
 	public boolean isOrderCanBePay(Order order) {
@@ -137,13 +166,9 @@ public class PayServiceImpl implements PayService {
 	}
 
 	@Override
-	public List<Order> findOrderByUserIdAndSubjectId(Integer userId, Integer subjectId) {
-		List<Order> list =  orderDao.findByUserIdAndSubjectId(userId, subjectId);
-		if(list == null || list.isEmpty()) {
-			return Collections.emptyList();
-		} else {
-			return list;
-		}
+	public boolean isBuyed(Integer userId, Integer subjectId) {
+		List<Order> list =  orderDao.findByUserIdAndSubjectIdAndStatus(userId, subjectId, OrderStatus.PAID);
+		return list != null && !list.isEmpty();
 	}
 
 	@Override

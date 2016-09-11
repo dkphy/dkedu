@@ -154,6 +154,11 @@ public class Node implements java.io.Serializable, Anchor, Siteable,
 	public static final String DEF_PAGE = "defPage";
 	public static final String STATIC_METHOD = "staticMethod";
 	public static final String STATIC_PAGE = "staticPage";
+	
+	/**
+	 * 站内信栏目ID
+	 */
+	public static final int USER_MESSAGE_NODE_ID = 162;
 
 	public static String getCoverTemplate(Map<String, String> customs) {
 		return customs != null ? customs.get(COVER_TEMPLATE) : null;

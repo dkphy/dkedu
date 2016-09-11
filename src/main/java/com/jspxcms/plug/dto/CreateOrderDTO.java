@@ -9,6 +9,7 @@ package com.jspxcms.plug.dto;
  */
 public class CreateOrderDTO {
 	private Integer buyerId; //
+	private String buyerName;
 	private Integer orderItemCount;
 	private Double totalMoney;
 	private String subject;
@@ -50,6 +51,14 @@ public class CreateOrderDTO {
 
 	public Integer getSellerId() {
 		return sellerId;
+	}
+
+	public String getBuyerName() {
+		return buyerName;
+	}
+
+	public void setBuyerName(String buyerName) {
+		this.buyerName = buyerName;
 	}
 
 	public void setSellerId(Integer sellerId) {

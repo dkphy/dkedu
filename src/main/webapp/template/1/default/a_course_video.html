@@ -13,12 +13,8 @@
     <script src="_files/a_js/jquery-1.9.1.min.js"></script>
 	<script src="_files/a_js/common.js"></script>
     <script type="text/javascript" src="_files/ckplayer/ckplayer.js"></script>
-    [#if canPlay??]
-    	<!-- 免费或已购买 -->
-    	<script type="text/javascript">
-    	//alert('free');
-    	</script>
-	[#else]
+    [#if shouldBuy??]
+    	<!-- 需购买 -->
 		<script type="text/javascript">
 		function loadedHandler(){
 	        CKobject.getObjectById('ckplayer_video').addListener('time','seekHandler');
@@ -70,7 +66,7 @@
                     </ul>
                </div>
                <!-- 免费课程不展示购买按钮 -->
-               [#if (course.customs['price']?number > 0)]
+               [#if (course.customs['price']?number > 0) && shouldBuy??]
                <a href="${ctx}/miniPay/pay_index.jspx?courseId=${Param.specialId}" class="buy_btn">立即购买该课程</a>
                [/#if]
             </div>

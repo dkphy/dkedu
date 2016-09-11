@@ -41,7 +41,7 @@ public class OAuthFilter extends PathMatchingFilter {
 	 */
 	public static final String FALLBACK_URL_PARAM = "fallbackUrl";
 	public static final String DEFAULT_LOGIN_URL = "/login.jspx";
-	public static final String DEFAULT_SUCCESS_URL = "/";
+	public static final String DEFAULT_SUCCESS_URL = "/edu.jspx";
 	public static final String DEFAULT_OAUTH_REGISTER_URL = "/oauth/register.jspx";
 	public static final String DEFAULT_ERROR_KEY_ATTRIBUTE_NAME = "shiroLoginFailure";
 	public static final String OAUTH_TOKEN_SESSION_NAME = "oauthToken";

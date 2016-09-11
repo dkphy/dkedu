@@ -171,11 +171,10 @@ public class InfoController {
 			if(course == null) {
 				return resp.badRequest("course not found: " + courseId);
 			}
-			Boolean canPlay = null;
-			if(user != null && isCanPlay(course, user.getId())) {
-				canPlay = Boolean.TRUE;
+			// 提示购买按钮
+			if(promptBuy(course, user)) {
+				modelMap.addAttribute("shouldBuy", Boolean.TRUE);
 			}
-			modelMap.addAttribute("canPlay", canPlay);
 			modelMap.addAttribute("course", course);
 		}
 
@@ -206,8 +205,18 @@ public class InfoController {
 			return true;
 		}
 		// 判断该学员是否购买过课程
-		List<Order> list = payService.findOrderByUserIdAndSubjectId(userId, course.getId());
-		return !list.isEmpty();
+		return payService.isBuyed(userId, course.getId());
+	}
+	
+	// 是否提示购买
+	private boolean promptBuy(Special course, User user) {
+		// 免费课无需购买
+		String priceStr = course.getCustoms().get("price");
+		if(StringUtils.isBlank(priceStr) || Double.valueOf(priceStr) <= 0) {
+			return false;
+		}
+		// 未登录或者已登录未购买
+		return user == null || !payService.isBuyed(user.getId(), course.getId());
 	}
 
 	@RequestMapping(value = "/info_download.jspx")

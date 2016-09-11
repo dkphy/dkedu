@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -67,11 +68,10 @@ public class SpecialController {
 		if(user != null) {
 			// 为该学员增加浏览记录，方便个人中心查看
 			bs.addBrowse(user.getId(), id);
-			// 已经购买过的，页面不展示"购买"和"试听"，展示"继续学习"
-			List<Order> list = payService.findOrderByUserIdAndSubjectId(user.getId(), id);
-			if(list != null && !list.isEmpty()) {
-				modelMap.addAttribute("isBuyed", Boolean.TRUE);
-			}
+		}
+		// 是否提示购买
+		if(promptBuy(special, user)) {
+			modelMap.addAttribute("shouldBuy", Boolean.TRUE);
 		}
 		modelMap.addAttribute("special", special);
 		Map<String, Object> data = modelMap.asMap();
@@ -81,6 +81,17 @@ public class SpecialController {
 		return special.getTemplate();
 	}
 	
+	// 是否提示购买
+	private boolean promptBuy(Special course, User user) {
+		// 免费课无需购买
+		String priceStr = course.getCustoms().get("price");
+		if(StringUtils.isBlank(priceStr) || Double.valueOf(priceStr) <= 0) {
+			return false;
+		}
+		// 未登录或者已登录未购买
+		return user == null || !payService.isBuyed(user.getId(), course.getId());
+	}
+
 	/**
 	 * 提交评分
 	 * @param courseId
@@ -107,10 +118,8 @@ public class SpecialController {
 		}
 		String ip = Servlets.getRemoteAddr(request);
 		String cookie = Site.getIdentityCookie(request, response);
-		if (userId != null) {
-			if (voteMarkService.isUserVoted(Special.SCORE_MARK, courseId, userId, null)) {
-				return resp.badRequest();
-			}
+		if (voteMarkService.isUserVoted(Special.SCORE_MARK, courseId, userId, null)) {
+			return resp.badRequest();
 		} else if (voteMarkService.isCookieVoted(Special.SCORE_MARK, courseId, cookie,
 				null)) {
 			return resp.badRequest();
