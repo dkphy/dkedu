@@ -213,7 +213,7 @@ function append(tag) {
   </c:when>
   <c:when test="${field.name eq 'priority'}">
 		<select name="priority" style="width:50px;">
-  		<c:forEach var="i" begin="0" end="20">
+  		<c:forEach var="i" begin="0" end="30">
   		<option<c:if test="${i==bean.priority}"> selected="selected"</c:if>>${i}</option>
   		</c:forEach>
   	</select>

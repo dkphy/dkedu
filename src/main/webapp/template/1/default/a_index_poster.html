@@ -29,11 +29,9 @@
         [@InfoList nodeId=node.id limit='1';list]
 		[#list list as info]
 		<div class="banner" style="background-image: url(${info.customs['schoolPosterPhoto']})">
-			<img alt="" src="_files/a_css/img/logo.png" class="logo">
+			<a class="banner_link" href="${info.link}"></a>
+			<a href="${ctx}"><img alt="" src="_files/a_css/img/logo.png" class="logo"/></a>
 		</div>
-<!-- 		<a href="${info.link}"> -->
-<!--         <div style="width:100%;height:502px;background:url(${info.customs['schoolPosterPhoto']}) no-repeat center center;"></div> -->
-<!--    		</a> -->
    		[/#list]
    		[/@InfoList]
    		[/@Node]	

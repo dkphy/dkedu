@@ -31,8 +31,8 @@
                     <div class="swiper-slide">
                         <div class="box">
                             <img src="${info.smallImage}" alt=""/>
-                            <b>${info.title}</b>
-                            <span class="num">56人已购买</span>
+                            <b><span>${info.title}</span></b>
+                            <span class="num">${info.soldCount!0}人已购买</span>
                             <a href="${ctx}/special/${info.id}.jspx"><span class="icon-cart"></span>￥${info.customs['price']}</a>
                         </div>
                     </div>

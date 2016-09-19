@@ -133,14 +133,11 @@ public class PayServiceImpl implements PayService {
 		int nodeId = Node.USER_MESSAGE_NODE_ID; // XXX 使用栏目、文章记录站内信
 		final int defaultSiteId = 1;
 		String title = "成功购买课程";
-		String fmt = "大康心理教育：亲爱的%1$s，你已成功购买课程《%2$》s，请及时前往我的课程页面进行学习。";
+		String fmt = "大康心理教育：亲爱的%1$s，你已成功购买课程《%2$s》，请及时前往我的课程页面进行学习。";
 		String text = String.format(fmt, username, subject);
 		Info bean = new Info();
 		InfoDetail detail = new InfoDetail();
 		detail.setTitle(title);
-		// detail.setFile(file);
-		// detail.setFileName(fileName);
-		// detail.setFileLength(fileLength);
 		Map<String, String> clobs = new HashMap<String, String>();
 		clobs.put("text", text);
 		String status = Info.CONTRIBUTION;

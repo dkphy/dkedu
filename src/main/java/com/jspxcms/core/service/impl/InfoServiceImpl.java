@@ -649,6 +649,16 @@ public class InfoServiceImpl implements InfoService, SiteDeleteListener,
 			}
 		}
 	}
+	
+
+	@Override
+	public void batchUpdate(Integer[] ids, Integer[] priority) {
+		for(int i=0; i<ids.length; i++) {
+			Info bean = dao.findOne(ids[i]);
+			bean.setPriority(priority[i]);
+			dao.save(bean);
+		}
+	}
 
 	private void firePostSave(Info bean) {
 		if (!CollectionUtils.isEmpty(listeners)) {
@@ -850,4 +860,5 @@ public class InfoServiceImpl implements InfoService, SiteDeleteListener,
 	public void setDao(InfoDao dao) {
 		this.dao = dao;
 	}
+
 }

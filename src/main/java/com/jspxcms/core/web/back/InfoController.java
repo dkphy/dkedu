@@ -383,6 +383,20 @@ public class InfoController {
 			return "redirect:edit.do";
 		}
 	}
+	
+	@RequiresPermissions("core:info:update")
+	@RequestMapping("batch_update.do")
+	public String batchUpdate(Integer[] id, Integer[] priority, Integer queryNodeId, Integer queryNodeType,
+			Integer queryInfoPermType, String queryStatus, String redirect,
+			HttpServletRequest request, RedirectAttributes ra) {
+		service.batchUpdate(id, priority);
+		ra.addAttribute("queryNodeId", queryNodeId);
+		ra.addAttribute("queryNodeType", queryNodeType);
+		ra.addAttribute("queryInfoPermType", queryInfoPermType);
+		ra.addAttribute("queryStatus", queryStatus);
+		ra.addFlashAttribute(MESSAGE, SAVE_SUCCESS);
+		return "redirect:list.do";
+	}
 
 	@RequiresPermissions("core:info:update")
 	@RequestMapping("update.do")

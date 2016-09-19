@@ -147,6 +147,7 @@ function optDelete(form) {
 	</shiro:hasPermission>
   <shiro:hasPermission name="core:info:edit">
   <div class="ls-btn"><input type="button" value="<s:message code="edit"/>" onclick="return optSingle('#edit_opt_');"/></div>
+  <div class="ls-btn"><input type="button" value="<s:message code="save"/>" onclick="return optMulti(this.form,'batch_update.do');"/></div>
   </shiro:hasPermission>
   <shiro:hasPermission name="core:info:move_form">
   <div class="ls-btn"><input type="button" value="<s:message code="move"/>" onclick="return optMulti(this.form,'move_form.do');"/></div>
@@ -246,7 +247,7 @@ function optDelete(form) {
       </c:choose>
       </shiro:hasPermission>
      </td>
-    <td><c:out value="${bean.id}"/></td>
+    <td><input type="text" name="id" value="${bean.id}" size="2" readonly /></td>
     <td>
     	<div><a href="view.do?id=${bean.id}&queryNodeId=${queryNodeId}&queryNodeType=${queryNodeType}&queryInfoPermType=${queryInfoPermType}&queryStatus=${queryStatus}&position=${pagedList.number*pagedList.size+status.index}&${searchstring}" title="<c:out value='${bean.title}'/>"><c:out value="${fnx:substringx_sis(bean.title,30,'...')}"/></a></div>
     	<div>
@@ -265,7 +266,7 @@ function optDelete(form) {
     	  [<span style="color:blue;">${bean.org.displayName}</span>]
     	</div>
     </td>
-    <td align="right"><c:out value="${bean.priority}"/></td>
+    <td align="right"><input type="text" name="priority" value="${bean.priority}" size="1"/></td>
     <td align="right"><c:out value="${bean.views}"/></td>
     <td align="center">
       <div>

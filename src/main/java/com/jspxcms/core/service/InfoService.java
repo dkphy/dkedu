@@ -57,4 +57,11 @@ public interface InfoService {
 	public int tobePublish(Integer siteId);
 
 	public int expired(Integer siteId);
+
+	/**
+	 * 批量更新
+	 * @param ids
+	 * @param priority
+	 */
+	public void batchUpdate(Integer[] ids, Integer[] priority);
 }

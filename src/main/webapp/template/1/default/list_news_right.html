@@ -59,45 +59,22 @@
         <div class="sidebar">
                 <div class="side_tit">
                     <b>精品课程</b>
-                    <a href="#">查看更多课程</a>
+                    <a href="${ctx}/specials.jspx">查看更多课程</a>
                 </div>
                 <div class="hot_lessons">
+                [@SpecialPage specialId=Param.specialId pageSize='4';pagedList]
+                	[#list pagedList.content as course]
                     <div class="box">
-                        <img src="_files/img/p1-kqcc.jpg" alt=""><!--尺寸330x200-->
-                        <b>三天搞懂所有考点</b>
+                        <img src="${course.smallImage}" alt=""><!--尺寸330x200-->
+                        <b>${course.title}</b>
                         <div class="price_bar">
-                            <strong>¥ 399</strong>
-                            <span>已有<i>56</i>人购买该课程</span>
+                            <strong>¥${course.customs['price']}</strong>
+                            <span>已有<i>${course.soldCount!0}</i>人购买该课程</span>
                         </div>
-                        <a href="#" class="buy_btn">敬请期待</a>
+                        <a href="${ctx}/special/${course.id}.jspx" class="buy_btn">购买</a>
                     </div>
-                    <div class="box">
-                        <img src="_files/img/p2-fzxlx.jpg" alt=""><!--尺寸330x200-->
-                        <b>发展心理学:读懂孩子到青少年</b>
-                        <div class="price_bar">
-                            <strong>¥ 199</strong>
-                            <span>已有<i>29</i>人购买该课程</span>
-                        </div>
-                        <a href="#" class="buy_btn">敬请期待</a>
-                    </div>
-                    <div class="box">
-                        <img src="_files/img/p3-shxlx.jpg" alt=""><!--尺寸330x200-->
-                        <b>社会心理学</b>
-                        <div class="price_bar">
-                            <strong>¥ 299</strong>
-                            <span>已有<i>119</i>人购买该课程</span>
-                        </div>
-                    	<a href="#" class="buy_btn">敬请期待</a>
-                	</div>
-                	<div class="box">
-                        <img src="_files/img/p4-yjzx.jpg" alt=""><!--尺寸330x200-->
-                        <b>领袖心理课易经的真相</b>
-                        <div class="price_bar">
-                            <strong>¥ 299</strong>
-                            <span>已有<i>69</i>人购买该课程</span>
-                        </div>
-                    	<a href="#" class="buy_btn">敬请期待</a>
-                	</div>
+                    [/#list]
+				[/@SpecialPage]
             	</div>
         </div>
 		[/#if]
