@@ -164,8 +164,7 @@ public class InfoController {
 				ForeContext.setData(data, request);
 				return site.getTemplate(UMemberController.TO_LOGIN);
 			}
-			String courseIdStr = request.getParameter("specialId");
-			Integer courseId = Integer.valueOf(courseIdStr);
+			Integer courseId = info.getSpecials().get(0).getId();
 			// 查询课程
 			Special course = specialService.get(courseId);
 			if(course == null) {

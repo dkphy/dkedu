@@ -52,7 +52,7 @@ public class CodeController {
 		return "plug/find_code/score_list";
 	}
 	
-	@RequiresPermissions("plug:score:create")
+	@RequiresPermissions("core:score:create")
 	@RequestMapping("create.do")
 	public String create(Integer id, org.springframework.ui.Model modelMap) {
 		if (id != null) {
@@ -63,7 +63,7 @@ public class CodeController {
 		return "plug/find_code/score_form";
 	}
 
-	@RequiresPermissions("plug:score:edit")
+	@RequiresPermissions("core:score:edit")
 	@RequestMapping("edit.do")
 	public String edit(Integer id, Integer position,
 			@PageableDefaults(sort = "id", sortDir = Direction.DESC) Pageable pageable,
@@ -81,7 +81,7 @@ public class CodeController {
 		return "plug/find_code/score_form";
 	}
 
-	@RequiresPermissions("plug:score:save")
+	@RequiresPermissions("core:score:save")
 	@RequestMapping("save.do")
 	public String save(@Valid UserCode bean, String redirect,
 			HttpServletRequest request, RedirectAttributes ra) {
@@ -97,7 +97,7 @@ public class CodeController {
 		}
 	}
 
-	@RequiresPermissions("plug:score:update")
+	@RequiresPermissions("core:score:update")
 	@RequestMapping("update.do")
 	public String update(@ModelAttribute("bean") UserCode bean, Integer position,
 			String redirect, HttpServletRequest request, RedirectAttributes ra) {
@@ -112,7 +112,7 @@ public class CodeController {
 		}
 	}
 	
-	@RequiresPermissions("plug:score:delete")
+	@RequiresPermissions("core:score:delete")
 	@RequestMapping("delete.do")
 	public String delete(Integer[] ids, HttpServletRequest request,
 			RedirectAttributes ra) {

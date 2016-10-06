@@ -64,14 +64,14 @@ function optDelete(form) {
 <form method="post">
 <tags:search_params/>
 <div class="ls-bc-opt">
-	<shiro:hasPermission name="plug:resume:create">
+	<shiro:hasPermission name="core:score:create">
 	<div class="ls-btn"><input type="button" value="<s:message code="create"/>" onclick="location.href='create.do?${searchstring}';"/></div>
 	<div class="ls-btn"></div>
 	</shiro:hasPermission>
-	<shiro:hasPermission name="plug:resume:edit">
+	<shiro:hasPermission name="core:score:edit">
 	<div class="ls-btn"><input type="button" value="<s:message code="edit"/>" onclick="return optSingle('#edit_opt_');"/></div>
 	</shiro:hasPermission>
-	<shiro:hasPermission name="plug:resume:delete">
+	<shiro:hasPermission name="core:score:delete">
 	<div class="ls-btn"><input type="button" value="<s:message code="delete"/>" onclick="return optDelete(this.form);"/></div>
 	</shiro:hasPermission>
 	<div style="clear:both"></div>

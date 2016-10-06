@@ -58,7 +58,7 @@
                    </div>
                    <ul class="clss_list">
 <!--                        <li class="current"><a href="#"></a></li> -->
-                       [@InfoPage specialId=Param.specialId pageSize='100';pagedList]
+                       [@InfoPage specialId=course.id pageSize='100';pagedList]
                        [#list pagedList.content as info]
                        <li><a href="${info.url}?specialId=${Param.specialId}">课时${info.priority}：  ◇${info.title}</a></li>
                        [/#list]
