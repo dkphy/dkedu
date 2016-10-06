@@ -42,11 +42,18 @@
         <div class="col_box login_col">
             <div class="com_tit long">
                 <h2 class="t_center">登录</h2>
-                <a href="register.jspx" class="link">注册</a>
+                <a href="${ctx}/register.jspx" class="link">注册</a>
             </div>
             <div class="form_group">
             <form id="validForm" action="${ctx}/login.jspx" method="post">
-			<input type="hidden" name="fallbackUrl" value="[#if Param.fallback??]${Param.fallback}[#else]edu.jspx[/#if]"/>
+            [#if Param.fallback??]
+            	[#assign fallback]${Param.fallback}[/#assign]
+            [#elseif fallback??]
+            	[#assign fallback]${fallback}[/#assign]
+            [#else]
+            	[#assign fallback]/edu.jspx[/#assign]
+            [/#if]
+			<input type="hidden" name="fallbackUrl" value="${fallback}"/>
                 <div class="line with_icon">
                     <span class="icon icon-user"></span>
                     <input type="text" id="username" name="username" value="${username!}" placeholder="手机号码/邮箱账号/昵称">
@@ -106,7 +113,7 @@
     [#if oauthQqUrl?? && oauthWeiboUrl??]
             <div class="quick_link">
                 <b>快捷登录：</b>
-                <a href="#" class="icon-wx"></a>
+<!--                 <a href="#" class="icon-wx"></a> -->
                 <a href="${oauthWeiboUrl}" class="icon-weibo"></a>
                 <a href="${oauthQqUrl}" class="icon-qq"></a>
             </div>

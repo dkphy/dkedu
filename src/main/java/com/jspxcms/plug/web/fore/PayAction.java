@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
@@ -74,9 +75,11 @@ public class PayAction {
 	 * @return
 	 */
 	@RequestMapping(value = "confirmOrder.jspx")
-	public RedirectView confirmOrder(@RequestParam("productionId")int productionId,@RequestParam("skuPrice") double skuPrice, HttpServletRequest request, Model model){
+	public RedirectView confirmOrder(@RequestParam("productionId")int productionId,
+			@RequestParam("skuPrice") double skuPrice, HttpServletRequest request, ModelMap model){
 		User user = Context.getCurrentUser(request);
 		if(user == null) {
+			model.put("fallback", "www.baidu.com");
 			return new RedirectView("/login.jspx?fallback=miniPay/pay_index.jspx?courseId=" + productionId,true,false,false);
 		}
 		

@@ -161,6 +161,8 @@ public class InfoController {
 			User user = Context.getCurrentUser(request);
 			if(user == null) {// 如果未登录，则跳转至登录页面
 				Map<String, Object> data = modelMap.asMap();
+				String fallbackUrl = String.format("info/%s.jspx", info.getId());
+				data.put("fallback", fallbackUrl);
 				ForeContext.setData(data, request);
 				return site.getTemplate(UMemberController.TO_LOGIN);
 			}

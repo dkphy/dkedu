@@ -212,11 +212,7 @@ function append(tag) {
     <f:textarea name="metaDescription" value="${bean.metaDescription}" class="{maxlength:450}" style="width:500px;height:80px;"/>
   </c:when>
   <c:when test="${field.name eq 'priority'}">
-		<select name="priority" style="width:50px;">
-  		<c:forEach var="i" begin="0" end="30">
-  		<option<c:if test="${i==bean.priority}"> selected="selected"</c:if>>${i}</option>
-  		</c:forEach>
-  	</select>
+  	<f:text name="priority" value="${bean.priority}" style="width:50px;"/>
   </c:when>
   <c:when test="${field.name eq 'publishDate'}">
     <input type="text" name="publishDate" value="<c:if test="${oprt=='edit'}"><fmt:formatDate value="${bean.publishDate}" pattern="yyyy-MM-dd'T'HH:mm:ss"/></c:if>" onclick="WdatePicker({dateFmt:'yyyy-MM-ddTHH:mm:ss'});" class="${oprt=='edit' ? 'required' : ''}" style="width:120px;"/>
